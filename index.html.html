@@ -1,0 +1,3402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nutrition & Lifestyle Assessment</title>
+
+  <style>
+    :root{
+      --bg0:#070a10;
+      --bg1:#0b1220;
+      --text:#eaf2ff;
+      --muted:#aab6cc;
+
+      --protein:#fb7185;
+      --carbs:#60a5fa;
+      --fats:#34d399;
+
+      --accent:#60a5fa;
+      --danger:#fb7185;
+
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius: 20px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 12% 0%, rgba(52,211,153,.18), transparent 60%),
+        radial-gradient(1000px 700px at 88% 10%, rgba(96,165,250,.18), transparent 55%),
+        radial-gradient(900px 700px at 65% 90%, rgba(251,113,133,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      min-height:100vh;
+    }
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.22;
+      background-image:
+        radial-gradient(circle at 18px 18px, rgba(255,255,255,.06) 2px, transparent 2px),
+        radial-gradient(circle at 58px 62px, rgba(255,255,255,.04) 2px, transparent 2px);
+      background-size: 80px 80px;
+      mix-blend-mode: overlay;
+    }
+
+    .wrap{ max-width: 1100px; margin:0 auto; padding: 26px 18px 60px; }
+    .hero{ display:flex; flex-direction:column; gap:12px; margin-bottom: 14px; }
+    .brandline{ display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap; justify-content:space-between; }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(15,25,48,.55);
+      box-shadow: 0 10px 28px rgba(0,0,0,.22);
+      color: var(--muted); font-size: 13px;
+    }
+    .badge b{ color: var(--text); font-weight: 800; }
+    h1{ font-size: 24px; margin:0; letter-spacing:.2px; }
+    .sub{ margin:0; color:var(--muted); line-height:1.5; max-width: 76ch; }
+
+    .card{
+      background: linear-gradient(180deg, rgba(15,25,48,.92), rgba(10,16,32,.92));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHeader{
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(800px 400px at 10% 0%, rgba(52,211,153,.13), transparent 55%),
+        radial-gradient(700px 350px at 90% 0%, rgba(96,165,250,.12), transparent 55%),
+        rgba(15,25,48,.55);
+    }
+    .cardHeader p{ margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height:1.45; }
+    .cardBody{ padding: 16px; }
+
+    .stepper{ display:flex; gap:8px; padding: 12px 16px 0; flex-wrap:wrap; }
+    .dot{ width: 34px; height: 8px; border-radius:999px; background: rgba(255,255,255,.10); }
+    .dot.on{ background: linear-gradient(90deg, rgba(52,211,153,.85), rgba(96,165,250,.85)); }
+
+    h2{ font-size: 16px; margin: 18px 0 10px; color: rgba(96,165,250,.95); }
+    #step-3 > h2{
+      margin-top: 6px;
+      margin-bottom: 12px;
+      font-size: 18px;
+      color: rgba(96,165,250,.95);
+    }
+
+    .note{ font-size: 12px; color: var(--muted); margin: 6px 0 0; }
+    .row{ display:flex; gap:12px; flex-wrap:wrap; }
+    .field{ flex: 1 1 240px; display:flex; flex-direction:column; gap:6px; margin: 8px 0; }
+    label{ font-size: 12px; color: var(--muted); }
+
+    input, select, textarea{
+      width:100%;
+      background: rgba(9,14,28,.95);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 11px 12px;
+      outline:none;
+      transition: box-shadow .12s ease, border-color .12s ease;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(96,165,250,.55);
+      box-shadow: 0 0 0 3px rgba(96,165,250,.15);
+    }
+    textarea{ min-height: 88px; resize: vertical; }
+
+    .help{
+      background: rgba(52,211,153,.07);
+      border: 1px solid rgba(52,211,153,.15);
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .checks{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      background: rgba(9,14,28,.95);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    @media (min-width: 920px){
+      .checks{ grid-template-columns: 1fr 1fr; }
+    }
+    .check{ display:flex; align-items:center; gap:10px; color: var(--muted); font-size: 13px; }
+    .check input{ width: 16px; height: 16px; accent-color: #34d399; }
+
+    .btnrow{
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    button{
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+      padding: 10px 14px;
+      cursor:pointer;
+      font-weight: 800;
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+    }
+    button:hover{ filter: brightness(1.08); }
+    button:active{ transform: translateY(1px); }
+    button:disabled{ opacity:.55; cursor:not-allowed; }
+
+    .primary{
+      border-color: rgba(52,211,153,.45);
+      background: linear-gradient(90deg, rgba(52,211,153,.26), rgba(96,165,250,.22));
+      box-shadow: 0 14px 30px rgba(52,211,153,.12);
+    }
+    .ghost{ border-color: rgba(255,255,255,.14); background: transparent; }
+    .mini{ padding: 8px 12px; font-weight: 800; border-radius: 999px; }
+
+    .invalid{
+      border-color: rgba(251,113,133,.9) !important;
+      box-shadow: 0 0 0 3px rgba(251,113,133,.18) !important;
+    }
+    .invalid-label{ color: rgba(251,113,133,.95) !important; }
+
+    .errBanner{
+      display:none;
+      margin: 0 0 14px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(251,113,133,.25);
+      background: rgba(251,113,133,.10);
+      color: #ffe6ea;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .warn{
+      color: #ffe6ea;
+      background: rgba(251,113,133,.10);
+      border: 1px solid rgba(251,113,133,.25);
+      padding: 12px 12px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .adjustNote{
+      color: var(--muted);
+      background: rgba(96,165,250,.08);
+      border: 1px solid rgba(96,165,250,.25);
+      padding: 12px 12px;
+      border-radius: 14px;
+      margin: 14px 0;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 920px){
+      .grid2{ grid-template-columns: 1fr 1fr; }
+      .span2{ grid-column: 1 / -1; }
+    }
+
+    .kpi{
+      background: linear-gradient(180deg, rgba(9,14,28,.92), rgba(8,12,24,.92));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      padding: 12px;
+    }
+    .kpi .small{ color: var(--muted); font-size: 12px; }
+    .kpi b{ display:block; font-size: 20px; margin-top: 6px; }
+    .kpi.target{
+      border-color: rgba(52,211,153,.40);
+      background:
+        radial-gradient(600px 240px at 10% 0%, rgba(52,211,153,.18), transparent 60%),
+        linear-gradient(180deg, rgba(9,14,28,.92), rgba(8,12,24,.92));
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 7px 10px;
+      border-radius: 999px;
+      margin: 6px 6px 0 0;
+      color: var(--muted);
+      background: rgba(255,255,255,.04);
+      font-size: 13px;
+    }
+    .pill b{ color: var(--text); }
+    .pill.protein{ border-color: rgba(251,113,133,.45); background: rgba(251,113,133,.08); }
+    .pill.protein b{ color: rgba(251,113,133,.98); }
+    .pill.carbs{ border-color: rgba(96,165,250,.45); background: rgba(96,165,250,.08); }
+    .pill.carbs b{ color: rgba(96,165,250,.98); }
+    .pill.fats{ border-color: rgba(52,211,153,.45); background: rgba(52,211,153,.08); }
+    .pill.fats b{ color: rgba(52,211,153,.98); }
+
+    .list{ margin: 8px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.6; }
+    .hr{ height:1px; background: rgba(255,255,255,.08); margin: 14px 0; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap; word-break: break-word; }
+
+    .drop{
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      overflow:hidden;
+      background: rgba(255,255,255,.04);
+    }
+    .dropHead{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      padding: 10px 12px;
+      cursor:pointer;
+      user-select:none;
+      color: var(--text);
+      font-weight: 900;
+    }
+    .dropBody{
+      display:none;
+      padding: 10px 12px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .drop.open .dropBody{ display:block; }
+
+    .mealsBox{
+      border: 1px solid rgba(96,165,250,.25);
+      background: radial-gradient(900px 380px at 15% 0%, rgba(96,165,250,.12), transparent 60%),
+                  radial-gradient(900px 380px at 85% 0%, rgba(52,211,153,.10), transparent 60%),
+                  rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .mealsTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight: 950;
+      color: rgba(96,165,250,.98);
+      margin: 0 0 8px;
+    }
+    .mealsTitle span{
+      display:inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(96,165,250,.35);
+      background: rgba(96,165,250,.10);
+      color: rgba(96,165,250,.98);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .donutRow{
+      display:flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .donutCard{
+      flex: 1 1 320px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,.03);
+      min-height: 160px;
+    }
+    .donutHead{
+      display:flex;
+      align-items:baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .donutHead b{ font-size: 13px; color: var(--text); }
+    .donutHead span{ font-size: 12px; color: var(--muted); }
+    .donutWrap{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .legend{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      min-width: 220px;
+    }
+    .legItem{ display:flex; align-items:center; gap: 8px; }
+    .swatch{ width: 10px; height: 10px; border-radius: 3px; }
+    .swProtein{ background: var(--protein); }
+    .swCarbs{ background: var(--carbs); }
+    .swFats{ background: var(--fats); }
+
+    #heroBadges {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ===== Body fat visual selector (cards) ===== */
+    .bfGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 600px){
+      .bfGrid{ grid-template-columns: 1fr; }
+    }
+
+    .bfCard{
+      text-align:left;
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(900px 300px at 20% 0%, rgba(96,165,250,.12), transparent 60%),
+        rgba(9,14,28,.92);
+      color: var(--text);
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease, filter .12s ease;
+    }
+    .bfCard:hover{ filter: brightness(1.05); }
+    .bfCard:active{ transform: translateY(1px); }
+
+    .bfImgWrap{
+      width:100%;
+      aspect-ratio: 16/10;
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bfImgWrap img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    .bfTop{
+      display:flex;
+      align-items:baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .bfTitle{ font-weight: 950; letter-spacing:.2px; }
+    .bfTag{
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+    .bfDesc{
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    /* selected */
+    .bfCard.isSelected{
+      border-color: rgba(52,211,153,.55);
+      box-shadow: 0 0 0 3px rgba(52,211,153,.14), 0 18px 45px rgba(0,0,0,.25);
+      background:
+        radial-gradient(900px 300px at 20% 0%, rgba(52,211,153,.16), transparent 60%),
+        radial-gradient(800px 260px at 90% 0%, rgba(96,165,250,.10), transparent 55%),
+        rgba(9,14,28,.92);
+    }
+
+    /* hidden by gender gating */
+    .bfCard.isHidden{ display:none; }
+
+    /* invalid highlight wrapper */
+    .bfGrid.invalidGrid{
+      border-radius: 16px;
+      box-shadow: 0 0 0 3px rgba(251,113,133,.18);
+      padding: 6px;
+    }
+
+    /* Prompt to select gender first */
+    .bfPrompt{
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+    }
+
+    /* CTA Boxes */
+    .ctaBox{
+      border: 1px solid rgba(96,165,250,.35);
+      background:
+        radial-gradient(900px 380px at 15% 0%, rgba(96,165,250,.15), transparent 60%),
+        radial-gradient(900px 380px at 85% 0%, rgba(52,211,153,.12), transparent 60%),
+        rgba(15,25,48,.85);
+      border-radius: 16px;
+      padding: 18px;
+      margin: 16px 0;
+    }
+    .ctaItem{
+      margin-bottom: 16px;
+    }
+    .ctaItem:last-child{
+      margin-bottom: 0;
+    }
+    .ctaTitle{
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .ctaDesc{
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+    .ctaBtn{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+      cursor: pointer;
+    }
+    .ctaBtn:hover{
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+    .ctaBtn:active{
+      transform: translateY(1px);
+    }
+    .ctaBtn.ctaPrimary{
+      background: linear-gradient(90deg, rgba(52,211,153,.85), rgba(96,165,250,.85));
+      color: #fff;
+      border: none;
+      box-shadow: 0 8px 24px rgba(52,211,153,.25);
+    }
+    .ctaBtn.ctaSecondary{
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .ctaDivider{
+      height: 1px;
+      background: rgba(255,255,255,.10);
+      margin: 14px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="brandline" style="justify-content:space-between; align-items:flex-start;">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;"></div>
+        <div class="field" style="flex:0 0 auto; margin:0; min-width:170px;">
+          <label for="langSelect" style="margin-bottom:6px;" data-i18n="lang.label">Language</label>
+          <select id="langSelect" style="padding:10px 12px;">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="heroBadges">
+        <span class="badge" data-i18n="badge.quiz">🥗 <b>Nutrition Quiz</b> — calories, macros, and a 2-week plan</span>
+        <span class="badge" data-i18n="badge.simple">⚡ <b>Simple</b> — made to be easy</span>
+        <span class="badge" data-i18n="badge.private">🔒 <b>Private</b> — runs in your browser</span>
+      </div>
+
+      <h1 data-i18n="hero.title">Nutrition & Lifestyle Assessment</h1>
+      <p class="sub" data-i18n="hero.sub">
+        Answer a few questions to estimate calories and macros, then get food options, swaps, steps + training targets, and a simple 2-week plan.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="cardHeader">
+        <p data-i18n="notice.top"></p>
+      </div>
+
+      <div class="stepper" id="stepper"></div>
+
+      <div class="cardBody">
+        <div class="errBanner" id="errBanner"></div>
+
+        <form id="quizForm" novalidate>
+
+          <!-- STEP 0 -->
+          <div id="step-0" class="step">
+            <h2 data-i18n="s1.title">1) Personal Data</h2>
+
+            <div class="row">
+              <div class="field">
+                <label for="firstName" data-i18n="p.name">Name</label>
+                <input id="firstName" type="text" name="firstName" required data-i18n-placeholder="p.name_ph" placeholder="e.g., Sarah" />
+              </div>
+              <div class="field">
+                <label for="age" data-i18n="s1.age">Age (years)</label>
+                <input id="age" type="number" min="13" max="90" name="age" required />
+              </div>
+              <div class="field">
+                <label for="gender" data-i18n="s1.gender">Gender</label>
+                <select id="gender" name="gender" required>
+                  <option value="" data-i18n="s1.gender.select">Select</option>
+                  <option value="male" data-i18n="s1.gender.male">Male</option>
+                  <option value="female" data-i18n="s1.gender.female">Female</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="heightCm" data-i18n="s1.height">Height (cm)</label>
+                <input id="heightCm" type="number" min="120" max="230" name="heightCm" required />
+              </div>
+              <div class="field">
+                <label for="weightKg" data-i18n="s1.weight">Weight (kg)</label>
+                <input id="weightKg" type="number" min="35" max="250" step="0.1" name="weightKg" required />
+              </div>
+              <div class="field">
+                <label for="activity" data-i18n="s1.activity">Activity level (lifestyle + training)</label>
+                <select id="activity" name="activity" required>
+                  <option value="" data-i18n="s1.activity.select">Select</option>
+                  <option value="sedentary" data-i18n="s1.activity.sedentary">Sedentary</option>
+                  <option value="light" data-i18n="s1.activity.light">Lightly active</option>
+                  <option value="moderate" data-i18n="s1.activity.moderate">Moderately active</option>
+                  <option value="very" data-i18n="s1.activity.very">Very active</option>
+                </select>
+                <div class="help" data-i18n="s1.activity.help">
+                  <b>Examples:</b><br/>
+                  <b>Sedentary:</b> desk job, little walking, no/rare training.<br/>
+                  <b>Light:</b> desk job + regular walks, training 1–3×/week.<br/>
+                  <b>Moderate:</b> active days + training 3–5×/week (or lots of walking).<br/>
+                  <b>Very active:</b> physical job OR high movement + frequent training.
+                </div>
+              </div>
+            </div>
+
+            <!-- BODY FAT VISUAL SELECTOR -->
+            <div class="field" id="bfFieldWrap">
+              <label data-i18n="s1.bfVisual.label">Body fat estimate (visual)</label>
+
+              <!-- Hidden required inputs for validation -->
+              <input type="hidden" id="bfMin" name="bfMin" required />
+              <input type="hidden" id="bfMax" name="bfMax" required />
+              <input type="hidden" id="bfRangeLabel" name="bfRangeLabel" required />
+
+              <!-- Prompt shown when no gender selected -->
+              <div class="bfPrompt" id="bfPrompt" data-i18n="s1.bfVisual.selectGender">
+                Please select your gender first to see body fat options.
+              </div>
+
+              <div class="bfGrid" id="bfGrid" role="radiogroup" aria-label="Body fat visual estimate" style="display:none;">
+
+                <!-- MALE CARDS -->
+                <button type="button" class="bfCard" data-gender="male" data-min="1" data-max="7" data-label="1–7%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_1_7.png" alt="Male 1–7% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">1–7%</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.1_7.desc">Competition level. Extremely striated, veins everywhere.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="male" data-min="8" data-max="10" data-label="8–10%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_8_10.png" alt="Male 8–10% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">8–10%</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.8_10.desc">Very lean. Clear striations, visible veins.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="male" data-min="11" data-max="12" data-label="11–12%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_11_12.png" alt="Male 11–12% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">11–12%</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.11_12.desc">Lean. Clear abs, some vascularity.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="male" data-min="13" data-max="15" data-label="13–15%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_13_15.png" alt="Male 13–15% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">13–15%</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.13_15.desc">Athletic. Visible abs, defined muscles.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="male" data-min="16" data-max="19" data-label="16–19%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_16_19.png" alt="Male 16–19% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">16–19%</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.16_19.desc">Fit. Some ab definition, less separation.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="male" data-min="20" data-max="24" data-label="20–24%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_20_24.png" alt="Male 20–24% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">20–24%</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.20_24.desc">Average. No ab definition, softer look.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="male" data-min="25" data-max="30" data-label="25–30%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_25_30.png" alt="Male 25–30% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">25–30%</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.25_30.desc">Soft midsection. Noticeable fat around waist.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="male" data-min="35" data-max="40" data-label="35–40%+" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/male_35_40.png" alt="Male 35–40%+ body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">35–40%+</div>
+                    <div class="bfTag" data-i18n="s1.gender.male">Male</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.35_40.desc">Clear fat accumulation. Rounder midsection.</div>
+                </button>
+
+                <!-- FEMALE CARDS -->
+                <button type="button" class="bfCard" data-gender="female" data-min="10" data-max="12" data-label="10–12%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_10_12.png" alt="Female 10–12% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">10–12%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.10_12.desc">Competition level. Extremely defined, visible striations.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="15" data-max="17" data-label="15–17%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_15_17.png" alt="Female 15–17% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">15–17%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.15_17.desc">Very lean. Clear muscle definition, visible abs.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="18" data-max="20" data-label="18–20%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_18_20.png" alt="Female 18–20% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">18–20%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.18_20.desc">Athletic/fit. Some ab definition, toned look.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="21" data-max="23" data-label="21–23%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_21_23.png" alt="Female 21–23% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">21–23%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.21_23.desc">Fit. Less definition, still lean.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="24" data-max="26" data-label="24–26%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_24_26.png" alt="Female 24–26% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">24–26%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.24_26.desc">Average/healthy. Some softness, normal look.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="27" data-max="29" data-label="27–29%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_27_29.png" alt="Female 27–29% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">27–29%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.27_29.desc">Softer shape. More fat around hips/waist.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="30" data-max="35" data-label="30–35%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_30_35.png" alt="Female 30–35% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">30–35%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.30_35.desc">Clear fat accumulation around body.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="36" data-max="40" data-label="36–40%" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_36_40.png" alt="Female 36–40% body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">36–40%</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.36_40.desc">Significant fat. Larger overall appearance.</div>
+                </button>
+
+                <button type="button" class="bfCard" data-gender="female" data-min="50" data-max="55" data-label="50%+" role="radio" aria-checked="false">
+                  <div class="bfImgWrap"><img src="img/bf/female_50_plus.png" alt="Female 50%+ body fat visual" /></div>
+                  <div class="bfTop">
+                    <div class="bfTitle">50%+</div>
+                    <div class="bfTag" data-i18n="s1.gender.female">Female</div>
+                  </div>
+                  <div class="bfDesc" data-i18n="s1.bf.female.50_plus.desc">High body fat. Much larger frame.</div>
+                </button>
+
+              </div>
+
+              <div class="help" data-i18n="s1.bfVisual.help">
+                Choose the closest match. If you're between two, pick the higher range.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="experience" data-i18n="s1.experience">Training experience</label>
+                <select id="experience" name="experience" required>
+                  <option value="" data-i18n="s1.experience.select">Select</option>
+                  <option value="none" data-i18n="s1.experience.none">None</option>
+                  <option value="beginner" data-i18n="s1.experience.beginner">Beginner (0–2 yrs)</option>
+                  <option value="intermediate" data-i18n="s1.experience.intermediate">Intermediate (2–5 yrs)</option>
+                  <option value="advanced" data-i18n="s1.experience.advanced">Advanced (5+ yrs)</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="trainingNow" data-i18n="s1.trainingNow">Currently training?</label>
+                <select id="trainingNow" name="trainingNow" required>
+                  <option value="" data-i18n="s1.trainingNow.select">Select</option>
+                  <option value="no" data-i18n="s1.no">No</option>
+                  <option value="yes" data-i18n="s1.yes">Yes</option>
+                </select>
+              </div>
+
+              <div class="field" id="trainedBeforeWrap" style="display:none">
+                <label for="trainedBefore" data-i18n="s1.trainedBefore">If no: have you trained before?</label>
+                <select id="trainedBefore" name="trainedBefore">
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="no" data-i18n="common.no">No</option>
+                  <option value="yes" data-i18n="common.yes">Yes</option>
+                </select>
+              </div>
+
+              <div class="field" id="trainingTypeWrap" style="display:none">
+                <label for="trainingType" data-i18n="s1.trainingType">Training type</label>
+                <select id="trainingType" name="trainingType">
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="strength" data-i18n="s1.trainingType.strength">Strength / weights</option>
+                  <option value="cardio" data-i18n="s1.trainingType.cardio">Cardio / endurance</option>
+                  <option value="mixed" data-i18n="s1.trainingType.mixed">Mixed</option>
+                  <option value="sport" data-i18n="s1.trainingType.sport">Sport-specific</option>
+                </select>
+              </div>
+
+              <div class="field" id="trainingDetailsWrap" style="display:none">
+                <label for="trainingDetails" data-i18n="s1.trainingDetails">What exactly do you do?</label>
+                <input id="trainingDetails" name="trainingDetails" type="text" data-i18n-placeholder="s1.trainingDetails.ph" placeholder="e.g., football + gym, CrossFit, boxing..." />
+              </div>
+
+              <div class="field" id="sessionsWrap">
+                <label for="sessionsPerWeek" data-i18n="s1.sessions">Sessions per week</label>
+                <select id="sessionsPerWeek" name="sessionsPerWeek">
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="0">0</option>
+                  <option value="1-2">1–2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5-6">5–6</option>
+                  <option value="7">7+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="steps" data-i18n="s1.steps">Average daily steps</label>
+                <select id="steps" name="steps" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="none" data-i18n="s1.steps.none">I don't track / very low</option>
+                  <option value="2k" data-i18n="s1.steps.2k">~2,000/day</option>
+                  <option value="lt4k" data-i18n="s1.steps.lt4k">&lt; 4,000/day</option>
+                  <option value="4to8k" data-i18n="s1.steps.4to8k">4,000–8,000/day</option>
+                  <option value="8to12k" data-i18n="s1.steps.8to12k">8,000–12,000/day</option>
+                  <option value="gt12k" data-i18n="s1.steps.gt12k">&gt; 12,000/day</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="sleep" data-i18n="s1.sleep">Sleep per night</label>
+                <select id="sleep" name="sleep" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="lt4" data-i18n="s1.sleep.lt4">&lt; 4h</option>
+                  <option value="4to6" data-i18n="s1.sleep.4to6">4–6h</option>
+                  <option value="6to8" data-i18n="s1.sleep.6to8">6–8h</option>
+                  <option value="8plus" data-i18n="s1.sleep.8plus">8h+</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="goal" data-i18n="s1.goal">Goal</label>
+                <select id="goal" name="goal" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="lose" data-i18n="s1.goal.lose">Lose fat</option>
+                  <option value="maintain" data-i18n="s1.goal.maintain">Maintain / recomposition</option>
+                  <option value="gain" data-i18n="s1.goal.gain">Build lean muscle mass</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 1 -->
+          <div id="step-1" class="step" style="display:none">
+            <h2 data-i18n="s2.title">2) Nutrition & Eating Habits</h2>
+            <p class="note" data-i18n="s2.note">Choose what best matches your average week.</p>
+
+            <div class="row">
+              <div class="field">
+                <label for="snacks" data-i18n="s2.snacks">Sugary snacks</label>
+                <select id="snacks" name="snacks" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="none" data-i18n="common.none">None</option>
+                  <option value="1" data-i18n="freq.1w">1×/week</option>
+                  <option value="2" data-i18n="freq.2w">2×/week</option>
+                  <option value="3-5" data-i18n="freq.3_5w">3–5×/week</option>
+                  <option value="daily" data-i18n="freq.daily">Daily</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="sodas" data-i18n="s2.sodas">Sodas / sweetened drinks</label>
+                <select id="sodas" name="sodas" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="none" data-i18n="common.none">None</option>
+                  <option value="1" data-i18n="freq.1w">1×/week</option>
+                  <option value="2" data-i18n="freq.2w">2×/week</option>
+                  <option value="3-5" data-i18n="freq.3_5w">3–5×/week</option>
+                  <option value="daily" data-i18n="freq.daily">Daily</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="fastfood" data-i18n="s2.fastfood">Fast food / burgers</label>
+                <select id="fastfood" name="fastfood" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="none" data-i18n="common.none">None</option>
+                  <option value="1" data-i18n="freq.1w">1×/week</option>
+                  <option value="2" data-i18n="freq.2w">2×/week</option>
+                  <option value="3-5" data-i18n="freq.3_5w">3–5×/week</option>
+                  <option value="daily" data-i18n="freq.daily">Daily</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="alcohol" data-i18n="s2.alcohol">Alcohol (frequency)</label>
+                <select id="alcohol" name="alcohol" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="none" data-i18n="common.none">None</option>
+                  <option value="1" data-i18n="freq.1w">1×/week</option>
+                  <option value="2" data-i18n="freq.2w">2×/week</option>
+                  <option value="3-4" data-i18n="freq.3_4w">3–4×/week</option>
+                  <option value="5+" data-i18n="freq.5w">5+×/week</option>
+                  <option value="daily" data-i18n="freq.daily">Daily</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="tracks" data-i18n="s2.tracks">Do you track calories currently?</label>
+                <select id="tracks" name="tracks" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="no" data-i18n="common.no">No</option>
+                  <option value="sometimes" data-i18n="common.sometimes">Sometimes</option>
+                  <option value="yes" data-i18n="common.yes">Yes</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="currentCals" data-i18n="s2.currentCals">If you had to guess: current daily calories (optional)</label>
+                <input id="currentCals" type="number" min="800" max="6000" name="currentCals" data-i18n-placeholder="s2.currentCals.ph" placeholder="e.g., 2200" />
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div id="step-2" class="step" style="display:none">
+            <h2 data-i18n="s3.title">3) Dietary Preferences & Constraints</h2>
+
+            <div class="row">
+              <div class="field">
+                <label for="diet" data-i18n="s3.diet">Diet type</label>
+                <select id="diet" name="diet" required>
+                  <option value="" data-i18n="common.select">Select</option>
+                  <option value="omnivore" data-i18n="s3.diet.omnivore">Omnivore</option>
+                  <option value="vegetarian" data-i18n="s3.diet.vegetarian">Vegetarian</option>
+                  <option value="vegan" data-i18n="s3.diet.vegan">Vegan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label data-i18n="s3.allergies">Allergies / restrictions (select all that apply)</label>
+              <div class="checks">
+                <label class="check"><input type="checkbox" name="allergies" value="milk"><span data-i18n="s3.allergy.milk">Milk (Dairy)</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="egg"><span data-i18n="s3.allergy.egg">Egg</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="peanut"><span data-i18n="s3.allergy.peanut">Peanut</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="treenuts"><span data-i18n="s3.allergy.treenuts">Tree nuts</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="soy"><span data-i18n="s3.allergy.soy">Soy</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="wheat"><span data-i18n="s3.allergy.wheat">Wheat</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="gluten"><span data-i18n="s3.allergy.gluten">Gluten</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="fish"><span data-i18n="s3.allergy.fish">Fish</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="shellfish"><span data-i18n="s3.allergy.shellfish">Shellfish</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="sesame"><span data-i18n="s3.allergy.sesame">Sesame</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="corn"><span data-i18n="s3.allergy.corn">Corn</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="mustard"><span data-i18n="s3.allergy.mustard">Mustard</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="celery"><span data-i18n="s3.allergy.celery">Celery</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="lupin"><span data-i18n="s3.allergy.lupin">Lupin</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="sulfites"><span data-i18n="s3.allergy.sulfites">Sulfites</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="fruits"><span data-i18n="s3.allergy.fruits">Fruits</span></label>
+                <label class="check"><input type="checkbox" name="allergies" value="vegetables"><span data-i18n="s3.allergy.vegetables">Vegetables</span></label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field" id="produceAllergyWrap" style="display:none">
+                <label for="produceAllergyDetails" data-i18n="s3.produce.details">If you're allergic to fruits and/or vegetables, what exactly?</label>
+                <input id="produceAllergyDetails" name="produceAllergyDetails" type="text" data-i18n-placeholder="s3.produce.details.ph" placeholder="e.g., strawberries, apples / tomatoes / peppers..." />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="likes" data-i18n="s3.likes">Favourite foods (comma separated)</label>
+                <textarea id="likes" name="likes" data-i18n-placeholder="s3.likes.ph" placeholder="e.g., pasta, curry, wraps, oats"></textarea>
+              </div>
+              <div class="field">
+                <label for="dislikes" data-i18n="s3.dislikes">Foods you dislike / avoid (comma separated)</label>
+                <textarea id="dislikes" name="dislikes" data-i18n-placeholder="s3.dislikes.ph" placeholder="e.g., mushrooms, tuna, eggs, rice"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div id="step-3" class="step" style="display:none">
+            <h2 data-i18n="results.title">Your Results</h2>
+            <div id="results"></div>
+          </div>
+
+          <div class="btnrow">
+            <button type="button" class="ghost" id="backBtn" disabled data-i18n="btn.back">Back</button>
+            <button type="button" class="primary" id="nextBtn" data-i18n="btn.next">Next</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* =========================
+   I18N (EN / FR / DE)
+   ========================= */
+const I18N = {
+  en: {
+    "lang.label": "Language",
+    "badge.quiz": "🥗 <b>Nutrition Quiz</b> — calories, macros, and a 2-week plan",
+    "badge.simple": "⚡ <b>Simple</b> — made to be easy",
+    "badge.private": "🔒 <b>Private</b> — runs in your browser",
+    "hero.title": "Nutrition & Lifestyle Assessment",
+    "hero.sub": "Answer a few questions to estimate calories and macros, then get food options, swaps, steps + training targets, and a simple 2-week plan.",
+    "notice.top": "<b>Approximation notice:</b> This is an estimate, not an exact target. If your current intake is much lower than the estimate, increase calories gradually over time rather than making a sudden jump.",
+    "s1.title": "1) Personal Data",
+    "p.name": "Name",
+    "p.name_ph": "e.g., Sarah",
+        "s1.age": "Age (years)",
+    "s1.gender": "Gender",
+    "s1.gender.select": "Select",
+    "s1.gender.male": "Male",
+    "s1.gender.female": "Female",
+    "s1.height": "Height (cm)",
+    "s1.weight": "Weight (kg)",
+    "s1.bfVisual.label": "Body fat estimate (visual)",
+    "s1.bfVisual.selectGender": "Please select your gender first to see body fat options.",
+    "s1.bfVisual.help": "Choose the closest match. If you're between two, pick the higher range.",
+    "s1.bf.male.1_7.desc": "Competition level. Extremely striated, veins everywhere.",
+    "s1.bf.male.8_10.desc": "Very lean. Clear striations, visible veins.",
+    "s1.bf.male.11_12.desc": "Lean. Clear abs, some vascularity.",
+    "s1.bf.male.13_15.desc": "Athletic. Visible abs, defined muscles.",
+    "s1.bf.male.16_19.desc": "Fit. Some ab definition, less separation.",
+    "s1.bf.male.20_24.desc": "Average. No definition, softer look.",
+    "s1.bf.male.25_30.desc": "Soft midsection. Noticeable fat around waist.",
+    "s1.bf.male.35_40.desc": "Clear fat accumulation. Rounder midsection.",
+    "s1.bf.female.10_12.desc": "Competition level. Extremely defined, visible striations.",
+    "s1.bf.female.15_17.desc": "Very lean. Clear muscle definition, visible abs.",
+    "s1.bf.female.18_20.desc": "Athletic/fit. Some ab definition, toned look.",
+    "s1.bf.female.21_23.desc": "Fit. Less definition, still lean.",
+    "s1.bf.female.24_26.desc": "Average/healthy. Some softness, normal look.",
+    "s1.bf.female.27_29.desc": "Softer shape. More fat around hips/waist.",
+    "s1.bf.female.30_35.desc": "Clear fat accumulation around body.",
+    "s1.bf.female.36_40.desc": "Significant fat. Larger overall appearance.",
+    "s1.bf.female.50_plus.desc": "High body fat. Much larger frame.",
+    "s1.activity": "Activity level (lifestyle + training)",
+    "s1.activity.select": "Select",
+    "s1.activity.sedentary": "Sedentary",
+    "s1.activity.light": "Lightly active",
+    "s1.activity.moderate": "Moderately active",
+    "s1.activity.very": "Very active",
+    "s1.activity.help": `<b>Examples:</b><br/>
+<b>Sedentary:</b> desk job, little walking, no/rare training.<br/>
+<b>Light:</b> desk job + regular walks, training 1–3×/week.<br/>
+<b>Moderate:</b> active days + training 3–5×/week (or lots of walking).<br/>
+<b>Very active:</b> physical job OR high movement + frequent training.`,
+    "s1.experience": "Training experience",
+    "s1.experience.select": "Select",
+    "s1.experience.none": "None",
+    "s1.experience.beginner": "Beginner (0–2 yrs)",
+    "s1.experience.intermediate": "Intermediate (2–5 yrs)",
+    "s1.experience.advanced": "Advanced (5+ yrs)",
+    "s1.trainingNow": "Currently training?",
+    "s1.trainingNow.select": "Select",
+    "s1.yes": "Yes",
+    "s1.no": "No",
+    "s1.trainedBefore": "If no: have you trained before?",
+    "s1.trainingType": "Training type",
+    "s1.trainingType.strength": "Strength / weights",
+    "s1.trainingType.cardio": "Cardio / endurance",
+    "s1.trainingType.mixed": "Mixed",
+    "s1.trainingType.sport": "Sport-specific",
+    "s1.trainingDetails": "What exactly do you do?",
+    "s1.trainingDetails.ph": "e.g., football + gym, CrossFit, boxing...",
+    "s1.sessions": "Sessions per week",
+    "s1.steps": "Average daily steps",
+    "s1.steps.none": "I don't track / very low",
+    "s1.steps.2k": "~2,000/day",
+    "s1.steps.lt4k": "< 4,000/day",
+    "s1.steps.4to8k": "4,000–8,000/day",
+    "s1.steps.8to12k": "8,000–12,000/day",
+    "s1.steps.gt12k": "> 12,000/day",
+    "s1.sleep": "Sleep per night",
+    "s1.sleep.lt4": "< 4h",
+    "s1.sleep.4to6": "4–6h",
+    "s1.sleep.6to8": "6–8h",
+    "s1.sleep.8plus": "8h+",
+    "s1.goal": "Goal",
+    "s1.goal.lose": "Lose fat",
+    "s1.goal.maintain": "Maintain / recomposition",
+    "s1.goal.gain": "Build lean muscle mass",
+    "s2.title": "2) Nutrition & Eating Habits",
+    "s2.note": "Choose what best matches your average week.",
+    "s2.snacks": "Sugary snacks",
+    "s2.sodas": "Sodas / sweetened drinks",
+    "s2.fastfood": "Fast food / burgers",
+    "s2.alcohol": "Alcohol (frequency)",
+    "s2.tracks": "Do you track calories currently?",
+    "s2.currentCals": "If you had to guess: current daily calories (optional)",
+    "s2.currentCals.required": "Current daily calories (required)",
+    "s2.currentCals.ph": "e.g., 2200",
+    "s3.title": "3) Dietary Preferences & Constraints",
+    "s3.diet": "Diet type",
+    "s3.diet.omnivore": "Omnivore",
+    "s3.diet.vegetarian": "Vegetarian",
+    "s3.diet.vegan": "Vegan",
+    "s3.allergies": "Allergies / restrictions (select all that apply)",
+    "s3.allergy.milk": "Milk (Dairy)",
+    "s3.allergy.egg": "Egg",
+    "s3.allergy.peanut": "Peanut",
+    "s3.allergy.treenuts": "Tree nuts",
+    "s3.allergy.soy": "Soy",
+    "s3.allergy.wheat": "Wheat",
+    "s3.allergy.gluten": "Gluten",
+    "s3.allergy.fish": "Fish",
+    "s3.allergy.shellfish": "Shellfish",
+    "s3.allergy.sesame": "Sesame",
+    "s3.allergy.corn": "Corn",
+    "s3.allergy.mustard": "Mustard",
+    "s3.allergy.celery": "Celery",
+    "s3.allergy.lupin": "Lupin",
+    "s3.allergy.sulfites": "Sulfites",
+    "s3.allergy.fruits": "Fruits",
+    "s3.allergy.vegetables": "Vegetables",
+    "s3.produce.details": "If you're allergic to fruits and/or vegetables, what exactly?",
+    "s3.produce.details.ph": "e.g., strawberries, apples / tomatoes / peppers...",
+    "s3.likes": "Favourite foods (comma separated)",
+    "s3.likes.ph": "e.g., pasta, curry, wraps, oats",
+    "s3.dislikes": "Foods you dislike / avoid (comma separated)",
+    "s3.dislikes.ph": "e.g., mushrooms, tuna, eggs, rice",
+    "common.select": "Select",
+    "common.none": "None",
+    "common.no": "No",
+    "common.yes": "Yes",
+    "common.sometimes": "Sometimes",
+    "freq.1w": "1×/week",
+    "freq.2w": "2×/week",
+    "freq.3_5w": "3–5×/week",
+    "freq.3_4w": "3–4×/week",
+    "freq.5w": "5+×/week",
+    "freq.daily": "Daily",
+    "results.title": "Your Results",
+    "results.notice.title": "Approximation notice:",
+    "results.notice.text": "This is an estimate, not an exact target. If your current intake is significantly lower than the estimate, increase calories gradually rather than making a sudden jump.",
+    "results.adjust.note": "Adjust calories over time based on 2–4 week trends in weekly average body weight (not daily changes), supported by waist measurements, progress photos, and gym performance, and make small adjustments of ~100–150 calories only if progress stalls or moves in the wrong direction.",
+    "results.calories": "Calories",
+    "results.bmr": "BMR",
+    "results.maintenance": "Estimated maintenance",
+    "results.target.lose": "Target calories to lose fat:",
+    "results.target.gain": "Target calories to build lean muscle mass:",
+    "results.target.maintain": "Target calories to maintain / recomp:",
+    "results.more": "More (why these numbers?)",
+    "results.macros": "Macro targets",
+    "results.macro.chart.grams": "Macro chart (grams)",
+    "results.macro.chart.calories": "Macro chart (calories)",
+    "results.macros.note": "Protein: {pf} g/kg BW • Fat: {fat}% of calories • Carbs: remainder",
+    "results.protein": "Protein",
+    "results.carbs": "Carbs",
+    "results.fats": "Fats",
+    "results.gramsDay": "grams/day",
+    "results.pctCalories": "% of calories",
+    "results.donutNote": "Donut colors match calorie split.",
+    "results.meals": "Simple meal ideas",
+    "results.mealIdeas.tag": "MEAL IDEAS",
+    "results.mealIdeas.sub": "Simple meal ideas",
+    "results.breakfast": "Breakfast",
+    "results.lunch": "Lunch",
+    "results.dinner": "Dinner",
+    "results.snack": "Snack (optional)",
+    "results.noOptions": "No options available",
+    "results.noMealsMatch": "No meal ideas match your allergies/dislikes in the current list.",
+    "results.action.title": "2-week action plan",
+    "results.action.cut": "1) Cut down (easy)",
+    "results.action.swaps": "2) Swaps (only what you need)",
+    "results.action.training": "3) Resistance training (2 weeks)",
+    "results.action.steps": "4) Daily steps",
+    "results.action.steps.aim": "aim for about",
+    "results.action.steps.perday": "steps/day",
+    "results.action.steps.after": "After that",
+    "results.action.steps.add1k": "add +1,000 per week until you reach 10,000/day",
+    "results.sleep": "Sleep",
+    "results.send": "Do you want to receive these results?",
+    "results.send.yes": "Yes, send me my results",
+    "results.summary": "Your answers (summary)",
+    "results.bodyComp": "Body composition (estimate)",
+    "results.bfRange": "Selected range",
+    "results.bfMidpoint": "BF% used (midpoint)",
+    "contact.email": "Email",
+    "contact.phone": "Phone number (WhatsApp)",
+    "contact.note": "This opens your email/WhatsApp app with the message pre-filled. You can review before sending.",
+    "contact.sendEmail": "Send by Email",
+    "contact.sendWhatsApp": "Send by WhatsApp",
+    "cut.sugary": "Sugary snacks",
+    "cut.drinks": "Sweetened drinks",
+    "cut.fastfood": "Fast food / burgers",
+    "cut.alcohol": "Alcohol",
+    "cut.note": "Week 1 = do it less. Week 2 = do it even less.",
+    "week.1": "Week 1",
+    "week.2": "Week 2",
+    "timesPerWeek": "time(s) per week",
+    "swap.sweet": "Sweet craving → Greek yogurt + sliced banana + cinnamon",
+    "swap.chocolate": "Chocolate/candy → 2 squares dark chocolate + fruit",
+    "swap.cookies": "Cookies → protein shake + banana",
+    "swap.dessert": "Dessert habit → 1 planned portion after dinner (not random snacking)",
+    "swap.soda": "Soda → sparkling water + lemon/lime",
+    "swap.sweetDrink": "Sweet drink → zero-sugar drink or iced tea (no sugar)",
+    "swap.energy": "Energy drink → black coffee or zero-sugar version",
+    "swap.fastfood": "Fast food → home bowl: protein + carbs + veggies (10–15 min)",
+    "swap.burger": "Burger → homemade wrap: protein + salad + sauce",
+    "swap.notime": "No time → rotisserie chicken + bag salad + potatoes",
+    "swap.alc.limit": "Limit alcohol to a set number of drinks",
+    "swap.alc.water": "Alternate alcohol with sparkling water",
+    "swap.alc.meal": "Eat a protein-rich meal before drinking",
+    "swap.keep.sugary": "Sugary snacks: keep doing what you're doing ✅",
+    "swap.keep.drinks": "Sweetened drinks: keep doing what you're doing ✅",
+    "swap.keep.fastfood": "Fast food/burgers: keep doing what you're doing ✅",
+    "swap.keep.alcohol": "Alcohol: keep doing what you're doing ✅",
+    "training.workouts": "workout(s)",
+    "training.note.start": "Start with 3 resistance workouts per week (simple full body).",
+    "training.note.add1": "Add one extra workout per week while keeping recovery manageable.",
+    "training.note.maintain": "Stay around 5–6 workouts/week based on recovery.",
+    "training.note.progress": "Keep your current schedule and focus on progression + recovery.",
+    "steps.note.to10k": "Aim to hit 10,000 steps every day.",
+    "steps.note.keep": "You already do 10,000+ steps/day. Keep doing what you're doing ✅",
+    "steps.note.progress": "Week 2: add +1,000 steps/day. After that: add +1,000/week until you reach 10,000/day.",
+    "sleep.note.keep": "Sleep: keep doing what you're doing. Try to stay in the 7–9 hour range.",
+    "sleep.note.add30": "Sleep: aim for 7–9 hours. For 2 weeks: add +30 minutes in bed each week.",
+    "sleep.note.add45_60": "Sleep: aim for 7–9 hours. For 2 weeks: add +45–60 minutes in bed each week.",
+    "sleep.note.aim": "Sleep: aim for 7–9 hours when possible.",
+    "recap.title": "Nutrition Assessment Results",
+    "recap.name": "Name",
+    "recap.age": "Age",
+    "recap.gender": "Gender",
+    "recap.height": "Height",
+    "recap.weight": "Weight",
+    "recap.bodyFat": "Body fat",
+    "recap.goal": "Goal",
+    "recap.activity": "Activity",
+    "recap.trainingNow": "Currently training",
+    "recap.trainedBefore": "Trained before",
+    "recap.trainingType": "Training type",
+    "recap.trainingDetails": "Training details",
+    "recap.stepsSleep": "Steps | Sleep",
+    "recap.calories": "Calories",
+    "recap.bmr": "BMR",
+    "recap.maintenance": "Maintenance",
+    "recap.target": "Target",
+    "recap.macros": "Macros",
+    "goal.lose": "Lose fat",
+    "goal.maintain": "Maintain / recomposition",
+    "goal.gain": "Build lean muscle mass",
+    "activity.sedentary": "Sedentary",
+    "activity.light": "Lightly active",
+    "activity.moderate": "Moderately active",
+    "activity.very": "Very active",
+    "steps.none": "Very low / not tracked",
+    "steps.2k": "~2,000/day",
+    "steps.lt4k": "< 4,000/day",
+    "steps.4to8k": "4,000–8,000/day",
+    "steps.8to12k": "8,000–12,000/day",
+    "steps.gt12k": "> 12,000/day",
+    "sleep.lt4": "< 4h",
+    "sleep.4to6": "4–6h",
+    "sleep.6to8": "6–8h",
+    "sleep.8plus": "8h+",
+    "trainingType.strength": "Strength / weights",
+    "trainingType.cardio": "Cardio / endurance",
+    "trainingType.mixed": "Mixed",
+    "trainingType.sport": "Sport-specific",
+    "why.title": "Why these targets?",
+    "why.calories.title": "Calories",
+    "why.calories.bmr": "BMR = baseline energy",
+    "why.calories.maintenance": "Maintenance = BMR × activity factor",
+    "why.calories.goal": "Goal shifts the target",
+    "why.calories.lose": "To lose fat, we go below maintenance so your body uses stored fat for energy.",
+    "why.calories.gain": "To build lean muscle, we go above maintenance to support training and recovery.",
+    "why.calories.maintain": "To maintain/recomp, we stay near maintenance to improve body composition with training + protein.",
+    "why.protein.title": "Protein",
+    "why.protein.text": "Protein is based on body weight (BW) and adjusted for your body fat level using standard guidelines.",
+    "why.fat.title": "Fat",
+    "why.fat.text": "Fat is set based on your body fat level (leaner = slightly lower fat%, higher BF = slightly higher).",
+    "why.carbs.title": "Carbs",
+    "why.carbs.text": "Carbs get the remaining calories to fuel training + movement and improve adherence.",
+    "why.reminder": "Reminder: it's an estimate. If you're eating far below this number now, increase slowly.",
+    "btn.back": "Back",
+    "btn.next": "Next",
+    "btn.results": "See results",
+    "btn.restart": "Restart",
+    "err.fill": "Please fill these fields:",
+    "err.selectBf": "Body fat estimate",
+    "cta.plan.title": "Want this turned into a simple 12‑week plan done with you?",
+    "cta.plan.btn": "Book your free 30‑min Game Plan Call",
+    "cta.community.title": "Not ready for 1‑1 yet?",
+    "cta.community.desc": "Join my free Skool community with courses on nutrition and body recomposition.",
+    "cta.community.btn": "Join the Free Coaching Group"
+  },
+  fr: {
+    "lang.label": "Langue",
+    "badge.quiz": "🥗 <b>Quiz Nutrition</b> — calories, macros et plan sur 2 semaines",
+    "badge.simple": "⚡ <b>Simple</b> — conçu pour être facile",
+    "badge.private": "🔒 <b>Privé</b> — fonctionne dans votre navigateur",
+    "hero.title": "Évaluation Nutrition & Mode de vie",
+    "hero.sub": "Répondez à quelques questions pour estimer vos calories et macros, puis obtenez des options de repas, des alternatives, des objectifs de pas + entraînement, et un plan simple sur 2 semaines.",
+    "notice.top": "<b>Note :</b> Ceci est une estimation, pas une cible exacte. Si votre apport actuel est bien inférieur à l'estimation, augmentez les calories progressivement plutôt que d'un coup.",
+    "s1.title": "1) Données personnelles",
+    "p.name": "Prénom",
+    "p.name_ph": "ex. Sarah",
+    "s1.age": "Âge (années)",
+    "s1.gender": "Sexe",
+    "s1.gender.select": "Sélectionner",
+    "s1.gender.male": "Homme",
+    "s1.gender.female": "Femme",
+    "s1.height": "Taille (cm)",
+    "s1.weight": "Poids (kg)",
+    "s1.bfVisual.label": "Estimation du taux de graisse corporelle (visuel)",
+    "s1.bfVisual.selectGender": "Veuillez d'abord sélectionner votre sexe pour voir les options.",
+    "s1.bfVisual.help": "Choisissez la correspondance la plus proche. En cas de doute, choisissez la fourchette supérieure.",
+    "s1.bf.male.1_7.desc": "Niveau compétition. Striations extrêmes, veines partout.",
+    "s1.bf.male.8_10.desc": "Très sec. Striations claires, veines visibles.",
+    "s1.bf.male.11_12.desc": "Sec. Abdos clairs, quelques veines.",
+    "s1.bf.male.13_15.desc": "Athlétique. Abdos visibles, muscles définis.",
+    "s1.bf.male.16_19.desc": "Fit. Un peu de définition abdominale.",
+    "s1.bf.male.20_24.desc": "Moyen. Pas de définition, look plus doux.",
+    "s1.bf.male.25_30.desc": "Ventre mou. Graisse visible autour de la taille.",
+    "s1.bf.male.35_40.desc": "Accumulation de graisse visible. Ventre plus rond.",
+    "s1.bf.female.10_12.desc": "Niveau compétition. Très définie, striations visibles.",
+    "s1.bf.female.15_17.desc": "Très sèche. Définition musculaire claire, abdos visibles.",
+    "s1.bf.female.18_20.desc": "Athlétique/fit. Quelques abdos, look tonique.",
+    "s1.bf.female.21_23.desc": "Fit. Moins de définition, toujours sèche.",
+    "s1.bf.female.24_26.desc": "Moyenne/saine. Un peu de douceur, look normal.",
+    "s1.bf.female.27_29.desc": "Formes plus douces. Plus de graisse hanches/taille.",
+    "s1.bf.female.30_35.desc": "Accumulation de graisse visible sur le corps.",
+    "s1.bf.female.36_40.desc": "Graisse importante. Apparence plus large.",
+    "s1.bf.female.50_plus.desc": "Graisse corporelle élevée. Silhouette beaucoup plus large.",
+    "s1.activity": "Niveau d'activité (mode de vie + entraînement)",
+    "s1.activity.select": "Sélectionner",
+    "s1.activity.sedentary": "Sédentaire",
+    "s1.activity.light": "Légèrement actif",
+    "s1.activity.moderate": "Modérément actif",
+    "s1.activity.very": "Très actif",
+    "s1.activity.help": `<b>Exemples :</b><br/><b>Sédentaire :</b> travail de bureau, peu de marche, pas/rare entraînement.<br/><b>Léger :</b> bureau + marches régulières, entraînement 1–3×/semaine.<br/><b>Modéré :</b> journées actives + entraînement 3–5×/semaine (ou beaucoup de marche).<br/><b>Très actif :</b> travail physique OU beaucoup de mouvement + entraînement fréquent.`,
+    "s1.experience": "Expérience d'entraînement",
+    "s1.experience.select": "Sélectionner",
+    "s1.experience.none": "Aucune",
+    "s1.experience.beginner": "Débutant (0–2 ans)",
+    "s1.experience.intermediate": "Intermédiaire (2–5 ans)",
+    "s1.experience.advanced": "Avancé (5+ ans)",
+    "s1.trainingNow": "Vous vous entraînez actuellement ?",
+    "s1.trainingNow.select": "Sélectionner",
+    "s1.yes": "Oui",
+    "s1.no": "Non",
+    "s1.trainedBefore": "Si non : avez-vous déjà fait du sport avant ?",
+    "s1.trainingType": "Type d'entraînement",
+    "s1.trainingType.strength": "Musculation / poids",
+    "s1.trainingType.cardio": "Cardio / endurance",
+    "s1.trainingType.mixed": "Mixte",
+    "s1.trainingType.sport": "Sport spécifique",
+    "s1.trainingDetails": "Que faites-vous exactement ?",
+    "s1.trainingDetails.ph": "ex. football + salle, CrossFit, boxe...",
+    "s1.sessions": "Séances par semaine",
+    "s1.steps": "Pas quotidiens moyens",
+    "s1.steps.none": "Je ne suis pas / très faible",
+    "s1.steps.2k": "~2 000/jour",
+    "s1.steps.lt4k": "< 4 000/jour",
+    "s1.steps.4to8k": "4 000–8 000/jour",
+    "s1.steps.8to12k": "8 000–12 000/jour",
+    "s1.steps.gt12k": "> 12 000/jour",
+    "s1.sleep": "Sommeil par nuit",
+    "s1.sleep.lt4": "< 4 h",
+    "s1.sleep.4to6": "4–6 h",
+    "s1.sleep.6to8": "6–8 h",
+    "s1.sleep.8plus": "8 h+",
+    "s1.goal": "Objectif",
+    "s1.goal.lose": "Perdre de la graisse",
+    "s1.goal.maintain": "Maintien / recomposition",
+    "s1.goal.gain": "Construire de la masse musculaire",
+    "s2.title": "2) Nutrition & Habitudes alimentaires",
+    "s2.note": "Choisissez ce qui correspond le mieux à votre semaine moyenne.",
+    "s2.snacks": "Snacks sucrés",
+    "s2.sodas": "Sodas / boissons sucrées",
+    "s2.fastfood": "Fast-food / burgers",
+    "s2.alcohol": "Alcool (fréquence)",
+    "s2.tracks": "Suivez-vous actuellement vos calories ?",
+    "s2.currentCals": "Si vous deviez estimer : calories quotidiennes actuelles (optionnel)",
+    "s2.currentCals.required": "Calories quotidiennes actuelles (obligatoire)",
+    "s2.currentCals.ph": "ex. 2200",
+    "s3.title": "3) Préférences alimentaires & Restrictions",
+    "s3.diet": "Type d'alimentation",
+    "s3.diet.omnivore": "Omnivore",
+    "s3.diet.vegetarian": "Végétarien",
+    "s3.diet.vegan": "Végane",
+    "s3.allergies": "Allergies / restrictions (sélectionnez tout ce qui s'applique)",
+    "s3.allergy.milk": "Lait (produits laitiers)",
+    "s3.allergy.egg": "Œuf",
+    "s3.allergy.peanut": "Arachide",
+    "s3.allergy.treenuts": "Fruits à coque",
+    "s3.allergy.soy": "Soja",
+    "s3.allergy.wheat": "Blé",
+    "s3.allergy.gluten": "Gluten",
+    "s3.allergy.fish": "Poisson",
+    "s3.allergy.shellfish": "Fruits de mer",
+    "s3.allergy.sesame": "Sésame",
+    "s3.allergy.corn": "Maïs",
+    "s3.allergy.mustard": "Moutarde",
+    "s3.allergy.celery": "Céleri",
+    "s3.allergy.lupin": "Lupin",
+    "s3.allergy.sulfites": "Sulfites",
+    "s3.allergy.fruits": "Fruits",
+    "s3.allergy.vegetables": "Légumes",
+    "s3.produce.details": "Si vous êtes allergique aux fruits et/ou légumes, lesquels ?",
+    "s3.produce.details.ph": "ex. fraises, pommes / tomates / poivrons...",
+    "s3.likes": "Aliments préférés (séparés par des virgules)",
+    "s3.likes.ph": "ex. pâtes, curry, wraps, flocons d'avoine",
+    "s3.dislikes": "Aliments que vous n'aimez pas / évitez (séparés par des virgules)",
+    "s3.dislikes.ph": "ex. champignons, thon, œufs, riz",
+    "common.select": "Sélectionner",
+    "common.none": "Aucun",
+    "common.no": "Non",
+    "common.yes": "Oui",
+    "common.sometimes": "Parfois",
+    "freq.1w": "1×/semaine",
+    "freq.2w": "2×/semaine",
+    "freq.3_5w": "3–5×/semaine",
+    "freq.3_4w": "3–4×/semaine",
+    "freq.5w": "5+×/semaine",
+    "freq.daily": "Tous les jours",
+    "results.title": "Vos résultats",
+    "results.notice.title": "Avertissement :",
+    "results.notice.text": "Il s'agit d'une estimation, pas d'un objectif exact. Si votre apport actuel est nettement inférieur à cette estimation, augmentez les calories progressivement plutôt que brutalement.",
+    "results.adjust.note": "Ajustez les calories au fil du temps en fonction des tendances sur 2 à 4 semaines de la moyenne hebdomadaire du poids corporel (pas des changements quotidiens), appuyées par les mesures de tour de taille, les photos de progression et les performances en salle, et effectuez de petits ajustements de ~100–150 calories uniquement si les progrès stagnent ou vont dans la mauvaise direction.",
+    "results.calories": "Calories",
+    "results.bmr": "MBR (métabolisme de base)",
+    "results.maintenance": "Maintenance estimée",
+    "results.target.lose": "Apport cible pour perdre de la graisse :",
+    "results.target.gain": "Apport cible pour développer de la masse musculaire :",
+    "results.target.maintain": "Apport cible pour maintien / recomposition :",
+    "results.more": "Plus de détails (pourquoi ces chiffres ?)",
+    "results.macros": "Objectifs en macronutriments",
+    "results.macro.chart.grams": "Répartition des macros (grammes)",
+    "results.macro.chart.calories": "Répartition des macros (calories)",
+    "results.macros.note": "Protéines : {pf} g/kg PC • Lipides : {fat}% des calories • Glucides : le reste",
+    "results.protein": "Protéines",
+    "results.carbs": "Glucides",
+    "results.fats": "Lipides",
+    "results.gramsDay": "g/jour",
+    "results.pctCalories": "% des calories",
+    "results.donutNote": "Les couleurs correspondent à la répartition calorique.",
+    "results.meals": "Idées de repas simples",
+    "results.mealIdeas.tag": "IDÉES REPAS",
+    "results.mealIdeas.sub": "Idées simples",
+    "results.breakfast": "Petit-déjeuner",
+    "results.lunch": "Déjeuner",
+    "results.dinner": "Dîner",
+    "results.snack": "Collation (optionnelle)",
+    "results.noOptions": "Aucune option disponible",
+    "results.noMealsMatch": "Aucune idée de repas ne correspond à vos allergies/aversions dans la liste actuelle.",
+    "results.action.title": "Plan d'action sur 2 semaines",
+    "results.action.cut": "1) Réduire progressivement (simple)",
+    "results.action.swaps": "2) Substitutions (uniquement si nécessaire)",
+    "results.action.training": "3) Entraînement en résistance (2 semaines)",
+    "results.action.steps": "4) Pas quotidiens",
+    "results.action.steps.aim": "viser environ",
+    "results.action.steps.perday": "pas/jour",
+    "results.action.steps.after": "Ensuite",
+    "results.action.steps.add1k": "ajouter +1 000 par semaine jusqu'à 10 000/jour",
+    "results.sleep": "Sommeil",
+    "results.send": "Souhaitez-vous recevoir ces résultats ?",
+    "results.send.yes": "Oui, envoyez-moi mes résultats",
+    "results.summary": "Récapitulatif de vos réponses",
+    "results.bodyComp": "Composition corporelle (estimation)",
+    "results.bfRange": "Fourchette sélectionnée",
+    "results.bfMidpoint": "% graisse utilisé (milieu)",
+    "contact.email": "Email",
+    "contact.phone": "Numéro de téléphone (WhatsApp)",
+    "contact.note": "Cela ouvre votre email/WhatsApp avec le message pré-rempli. Vous pouvez vérifier avant d'envoyer.",
+    "contact.sendEmail": "Envoyer par email",
+    "contact.sendWhatsApp": "Envoyer par WhatsApp",
+    "cut.sugary": "Snacks sucrés",
+    "cut.drinks": "Boissons sucrées",
+    "cut.fastfood": "Fast-food / burgers",
+    "cut.alcohol": "Alcool",
+    "cut.note": "Semaine 1 = réduis. Semaine 2 = réduis encore plus.",
+    "week.1": "Semaine 1",
+    "week.2": "Semaine 2",
+    "timesPerWeek": "fois par semaine",
+    "swap.sweet": "Envie de sucré → yaourt grec + banane en rondelles + cannelle",
+    "swap.chocolate": "Chocolat / bonbons → 2 carrés de chocolat noir + fruit",
+    "swap.cookies": "Biscuits → shake protéiné + banane",
+    "swap.dessert": "Habitude dessert → 1 portion planifiée après le dîner (pas de grignotage aléatoire)",
+    "swap.soda": "Soda → eau pétillante + citron / citron vert",
+    "swap.sweetDrink": "Boisson sucrée → boisson sans sucre ou thé glacé (sans sucre)",
+    "swap.energy": "Boisson énergisante → café noir ou version sans sucre",
+    "swap.fastfood": "Fast-food → bol maison : protéines + glucides + légumes (10–15 min)",
+    "swap.burger": "Burger → wrap maison : protéines + salade + sauce",
+    "swap.notime": "Pas le temps → poulet rôti + salade en sachet + pommes de terre",
+    "swap.alc.limit": "Limiter l'alcool à un nombre défini de verres",
+    "swap.alc.water": "Alterner l'alcool avec de l'eau pétillante",
+    "swap.alc.meal": "Manger un repas riche en protéines avant de boire",
+    "swap.keep.sugary": "Snacks sucrés : continue comme ça ✅",
+    "swap.keep.drinks": "Boissons sucrées : continue comme ça ✅",
+    "swap.keep.fastfood": "Fast-food / burgers : continue comme ça ✅",
+    "swap.keep.alcohol": "Alcool : continue comme ça ✅",
+    "training.workouts": "séance(s)",
+    "training.note.start": "Commence avec 3 séances de musculation par semaine (full body simple).",
+    "training.note.add1": "Ajoute une séance par semaine tout en gardant une récupération correcte.",
+    "training.note.maintain": "Reste autour de 5–6 séances/semaine selon ta récupération.",
+    "training.note.progress": "Garde ton rythme actuel et concentre-toi sur la progression + la récupération.",
+    "steps.note.to10k": "Vise 10 000 pas par jour.",
+    "steps.note.keep": "Tu fais déjà 10 000+ pas/jour. Continue comme ça ✅",
+    "steps.note.progress": "Semaine 2 : +1 000 pas/jour. Ensuite : +1 000/semaine jusqu'à atteindre 10 000/jour.",
+    "sleep.note.keep": "Sommeil : continue comme ça. Essaie de rester dans la zone 7–9 h.",
+    "sleep.note.add30": "Sommeil : vise 7–9 h. Pendant 2 semaines : +30 min au lit chaque semaine.",
+    "sleep.note.add45_60": "Sommeil : vise 7–9 h. Pendant 2 semaines : +45–60 min au lit chaque semaine.",
+    "sleep.note.aim": "Sommeil : vise 7–9 h quand c'est possible.",
+    "recap.title": "Résultats de l'évaluation nutritionnelle",
+    "recap.name": "Prénom",
+    "recap.age": "Âge",
+    "recap.gender": "Sexe",
+    "recap.height": "Taille",
+    "recap.weight": "Poids",
+    "recap.bodyFat": "Graisse corporelle",
+    "recap.goal": "Objectif",
+    "recap.activity": "Activité",
+    "recap.trainingNow": "Entraînement actuel",
+    "recap.trainedBefore": "Déjà entraîné",
+    "recap.trainingType": "Type d'entraînement",
+    "recap.trainingDetails": "Détails de l'entraînement",
+    "recap.stepsSleep": "Pas | Sommeil",
+    "recap.calories": "Calories",
+    "recap.bmr": "MBR",
+    "recap.maintenance": "Maintenance",
+    "recap.target": "Cible",
+    "recap.macros": "Macros",
+    "goal.lose": "Perdre de la graisse",
+    "goal.maintain": "Maintien / recomposition",
+    "goal.gain": "Construire de la masse musculaire",
+    "activity.sedentary": "Sédentaire",
+    "activity.light": "Légèrement actif",
+    "activity.moderate": "Modérément actif",
+    "activity.very": "Très actif",
+    "steps.none": "Très faible / non suivi",
+    "steps.2k": "~2 000/jour",
+    "steps.lt4k": "< 4 000/jour",
+    "steps.4to8k": "4 000–8 000/jour",
+    "steps.8to12k": "8 000–12 000/jour",
+    "steps.gt12k": "> 12 000/jour",
+    "sleep.lt4": "< 4h",
+    "sleep.4to6": "4–6h",
+    "sleep.6to8": "6–8h",
+    "sleep.8plus": "8h+",
+    "trainingType.strength": "Musculation / poids",
+    "trainingType.cardio": "Cardio / endurance",
+    "trainingType.mixed": "Mixte",
+    "trainingType.sport": "Sport spécifique",
+    "why.title": "Pourquoi ces valeurs ?",
+    "why.calories.title": "Calories",
+    "why.calories.bmr": "MBR = énergie de base",
+    "why.calories.maintenance": "Maintenance = MBR × facteur d'activité",
+    "why.calories.goal": "L'objectif ajuste la cible",
+    "why.calories.lose": "Pour perdre de la graisse, on descend sous la maintenance afin que le corps utilise les réserves.",
+    "why.calories.gain": "Pour construire du muscle, on dépasse la maintenance pour soutenir l'entraînement et la récupération.",
+    "why.calories.maintain": "Pour maintien/recomposition, on reste proche de la maintenance pour améliorer la composition corporelle avec l'entraînement + protéines.",
+    "why.protein.title": "Protéines",
+    "why.protein.text": "Basées sur le poids corporel (PC) et ajustées selon votre taux de graisse corporelle selon les recommandations standards.",
+    "why.fat.title": "Lipides",
+    "why.fat.text": "Basés sur votre taux de graisse (plus sec = un peu moins, plus gras = un peu plus).",
+    "why.carbs.title": "Glucides",
+    "why.carbs.text": "Le reste des calories pour soutenir l'entraînement et l'activité, et améliorer l'adhérence.",
+    "why.reminder": "Rappel : il s'agit d'une estimation. Si ton apport actuel est bien inférieur, augmente progressivement.",
+    "btn.back": "Retour",
+    "btn.next": "Suivant",
+    "btn.results": "Voir les résultats",
+    "btn.restart": "Recommencer",
+    "err.fill": "Veuillez remplir ces champs :",
+    "err.selectBf": "Estimation graisse corporelle",
+    "cta.plan.title": "Tu veux transformer ça en un plan simple de 12 semaines, fait avec toi ?",
+    "cta.plan.btn": "Réserve ton appel gratuit de 30 min",
+    "cta.community.title": "Pas encore prêt pour du 1-1 ?",
+    "cta.community.desc": "Rejoins ma communauté Skool gratuite avec des cours sur la nutrition et la recomposition corporelle.",
+    "cta.community.btn": "Rejoindre le groupe gratuit"
+  },
+  de: {
+    "lang.label": "Sprache",
+    "badge.quiz": "🥗 <b>Ernährungs-Quiz</b> — Kalorien, Makros & 2-Wochen-Plan",
+    "badge.simple": "⚡ <b>Einfach</b> — bewusst leicht gemacht",
+    "badge.private": "🔒 <b>Privat</b> — läuft im Browser",
+    "hero.title": "Ernährungs- & Lifestyle-Check",
+    "hero.sub": "Beantworte ein paar Fragen, um Kalorien und Makros zu schätzen. Danach bekommst du Essensideen, Alternativen, Schritte- & Trainingsziele sowie einen einfachen 2-Wochen-Plan.",
+    "notice.top": "<b>Hinweis:</b> Das ist eine Schätzung, kein exaktes Ziel. Wenn deine aktuelle Kalorienzufuhr deutlich darunter liegt, erhöhe schrittweise statt abrupt.",
+    "s1.title": "1) Persönliche Daten",
+    "p.name": "Name",
+    "p.name_ph": "z. B. Sarah",
+    "s1.age": "Alter (Jahre)",
+    "s1.gender": "Geschlecht",
+    "s1.gender.select": "Auswählen",
+    "s1.gender.male": "Männlich",
+    "s1.gender.female": "Weiblich",
+    "s1.height": "Größe (cm)",
+    "s1.weight": "Gewicht (kg)",
+    "s1.bfVisual.label": "Körperfett-Schätzung (visuell)",
+    "s1.bfVisual.selectGender": "Bitte wähle zuerst dein Geschlecht, um die Optionen zu sehen.",
+    "s1.bfVisual.help": "Wähle die nächste Übereinstimmung. Im Zweifel wähle den höheren Bereich.",
+    "s1.bf.male.1_7.desc": "Wettkampfniveau. Extreme Striationen, Venen überall.",
+    "s1.bf.male.8_10.desc": "Sehr schlank. Klare Striationen, sichtbare Venen.",
+    "s1.bf.male.11_12.desc": "Schlank. Klare Bauchmuskeln, etwas Vaskularität.",
+    "s1.bf.male.13_15.desc": "Athletisch. Sichtbare Bauchmuskeln, definierte Muskeln.",
+    "s1.bf.male.16_19.desc": "Fit. Etwas Bauchmuskeldefinition.",
+    "s1.bf.male.20_24.desc": "Durchschnitt. Kein Definition, weicherer Look.",
+    "s1.bf.male.25_30.desc": "Weiche Körpermitte. Sichtbares Fett um die Taille.",
+    "s1.bf.male.35_40.desc": "Deutliche Fettansammlung. Rundere Körpermitte.",
+    "s1.bf.female.10_12.desc": "Wettkampfniveau. Extrem definiert, sichtbare Striationen.",
+    "s1.bf.female.15_17.desc": "Sehr schlank. Klare Muskeldefinition, sichtbare Bauchmuskeln.",
+    "s1.bf.female.18_20.desc": "Athletisch/fit. Etwas Bauchmuskeldefinition, trainierter Look.",
+    "s1.bf.female.21_23.desc": "Fit. Weniger Definition, trotzdem schlank.",
+    "s1.bf.female.24_26.desc": "Durchschnitt/gesund. Etwas Weichheit, normaler Look.",
+    "s1.bf.female.27_29.desc": "Weichere Form. Mehr Fett um Hüften/Taille.",
+    "s1.bf.female.30_35.desc": "Deutliche Fettansammlung am Körper.",
+    "s1.bf.female.36_40.desc": "Erhebliches Fett. Größeres Gesamterscheinungsbild.",
+    "s1.bf.female.50_plus.desc": "Hoher Körperfettanteil. Deutlich größere Statur.",
+    "s1.activity": "Aktivitätslevel (Alltag + Training)",
+    "s1.activity.select": "Auswählen",
+    "s1.activity.sedentary": "Sitzend",
+    "s1.activity.light": "Leicht aktiv",
+    "s1.activity.moderate": "Mäßig aktiv",
+    "s1.activity.very": "Sehr aktiv",
+    "s1.activity.help": `<b>Beispiele:</b><br/><b>Sitzend:</b> Bürojob, wenig Gehen, kein/selten Training.<br/><b>Leicht:</b> Bürojob + regelmäßige Spaziergänge, Training 1–3×/Woche.<br/><b>Mäßig:</b> aktive Tage + Training 3–5×/Woche (oder viel Gehen).<br/><b>Sehr aktiv:</b> körperlicher Job ODER viel Bewegung + häufiges Training.`,
+    "s1.experience": "Trainingserfahrung",
+    "s1.experience.select": "Auswählen",
+    "s1.experience.none": "Keine",
+    "s1.experience.beginner": "Anfänger (0–2 J.)",
+    "s1.experience.intermediate": "Fortgeschritten (2–5 J.)",
+    "s1.experience.advanced": "Sehr erfahren (5+ J.)",
+    "s1.trainingNow": "Trainierst du aktuell?",
+    "s1.trainingNow.select": "Auswählen",
+    "s1.yes": "Ja",
+    "s1.no": "Nein",
+    "s1.trainedBefore": "Wenn nein: hast du früher schon trainiert?",
+    "s1.trainingType": "Trainingsart",
+    "s1.trainingType.strength": "Krafttraining / Gewichte",
+    "s1.trainingType.cardio": "Cardio / Ausdauer",
+    "s1.trainingType.mixed": "Gemischt",
+    "s1.trainingType.sport": "Sportspezifisch",
+    "s1.trainingDetails": "Was genau machst du?",
+    "s1.trainingDetails.ph": "z. B. Fußball + Fitnessstudio, CrossFit, Boxen...",
+    "s1.sessions": "Einheiten pro Woche",
+    "s1.steps": "Durchschnittliche tägliche Schritte",
+    "s1.steps.none": "Ich tracke nicht / sehr niedrig",
+    "s1.steps.2k": "~2.000/Tag",
+    "s1.steps.lt4k": "< 4.000/Tag",
+    "s1.steps.4to8k": "4.000–8.000/Tag",
+    "s1.steps.8to12k": "8.000–12.000/Tag",
+    "s1.steps.gt12k": "> 12.000/Tag",
+    "s1.sleep": "Schlaf pro Nacht",
+    "s1.sleep.lt4": "< 4 Std.",
+    "s1.sleep.4to6": "4–6 Std.",
+    "s1.sleep.6to8": "6–8 Std.",
+    "s1.sleep.8plus": "8 Std.+",
+    "s1.goal": "Ziel",
+    "s1.goal.lose": "Fett verlieren",
+    "s1.goal.maintain": "Erhalt / Rekomposition",
+    "s1.goal.gain": "Muskelmasse aufbauen",
+    "s2.title": "2) Ernährung & Essgewohnheiten",
+    "s2.note": "Wähle, was am besten zu deiner durchschnittlichen Woche passt.",
+    "s2.snacks": "Zuckerhaltige Snacks",
+    "s2.sodas": "Limonaden / gesüßte Getränke",
+    "s2.fastfood": "Fast Food / Burger",
+    "s2.alcohol": "Alkohol (Häufigkeit)",
+    "s2.tracks": "Verfolgst du aktuell deine Kalorien?",
+    "s2.currentCals": "Falls du schätzen müsstest: aktuelle tägliche Kalorien (optional)",
+    "s2.currentCals.required": "Aktuelle tägliche Kalorien (erforderlich)",
+    "s2.currentCals.ph": "z. B. 2200",
+    "s3.title": "3) Ernährungspräferenzen & Einschränkungen",
+    "s3.diet": "Ernährungsform",
+    "s3.diet.omnivore": "Allesesser",
+    "s3.diet.vegetarian": "Vegetarisch",
+    "s3.diet.vegan": "Vegan",
+    "s3.allergies": "Allergien / Einschränkungen (alles Zutreffende auswählen)",
+    "s3.allergy.milk": "Milch (Milchprodukte)",
+    "s3.allergy.egg": "Ei",
+    "s3.allergy.peanut": "Erdnuss",
+    "s3.allergy.treenuts": "Schalenfrüchte",
+    "s3.allergy.soy": "Soja",
+    "s3.allergy.wheat": "Weizen",
+    "s3.allergy.gluten": "Gluten",
+    "s3.allergy.fish": "Fisch",
+    "s3.allergy.shellfish": "Schalentiere",
+    "s3.allergy.sesame": "Sesam",
+    "s3.allergy.corn": "Mais",
+    "s3.allergy.mustard": "Senf",
+    "s3.allergy.celery": "Sellerie",
+    "s3.allergy.lupin": "Lupine",
+    "s3.allergy.sulfites": "Sulfite",
+    "s3.allergy.fruits": "Obst",
+    "s3.allergy.vegetables": "Gemüse",
+    "s3.produce.details": "Wenn du gegen Obst und/oder Gemüse allergisch bist – gegen welche?",
+    "s3.produce.details.ph": "z. B. Erdbeeren, Äpfel / Tomaten / Paprika...",
+    "s3.likes": "Lieblingslebensmittel (durch Kommas getrennt)",
+    "s3.likes.ph": "z. B. Pasta, Curry, Wraps, Haferflocken",
+    "s3.dislikes": "Lebensmittel, die du nicht magst / vermeidest (durch Kommas getrennt)",
+    "s3.dislikes.ph": "z. B. Pilze, Thunfisch, Eier, Reis",
+    "common.select": "Auswählen",
+    "common.none": "Keine",
+    "common.no": "Nein",
+    "common.yes": "Ja",
+    "common.sometimes": "Manchmal",
+    "freq.1w": "1×/Woche",
+    "freq.2w": "2×/Woche",
+    "freq.3_5w": "3–5×/Woche",
+    "freq.3_4w": "3–4×/Woche",
+    "freq.5w": "5+×/Woche",
+    "freq.daily": "Täglich",
+    "results.title": "Deine Ergebnisse",
+    "results.notice.title": "Hinweis:",
+    "results.notice.text": "Dies ist eine Schätzung, kein exakter Zielwert. Wenn deine aktuelle Kalorienzufuhr deutlich darunter liegt, erhöhe sie schrittweise und nicht abrupt.",
+    "results.adjust.note": "Passe die Kalorien im Laufe der Zeit basierend auf 2–4 Wochen Trends des wöchentlichen Durchschnittsgewichts (nicht täglicher Änderungen) an, unterstützt durch Taillenumfang, Fortschrittsfotos und Trainingsleistung, und nimm kleine Anpassungen von ~100–150 Kalorien nur vor, wenn der Fortschritt stagniert oder in die falsche Richtung geht.",
+    "results.calories": "Kalorien",
+    "results.bmr": "Grundumsatz (BMR)",
+    "results.maintenance": "Geschätzter Erhaltungsbedarf",
+    "results.target.lose": "Zielkalorien für Fettverlust:",
+    "results.target.gain": "Zielkalorien für Muskelaufbau:",
+    "results.target.maintain": "Zielkalorien für Erhalt / Rekomposition:",
+    "results.more": "Mehr Infos (warum diese Werte?)",
+    "results.macros": "Makroziele",
+    "results.macro.chart.grams": "Makroübersicht (Gramm)",
+    "results.macro.chart.calories": "Makroübersicht (Kalorien)",
+    "results.macros.note": "Protein: {pf} g/kg KG • Fett: {fat}% der Kalorien • Kohlenhydrate: Rest",
+    "results.protein": "Protein",
+    "results.carbs": "Kohlenhydrate",
+    "results.fats": "Fette",
+    "results.gramsDay": "g/Tag",
+    "results.pctCalories": "% der Kalorien",
+    "results.donutNote": "Die Farben entsprechen der Kalorienverteilung.",
+    "results.meals": "Einfache Mahlzeitenideen",
+    "results.mealIdeas.tag": "MAHLZEITIDEEN",
+    "results.mealIdeas.sub": "Einfache Ideen",
+    "results.breakfast": "Frühstück",
+    "results.lunch": "Mittagessen",
+    "results.dinner": "Abendessen",
+    "results.snack": "Snack (optional)",
+    "results.noOptions": "Keine Optionen verfügbar",
+    "results.noMealsMatch": "Keine Mahlzeitenideen passen zu deinen Allergien/Abneigungen in der aktuellen Liste.",
+    "results.action.title": "2-Wochen-Aktionsplan",
+    "results.action.cut": "1) Reduzieren (einfach)",
+    "results.action.swaps": "2) Alternativen (nur wenn nötig)",
+    "results.action.training": "3) Krafttraining (2 Wochen)",
+    "results.action.steps": "4) Tägliche Schritte",
+    "results.action.steps.aim": "anstreben etwa",
+    "results.action.steps.perday": "Schritte/Tag",
+    "results.action.steps.after": "Danach",
+    "results.action.steps.add1k": "+1.000 pro Woche hinzufügen bis 10.000/Tag",
+    "results.sleep": "Schlaf",
+    "results.send": "Möchtest du diese Ergebnisse erhalten?",
+    "results.send.yes": "Ja, sende mir meine Ergebnisse",
+    "results.summary": "Zusammenfassung deiner Angaben",
+    "results.bodyComp": "Körperzusammensetzung (Schätzung)",
+    "results.bfRange": "Ausgewählter Bereich",
+    "results.bfMidpoint": "KF% verwendet (Mitte)",
+    "contact.email": "E-Mail",
+    "contact.phone": "Telefonnummer (WhatsApp)",
+    "contact.note": "Das öffnet E-Mail/WhatsApp mit vorausgefüllter Nachricht. Du kannst vor dem Senden prüfen.",
+    "contact.sendEmail": "Per E-Mail senden",
+    "contact.sendWhatsApp": "Per WhatsApp senden",
+    "cut.sugary": "Zuckerhaltige Snacks",
+       "cut.drinks": "Gesüßte Getränke",
+    "cut.fastfood": "Fast Food / Burger",
+    "cut.alcohol": "Alkohol",
+    "cut.note": "Woche 1 = weniger. Woche 2 = noch weniger.",
+    "week.1": "Woche 1",
+    "week.2": "Woche 2",
+    "timesPerWeek": "Mal pro Woche",
+    "swap.sweet": "Süßhunger → griechischer Joghurt + geschnittene Banane + Zimt",
+    "swap.chocolate": "Schokolade / Süßigkeiten → 2 Stück dunkle Schokolade + Obst",
+    "swap.cookies": "Kekse → Proteinshake + Banane",
+    "swap.dessert": "Dessert-Gewohnheit → 1 geplante Portion nach dem Abendessen (kein ungeplantes Snacken)",
+    "swap.soda": "Limonade → Sprudelwasser + Zitrone / Limette",
+    "swap.sweetDrink": "Süßes Getränk → zuckerfreies Getränk oder Eistee (ohne Zucker)",
+    "swap.energy": "Energy-Drink → schwarzer Kaffee oder zuckerfreie Variante",
+    "swap.fastfood": "Fast Food → selbstgemachte Bowl: Protein + Kohlenhydrate + Gemüse (10–15 Min.)",
+    "swap.burger": "Burger → selbstgemachter Wrap: Protein + Salat + Sauce",
+    "swap.notime": "Keine Zeit → Grillhähnchen + Beutelsalat + Kartoffeln",
+    "swap.alc.limit": "Alkohol auf eine feste Anzahl an Getränken begrenzen",
+    "swap.alc.water": "Alkohol mit Sprudelwasser abwechseln",
+    "swap.alc.meal": "Vor dem Trinken eine proteinreiche Mahlzeit essen",
+    "swap.keep.sugary": "Zuckerhaltige Snacks: mach weiter so ✅",
+    "swap.keep.drinks": "Gesüßte Getränke: mach weiter so ✅",
+    "swap.keep.fastfood": "Fast Food / Burger: mach weiter so ✅",
+    "swap.keep.alcohol": "Alkohol: mach weiter so ✅",
+    "training.workouts": "Trainingseinheit(en)",
+    "training.note.start": "Starte mit 3 Krafttrainingseinheiten pro Woche (einfaches Ganzkörpertraining).",
+    "training.note.add1": "Füge eine zusätzliche Einheit pro Woche hinzu und achte auf Regeneration.",
+    "training.note.maintain": "Bleibe bei etwa 5–6 Einheiten/Woche – je nach Erholung.",
+    "training.note.progress": "Behalte deinen aktuellen Plan bei und fokussiere dich auf Progression + Regeneration.",
+    "steps.note.to10k": "Ziel: 10.000 Schritte pro Tag.",
+    "steps.note.keep": "Du machst bereits 10.000+ Schritte/Tag. Mach weiter so ✅",
+    "steps.note.progress": "Woche 2: +1.000 Schritte/Tag. Danach: +1.000/Woche, bis du 10.000/Tag erreichst.",
+    "sleep.note.keep": "Schlaf: mach weiter so. Versuche im Bereich 7–9 Stunden zu bleiben.",
+    "sleep.note.add30": "Schlaf: Ziel 7–9 Stunden. Für 2 Wochen: jede Woche +30 Minuten mehr im Bett.",
+    "sleep.note.add45_60": "Schlaf: Ziel 7–9 Stunden. Für 2 Wochen: jede Woche +45–60 Minuten mehr im Bett.",
+    "sleep.note.aim": "Schlaf: wenn möglich 7–9 Stunden anpeilen.",
+    "recap.title": "Ergebnisse der Ernährungsanalyse",
+    "recap.name": "Name",
+    "recap.age": "Alter",
+    "recap.gender": "Geschlecht",
+    "recap.height": "Größe",
+    "recap.weight": "Gewicht",
+    "recap.bodyFat": "Körperfett",
+    "recap.goal": "Ziel",
+    "recap.activity": "Aktivität",
+    "recap.trainingNow": "Trainierst du aktuell",
+    "recap.trainedBefore": "Schon früher trainiert",
+    "recap.trainingType": "Trainingsart",
+    "recap.trainingDetails": "Trainingsdetails",
+    "recap.stepsSleep": "Schritte | Schlaf",
+    "recap.calories": "Kalorien",
+    "recap.bmr": "Grundumsatz (BMR)",
+    "recap.maintenance": "Erhalt",
+    "recap.target": "Ziel",
+    "recap.macros": "Makros",
+    "goal.lose": "Fett verlieren",
+    "goal.maintain": "Erhalt / Rekomposition",
+    "goal.gain": "Muskelmasse aufbauen",
+    "activity.sedentary": "Sitzend",
+    "activity.light": "Leicht aktiv",
+    "activity.moderate": "Mäßig aktiv",
+    "activity.very": "Sehr aktiv",
+    "steps.none": "Sehr niedrig / nicht getrackt",
+    "steps.2k": "~2.000/Tag",
+    "steps.lt4k": "< 4.000/Tag",
+    "steps.4to8k": "4.000–8.000/Tag",
+    "steps.8to12k": "8.000–12.000/Tag",
+    "steps.gt12k": "> 12.000/Tag",
+    "sleep.lt4": "< 4 Std.",
+    "sleep.4to6": "4–6 Std.",
+    "sleep.6to8": "6–8 Std.",
+    "sleep.8plus": "8 Std.+",
+    "trainingType.strength": "Krafttraining / Gewichte",
+    "trainingType.cardio": "Cardio / Ausdauer",
+    "trainingType.mixed": "Gemischt",
+    "trainingType.sport": "Sportspezifisch",
+    "why.title": "Warum diese Werte?",
+    "why.calories.title": "Kalorien",
+    "why.calories.bmr": "BMR = Grundenergie",
+    "why.calories.maintenance": "Erhalt = BMR × Aktivitätsfaktor",
+    "why.calories.goal": "Das Ziel verschiebt den Bedarf",
+    "why.calories.lose": "Für Fettverlust gehen wir unter den Erhalt, damit der Körper gespeichertes Fett nutzt.",
+    "why.calories.gain": "Für Muskelaufbau gehen wir über den Erhalt, um Training und Regeneration zu unterstützen.",
+    "why.calories.maintain": "Für Erhalt/Rekomposition bleiben wir nahe am Erhalt, um die Körperkomposition mit Training + Protein zu verbessern.",
+    "why.protein.title": "Protein",
+    "why.protein.text": "Basierend auf Körpergewicht (KG) und angepasst an deinen Körperfettanteil nach Standardrichtlinien.",
+    "why.fat.title": "Fett",
+    "why.fat.text": "Basierend auf deinem Körperfettanteil (schlanker = etwas weniger, höherer KFA = etwas mehr).",
+    "why.carbs.title": "Kohlenhydrate",
+    "why.carbs.text": "Restliche Kalorien zur Unterstützung von Training, Bewegung und Umsetzbarkeit.",
+    "why.reminder": "Hinweis: Dies ist eine Schätzung. Wenn du aktuell deutlich darunter isst, steigere langsam.",
+    "btn.back": "Zurück",
+    "btn.next": "Weiter",
+    "btn.results": "Ergebnisse ansehen",
+    "btn.restart": "Neu starten",
+    "err.fill": "Bitte fülle diese Felder aus:",
+    "err.selectBf": "Körperfett-Schätzung",
+    "cta.plan.title": "Willst du das in einen einfachen 12-Wochen-Plan umwandeln – gemeinsam mit dir?",
+    "cta.plan.btn": "Buche dein kostenloses 30-Min Strategiegespräch",
+    "cta.community.title": "Noch nicht bereit für 1-1?",
+    "cta.community.desc": "Tritt meiner kostenlosen Skool-Community bei – mit Kursen zu Ernährung und Körperrekomposition.",
+    "cta.community.btn": "Kostenlose Coaching-Gruppe beitreten"
+  }
+};
+
+const LANG_KEY = "nr_lang";
+
+function t(key){
+  const lang = getLang();
+  return (I18N[lang] && I18N[lang][key]) || (I18N.en[key]) || key;
+}
+
+function getLang(){
+  return localStorage.getItem(LANG_KEY) || "en";
+}
+
+function setLang(lang){
+  localStorage.setItem(LANG_KEY, lang);
+  applyI18n();
+  updateNavButtonText();
+  if (currentStep === stepsEls.length - 1 && lastResultsData) {
+    renderResults(lastResultsData);
+  }
+}
+
+function applyI18n(){
+  document.documentElement.lang = getLang();
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    el.innerHTML = t(key);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+    const key = el.getAttribute("data-i18n-placeholder");
+    el.setAttribute("placeholder", t(key));
+  });
+}
+
+function updateNavButtonText(){
+  if (currentStep === stepsEls.length-1) {
+    nextBtn.textContent = t("btn.restart");
+  } else if (currentStep === stepsEls.length-2) {
+    nextBtn.textContent = t("btn.results");
+  } else {
+    nextBtn.textContent = t("btn.next");
+  }
+  backBtn.textContent = t("btn.back");
+}
+
+/* =========================
+   CALCULATION RULES (UPDATED)
+   ========================= */
+// Updated activity factors per your requirements
+const ACTIVITY_FACTOR = { 
+  sedentary: 1.2, 
+  light: 1.35, 
+  moderate: 1.55, 
+  very: 1.825  // Using midpoint of 1.75-1.9
+};
+
+const GOAL_MULT = { lose: 0.80, maintain: 1.00, gain: 1.15 };
+
+function round(n){ return Math.round(n); }
+function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+function mifflinBMR({ gender, weightKg, heightCm, age }) {
+  const base = 10 * weightKg + 6.25 * heightCm - 5 * age;
+  return gender === "male" ? base + 5 : base - 161;
+}
+
+/* =========================
+   BF / PROTEIN / FAT CALCULATION (UPDATED - based on BW, not LBM)
+   ========================= */
+function bfMidpointPct(data){
+  const min = Number(data.bfMin);
+  const max = Number(data.bfMax);
+  if (!isFinite(min) || !isFinite(max) || min <= 0 || max <= 0) return null;
+  return (min + max) / 2;
+}
+
+// NEW: Protein factor based on body fat % and gender (g/kg BODY WEIGHT)
+function proteinFactorGPerKgBW(bfPct, gender){
+  if (gender === "male") {
+    if (bfPct <= 7) return 2.4;
+    if (bfPct <= 10) return 2.4;
+    if (bfPct <= 12) return 2.4;
+    if (bfPct <= 15) return 2.2;
+    if (bfPct <= 19) return 2.2;
+    if (bfPct <= 24) return 2.0;
+    if (bfPct <= 30) return 2.0;
+    return 1.6; // 35-40%+
+  } else {
+    // Female
+    if (bfPct <= 12) return 2.4;
+    if (bfPct <= 17) return 2.4;
+    if (bfPct <= 20) return 2.4;
+    if (bfPct <= 23) return 2.2;
+    if (bfPct <= 26) return 2.2;
+    if (bfPct <= 29) return 2.0;
+    if (bfPct <= 35) return 1.6;
+    if (bfPct <= 40) return 1.6;
+    return 1.6; // 50%+
+  }
+}
+
+// NEW: Fat percentage based on body fat % and gender
+function fatPctFromBF(bfPct, gender){
+  if (gender === "male") {
+    if (bfPct <= 7) return 0.225;
+    if (bfPct <= 10) return 0.225;
+    if (bfPct <= 12) return 0.225;
+    if (bfPct <= 15) return 0.25;
+    if (bfPct <= 19) return 0.25;
+    if (bfPct <= 24) return 0.25;
+    if (bfPct <= 30) return 0.30;
+    return 0.30; // 35-40%+
+  } else {
+    // Female
+    if (bfPct <= 12) return 0.225;
+    if (bfPct <= 17) return 0.225;
+    if (bfPct <= 20) return 0.25;
+    if (bfPct <= 23) return 0.25;
+    if (bfPct <= 26) return 0.25;
+    if (bfPct <= 29) return 0.275;
+    if (bfPct <= 35) return 0.275;
+    if (bfPct <= 40) return 0.30;
+    return 0.30; // 50%+
+  }
+}
+
+function computeTargets(data) {
+  const bmr = mifflinBMR(data);
+  // Updated default to 1.2 (sedentary) if activity is missing
+  const maintenance = bmr * (ACTIVITY_FACTOR[data.activity] ?? 1.2);
+  const targetCalories = maintenance * (GOAL_MULT[data.goal] ?? 1.0);
+
+  // Get body fat percentage
+  const bfPct = bfMidpointPct(data) ?? (data.gender === "female" ? 28 : 20);
+
+  // Calculate protein based on body weight (not LBM)
+  const pFactor = proteinFactorGPerKgBW(bfPct, data.gender);
+  const proteinG = data.weightKg * pFactor;
+
+  // Calculate fat based on body fat percentage
+  const fatPct = fatPctFromBF(bfPct, data.gender);
+  const fatKcal = targetCalories * fatPct;
+  const fatG = fatKcal / 9;
+
+  // Calculate carbs from remaining calories
+  const proteinKcal = proteinG * 4;
+  const carbKcal = Math.max(0, targetCalories - proteinKcal - fatKcal);
+  const carbsG = carbKcal / 4;
+
+  return {
+    bmr, maintenance, targetCalories,
+    proteinG, carbsG, fatG,
+    bfPct, fatPct, pFactor
+  };
+}
+
+/* =========================
+   MEAL IDEAS (with translations)
+   ========================= */
+function getMealIdeas() {
+  const lang = getLang();
+  
+  const MEAL_IDEAS_I18N = {
+    en: {
+      vegetarian: {
+        breakfast: [
+          "Greek yogurt, oats, blueberries, chia seeds, peanut butter",
+          "Eggs, spinach, mushrooms, whole-grain toast",
+          "Cottage cheese, banana, almond butter, cinnamon"
+        ],
+        lunch: [
+          "Lentils, quinoa, cucumber, cherry tomatoes, feta, olive oil",
+          "Halloumi cheese, mixed greens, roasted sweet potato",
+          "Chickpeas, tahini, lemon juice, parsley, whole-wheat pita"
+        ],
+        dinner: [
+          "Paneer cheese, tomato sauce, basmati rice, spices",
+          "Eggplant, lentils, garlic, olive oil",
+          "Ricotta cheese, zucchini, whole-wheat pasta"
+        ],
+        snacks: [
+          "Greek yogurt, almonds",
+          "Cheese slices, apple",
+          "Whey protein (animal-based), water, cinnamon"
+        ]
+      },
+      vegan: {
+        breakfast: [
+          "Tofu scramble, turmeric, bell peppers, onions, spinach",
+          "Rolled oats, soy milk, flaxseed, strawberries",
+          "Chickpea flour, water, cumin, scallions, olive oil"
+        ],
+        lunch: [
+          "Black beans, brown rice, avocado, cilantro, lime",
+          "Tempeh, broccoli, garlic, sesame oil",
+          "Hummus, roasted vegetables, whole-grain wrap"
+        ],
+        dinner: [
+          "Tofu, coconut milk, curry spices, spinach",
+          "Lentil pasta, homemade marinara sauce, mushrooms",
+          "Seitan, bell peppers, onions, tamari"
+        ],
+        snacks: [
+          "Roasted edamame",
+          "Peanut butter, rice cakes",
+          "Protein powder (plant-based: pea + rice blend), almond milk"
+        ]
+      },
+      omnivore: {
+        breakfast: [
+          "Eggs, smoked salmon, avocado, rye bread",
+          "Skyr yogurt, raspberries, walnuts",
+          "Egg whites, turkey bacon, tomatoes, sourdough"
+        ],
+        lunch: [
+          "Chicken breast, jasmine rice, green beans",
+          "Tuna, olive oil, mixed greens, chickpeas",
+          "Lean beef, roasted potatoes, carrots"
+        ],
+        dinner: [
+          "Salmon, lemon, asparagus, olive oil",
+          "Chicken breast, quinoa, roasted Brussels sprouts",
+          "Shrimp, garlic, olive oil, rice noodles"
+        ],
+        snacks: [
+          "Beef jerky",
+          "Hard-boiled eggs",
+          "Whey protein (animal-based), banana"
+        ]
+      }
+    },
+    fr: {
+      vegetarian: {
+        breakfast: [
+          "Yaourt grec, flocons d'avoine, myrtilles, graines de chia, beurre de cacahuète",
+          "Œufs, épinards, champignons, pain complet grillé",
+          "Fromage blanc, banane, purée d'amande, cannelle"
+        ],
+        lunch: [
+          "Lentilles, quinoa, concombre, tomates cerises, feta, huile d'olive",
+          "Halloumi, salade verte, patate douce rôtie",
+          "Pois chiches, tahini, jus de citron, persil, pain pita complet"
+        ],
+        dinner: [
+          "Paneer, sauce tomate, riz basmati, épices",
+          "Aubergine, lentilles, ail, huile d'olive",
+          "Ricotta, courgette, pâtes complètes"
+        ],
+        snacks: [
+          "Yaourt grec, amandes",
+          "Tranches de fromage, pomme",
+          "Whey protéine, eau, cannelle"
+        ]
+      },
+      vegan: {
+        breakfast: [
+          "Tofu brouillé, curcuma, poivrons, oignons, épinards",
+          "Flocons d'avoine, lait de soja, graines de lin, fraises",
+          "Farine de pois chiches, eau, cumin, oignons verts, huile d'olive"
+        ],
+        lunch: [
+          "Haricots noirs, riz complet, avocat, coriandre, citron vert",
+          "Tempeh, brocoli, ail, huile de sésame",
+          "Houmous, légumes rôtis, wrap complet"
+        ],
+        dinner: [
+          "Tofu, lait de coco, épices curry, épinards",
+          "Pâtes aux lentilles, sauce marinara maison, champignons",
+          "Seitan, poivrons, oignons, tamari"
+        ],
+        snacks: [
+          "Edamame grillés",
+          "Beurre de cacahuète, galettes de riz",
+          "Protéine végétale (pois + riz), lait d'amande"
+        ]
+      },
+      omnivore: {
+        breakfast: [
+          "Œufs, saumon fumé, avocat, pain de seigle",
+          "Skyr, framboises, noix",
+          "Blancs d'œufs, bacon de dinde, tomates, pain au levain"
+        ],
+        lunch: [
+          "Blanc de poulet, riz jasmin, haricots verts",
+          "Thon, huile d'olive, salade verte, pois chiches",
+          "Bœuf maigre, pommes de terre rôties, carottes"
+        ],
+        dinner: [
+          "Saumon, citron, asperges, huile d'olive",
+          "Blanc de poulet, quinoa, choux de Bruxelles rôtis",
+          "Crevettes, ail, huile d'olive, nouilles de riz"
+        ],
+        snacks: [
+          "Viande séchée",
+          "Œufs durs",
+          "Whey protéine, banane"
+        ]
+      }
+    },
+    de: {
+      vegetarian: {
+        breakfast: [
+          "Griechischer Joghurt, Haferflocken, Blaubeeren, Chiasamen, Erdnussbutter",
+          "Eier, Spinat, Pilze, Vollkorntoast",
+          "Hüttenkäse, Banane, Mandelbutter, Zimt"
+        ],
+        lunch: [
+          "Linsen, Quinoa, Gurke, Kirschtomaten, Feta, Olivenöl",
+          "Halloumi, gemischter Salat, geröstete Süßkartoffel",
+          "Kichererbsen, Tahini, Zitronensaft, Petersilie, Vollkorn-Pita"
+        ],
+        dinner: [
+          "Paneer, Tomatensauce, Basmatireis, Gewürze",
+          "Aubergine, Linsen, Knoblauch, Olivenöl",
+          "Ricotta, Zucchini, Vollkornnudeln"
+        ],
+        snacks: [
+          "Griechischer Joghurt, Mandeln",
+          "Käsescheiben, Apfel",
+          "Whey-Protein, Wasser, Zimt"
+        ]
+      },
+      vegan: {
+        breakfast: [
+          "Tofu-Rührei, Kurkuma, Paprika, Zwiebeln, Spinat",
+          "Haferflocken, Sojamilch, Leinsamen, Erdbeeren",
+          "Kichererbsenmehl, Wasser, Kreuzkümmel, Frühlingszwiebeln, Olivenöl"
+        ],
+        lunch: [
+          "Schwarze Bohnen, brauner Reis, Avocado, Koriander, Limette",
+          "Tempeh, Brokkoli, Knoblauch, Sesamöl",
+          "Hummus, geröstetes Gemüse, Vollkorn-Wrap"
+        ],
+        dinner: [
+          "Tofu, Kokosmilch, Currygewürze, Spinat",
+          "Linsennudeln, hausgemachte Marinara-Sauce, Pilze",
+          "Seitan, Paprika, Zwiebeln, Tamari"
+        ],
+        snacks: [
+          "Geröstete Edamame",
+          "Erdnussbutter, Reiswaffeln",
+          "Pflanzliches Protein (Erbsen + Reis), Mandelmilch"
+        ]
+      },
+      omnivore: {
+        breakfast: [
+          "Eier, Räucherlachs, Avocado, Roggenbrot",
+          "Skyr, Himbeeren, Walnüsse",
+          "Eiweiß, Putenbacon, Tomaten, Sauerteigbrot"
+        ],
+        lunch: [
+          "Hähnchenbrust, Jasminreis, grüne Bohnen",
+          "Thunfisch, Olivenöl, gemischter Salat, Kichererbsen",
+          "Mageres Rindfleisch, Bratkartoffeln, Karotten"
+        ],
+        dinner: [
+          "Lachs, Zitrone, Spargel, Olivenöl",
+          "Hähnchenbrust, Quinoa, gerösteter Rosenkohl",
+          "Garnelen, Knoblauch, Olivenöl, Reisnudeln"
+        ],
+        snacks: [
+          "Beef Jerky",
+          "Hartgekochte Eier",
+          "Whey-Protein, Banane"
+        ]
+      }
+    }
+  };
+  
+  return MEAL_IDEAS_I18N[lang] || MEAL_IDEAS_I18N.en;
+}
+
+function normalizeWord(w){
+  w = String(w || "").trim().toLowerCase();
+  w = w.replace(/[^a-z0-9\s]/g, " ");
+  w = w.replace(/\s+/g, " ").trim();
+  if (w.endsWith("s") && w.length > 3) w = w.slice(0, -1);
+  return w;
+}
+
+const FOOD_FAMILIES = {
+  berries: ["strawberry", "strawberries", "blueberry", "blueberries", "raspberry", "raspberries", "blackberry", "blackberries", "cranberry", "cranberries"],
+  citrus: ["orange","oranges","lemon","lemons","lime","limes","grapefruit"],
+  nuts: ["almond","almonds","walnut","walnuts","cashew","cashews","hazelnut","hazelnuts","pecan","pecans","pistachio","pistachios"]
+};
+
+function expandFoodNeedles(tokens){
+  const expanded = new Set();
+  tokens.forEach(tRaw => {
+    const t = normalizeWord(tRaw);
+    expanded.add(t);
+    if (FOOD_FAMILIES[t]) FOOD_FAMILIES[t].forEach(x => expanded.add(normalizeWord(x)));
+  });
+  return Array.from(expanded);
+}
+
+function tokenizeCSV(text){
+  return String(text || "").split(",").map(normalizeWord).filter(Boolean);
+}
+
+function splitMealParts(mealText){
+  return String(mealText || "").split(",").map(p => p.trim()).filter(Boolean);
+}
+
+function containsAnyDislike(mealText, dislikes){
+  const expanded = expandFoodNeedles(dislikes);
+  const parts = splitMealParts(mealText).map(normalizeWord);
+  if (expanded.includes("egg") && parts.some(p => p.includes("egg"))) return true;
+  return parts.some(p => expanded.some(d => d && p.includes(d)));
+}
+
+function partHasAnyNeedle(part, needles){
+  const p = normalizeWord(part);
+  return needles.some(n => n && p.includes(normalizeWord(n)));
+}
+
+function sanitizeMealForAllergies(mealText, data){
+  const allergies = data.allergies || [];
+  let parts = splitMealParts(mealText);
+
+  const hasGluten = allergies.includes("gluten");
+  const hasWheat  = allergies.includes("wheat");
+
+  if (hasGluten) parts = parts.map(applyGlutenFreeSwap);
+  if (hasWheat)  parts = parts.map(applyWheatFreeSwap);
+
+  const produceNeedles = [];
+  if ((allergies.includes("fruits") || allergies.includes("vegetables")) && data.produceAllergyDetails) {
+    const tokens = String(data.produceAllergyDetails).split(/[,/]/g).map(normalizeWord).filter(Boolean);
+    produceNeedles.push(...expandFoodNeedles(tokens));
+  }
+
+  const removeNeedles = [];
+
+  if (allergies.includes("milk")) {
+    removeNeedles.push("yogurt","greek yogurt","skyr","cottage cheese","cheese","feta","ricotta","paneer","halloumi","milk");
+  }
+  if (allergies.includes("egg")) {
+    removeNeedles.push("egg","eggs","egg whites","hard-boiled eggs");
+  }
+  if (allergies.includes("soy")) {
+    removeNeedles.push("soy","soy milk","tofu","tempeh","edamame","tamari");
+  }
+  if (allergies.includes("peanut")) {
+    removeNeedles.push("peanut","peanut butter");
+  }
+  if (allergies.includes("treenuts")) {
+    removeNeedles.push("almond","almonds","almond butter","walnut","walnuts");
+  }
+  if (allergies.includes("sesame")) {
+    removeNeedles.push("sesame","tahini");
+  }
+  if (allergies.includes("fish")) {
+    removeNeedles.push("fish","salmon","smoked salmon","tuna");
+  }
+  if (allergies.includes("shellfish")) {
+    removeNeedles.push("shrimp","shellfish");
+  }
+
+  if (allergies.includes("fruits") || allergies.includes("vegetables")) {
+    removeNeedles.push(...produceNeedles);
+  }
+
+  if (hasGluten) {
+    removeNeedles.push("seitan");
+  }
+
+  const kept = parts.filter(part => !partHasAnyNeedle(part, removeNeedles));
+
+  if (!kept.length) return null;
+  return kept.join(", ");
+}
+
+function applyGlutenFreeSwap(part){
+  let p = part;
+  const swaps = [
+    [/\bwhole[-\s]?wheat\s+pasta\b/i, "gluten-free pasta"],
+    [/\bpasta\b/i, "gluten-free pasta"],
+    [/\bwhole[-\s]?wheat\s+wrap\b/i, "gluten-free wrap"],
+    [/\bwrap\b/i, "gluten-free wrap"],
+    [/\bpita\b/i, "gluten-free pita"],
+    [/\bwhole[-\s]?grain\s+toast\b/i, "gluten-free toast"],
+    [/\btoast\b/i, "gluten-free toast"],
+    [/\bsourdough\b/i, "gluten-free sourdough"],
+    [/\brye\s+bread\b/i, "gluten-free bread"],
+    [/\brye\b/i, "gluten-free bread"],
+    [/\bbread\b/i, "gluten-free bread"],
+    [/\brolled\s+oats\b/i, "gluten-free oats"],
+    [/\boats\b/i, "gluten-free oats"],
+    [/\btamari\b/i, "gluten-free tamari"],
+    [/\bsoy\s+sauce\b/i, "gluten-free soy sauce"]
+  ];
+  for (const [re, rep] of swaps) {
+    if (re.test(p)) p = p.replace(re, rep);
+  }
+  return p;
+}
+
+function applyWheatFreeSwap(part){
+  let p = part;
+  const swaps = [
+    [/\bwhole[-\s]?wheat\s+pasta\b/i, "rice pasta"],
+    [/\bpasta\b/i, "rice pasta"],
+    [/\bwhole[-\s]?wheat\s+wrap\b/i, "corn tortilla"],
+    [/\bwrap\b/i, "corn tortilla"],
+    [/\bpita\b/i, "corn tortilla"],
+    [/\bwhole[-\s]?grain\s+toast\b/i, "wheat-free toast"],
+    [/\btoast\b/i, "wheat-free toast"],
+    [/\bsourdough\b/i, "wheat-free sourdough"],
+    [/\brye\s+bread\b/i, "wheat-free bread"],
+    [/\brye\b/i, "wheat-free bread"],
+    [/\bbread\b/i, "wheat-free bread"],
+    [/\brolled\s+oats\b/i, "certified wheat-free oats"],
+    [/\boats\b/i, "certified wheat-free oats"]
+  ];
+  for (const [re, rep] of swaps) {
+    if (re.test(p)) p = p.replace(re, rep);
+  }
+  return p;
+}
+
+function pickN(arr, n){
+  const copy = arr.slice();
+  for (let i=copy.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy.slice(0, Math.min(n, copy.length));
+}
+
+function buildMealIdeas(data){
+  const dislikes = tokenizeCSV(data.dislikes);
+  const MEAL_IDEAS = getMealIdeas();
+  const ideas = MEAL_IDEAS[data.diet] || MEAL_IDEAS.omnivore;
+
+  const cleanList = (list) => list
+    .filter(x => !containsAnyDislike(x, dislikes))
+    .map(x => sanitizeMealForAllergies(x, data))
+    .filter(Boolean);
+
+  const breakfast = cleanList(ideas.breakfast);
+  const lunch     = cleanList(ideas.lunch);
+  const dinner    = cleanList(ideas.dinner);
+  const snacks    = cleanList(ideas.snacks);
+
+  return {
+    breakfast: pickN(breakfast, 2),
+    lunch: pickN(lunch, 2),
+    dinner: pickN(dinner, 2),
+    snacks: pickN(snacks, 2),
+    empty: (!breakfast.length && !lunch.length && !dinner.length && !snacks.length)
+  };
+}
+
+/* =========================
+   ACTION PLAN
+   ========================= */
+function habitPerWeek(v){
+  if (v === "none") return 0;
+  if (v === "1") return 1;
+  if (v === "2") return 2;
+  if (v === "3-4") return 3.5;
+  if (v === "3-5") return 4;
+  if (v === "5+") return 5.5;
+  if (v === "daily") return 7;
+  return 0;
+}
+
+function progressiveCutLabel(itemName, n){
+  if (n <= 0) return null;
+  let week1 = n, week2 = n;
+
+  if (n === 1) { week1 = 1; week2 = 1; }
+  else if (n === 2) { week1 = 1; week2 = 1; }
+  else if (n > 2 && n <= 5) { week1 = 2; week2 = 1; }
+  else if (n > 5) { week1 = 3; week2 = 2; }
+
+  return { key: itemName, week1, week2 };
+}
+
+function trainingProgression(data){
+  if (data.trainingNow === "no" && (data.trainedBefore === "no" || !data.trainedBefore)) {
+    return { week1: 3, week2: 3, noteKey: "training.note.start" };
+  }
+
+  const sessions = data.sessionsPerWeek || "0";
+
+  if (sessions === "0" || sessions === "1-2" || sessions === "" || sessions == null) {
+    return { week1: 3, week2: 3, noteKey: "training.note.start" };
+  }
+
+  if (sessions === "3") {
+    return { week1: 4, week2: 4, noteKey: "training.note.add1" };
+  }
+
+  if (sessions === "4") {
+    return { week1: 5, week2: 5, noteKey: "training.note.add1" };
+  }
+
+  if (sessions === "5-6") {
+    return { week1: 5, week2: 6, noteKey: "training.note.maintain" };
+  }
+
+  return { week1: 6, week2: 6, noteKey: "training.note.progress" };
+}
+
+function baseStepsFromBand(band){
+  if (band === "none") return 2000;
+  if (band === "2k") return 2000;
+  if (band === "lt4k") return 3000;
+  if (band === "4to8k") return 6000;
+  if (band === "8to12k") return 9000;
+  if (band === "gt12k") return 12000;
+  return 6000;
+}
+
+function stepPlan(stepsBand){
+  if (stepsBand === "8to12k") {
+    return { mode: "to10k", noteKey: "steps.note.to10k" };
+  }
+
+  const start = baseStepsFromBand(stepsBand);
+
+  if (start >= 10000) {
+    return { mode: "keep", noteKey: "steps.note.keep" };
+  }
+
+  return {
+    mode: "progress",
+    week1: start,
+    week2: Math.min(10000, start + 1000),
+    noteKey: "steps.note.progress",
+    showLongTerm: true
+  };
+}
+
+function sleepAdvice(sleepBand){
+  if (sleepBand === "6to8" || sleepBand === "8plus") {
+    return { noteKey: "sleep.note.keep" };
+  }
+  if (sleepBand === "4to6") {
+    return { noteKey: "sleep.note.add30" };
+  }
+  if (sleepBand === "lt4") {
+    return { noteKey: "sleep.note.add45_60" };
+  }
+  return { noteKey: "sleep.note.aim" };
+}
+
+function swapsForHabits(data){
+  const swaps = [];
+  const sugarN = habitPerWeek(data.snacks);
+  const sodaN = habitPerWeek(data.sodas);
+  const fastN = habitPerWeek(data.fastfood);
+  const alcN  = habitPerWeek(data.alcohol);
+
+  if (sugarN > 0){
+    swaps.push("swap.sweet", "swap.chocolate", "swap.cookies", "swap.dessert");
+  } else {
+    swaps.push("swap.keep.sugary");
+  }
+
+  if (sodaN > 0){
+    swaps.push("swap.soda", "swap.sweetDrink", "swap.energy");
+  } else {
+    swaps.push("swap.keep.drinks");
+  }
+
+  if (fastN > 0){
+    swaps.push("swap.fastfood", "swap.burger", "swap.notime");
+  } else {
+    swaps.push("swap.keep.fastfood");
+  }
+
+  if (alcN > 0){
+    swaps.push("swap.alc.limit", "swap.alc.water", "swap.alc.meal");
+  } else {
+    swaps.push("swap.keep.alcohol");
+  }
+
+  return swaps;
+}
+
+function goalLabelI18n(goal){
+  if (goal === "lose") return t("results.target.lose");
+  if (goal === "gain") return t("results.target.gain");
+  return t("results.target.maintain");
+}
+
+function buildWhyText(data, targets){
+  const goalKey = data.goal || "maintain";
+  const g = t("goal." + goalKey);
+
+  const whyCalories =
+    data.goal === "lose"
+      ? t("why.calories.lose")
+      : data.goal === "gain"
+        ? t("why.calories.gain")
+        : t("why.calories.maintain");
+
+  return `
+${t("why.title")}
+
+• ${t("why.calories.title")}:
+  - ${t("why.calories.bmr")}
+  - ${t("why.calories.maintenance")}
+  - ${t("why.calories.goal")} (${g})
+  - ${whyCalories}
+
+• ${t("why.protein.title")}:
+  - ${t("why.protein.text")}
+
+• ${t("why.fat.title")}:
+  - ${t("why.fat.text")}
+
+• ${t("why.carbs.title")}:
+  - ${t("why.carbs.text")}
+
+${t("why.reminder")}
+`.trim();
+}
+
+function buildResultsText(data, targets){
+  const goalKey = data.goal || "maintain";
+  const activityKey = data.activity || "moderate";
+  const stepsKey = data.steps || "none";
+  const sleepKey = data.sleep || "6to8";
+  
+  return `${t("recap.title")}
+
+${t("recap.name")}: ${data.firstName || "-"}
+${t("recap.age")}: ${data.age || "-"} | ${t("recap.gender")}: ${data.gender === "male" ? t("s1.gender.male") : data.gender === "female" ? t("s1.gender.female") : "-"}
+${t("recap.height")}: ${data.heightCm || "-"} cm | ${t("recap.weight")}: ${data.weightKg || "-"} kg
+${t("recap.bodyFat")}: ${data.bfRangeLabel || "-"} (~${Math.round(targets.bfPct)}%)
+${t("recap.goal")}: ${t("goal." + goalKey)}
+${t("recap.activity")}: ${t("activity." + activityKey)}
+${t("recap.trainingNow")}: ${data.trainingNow === "yes" ? t("common.yes") : t("common.no")}
+${t("recap.trainedBefore")}: ${data.trainedBefore ? (data.trainedBefore === "yes" ? t("common.yes") : t("common.no")) : "-"}
+${t("recap.trainingType")}: ${data.trainingType ? t("trainingType." + data.trainingType) : "-"}
+${t("recap.trainingDetails")}: ${data.trainingDetails || "-"}
+${t("recap.stepsSleep")}: ${t("steps." + stepsKey)} | ${t("sleep." + sleepKey)}
+
+${t("recap.calories")}:
+- ${t("recap.bmr")}: ${Math.round(targets.bmr)} kcal/day
+- ${t("recap.maintenance")}: ${Math.round(targets.maintenance)} kcal/day
+- ${t("recap.target")}: ${Math.round(targets.targetCalories)} kcal/day
+
+${t("recap.macros")}:
+- ${t("results.protein")}: ${Math.round(targets.proteinG)} g/day
+- ${t("results.carbs")}: ${Math.round(targets.carbsG)} g/day
+- ${t("results.fats")}: ${Math.round(targets.fatG)} g/day
+`;
+}
+
+function escapeHtml(s){
+  return String(s || "").replace(/[&<>"']/g, (c)=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
+
+/* =========================
+   DONUT CHARTS (SVG)
+   ========================= */
+function pctRound(x){ return Math.max(0, Math.round(x)); }
+
+function donutSVG(pctProtein, pctCarbs, pctFats){
+  const r = 44;
+  const c = 2 * Math.PI * r;
+  const p1 = (pctProtein/100) * c;
+  const p2 = (pctCarbs/100) * c;
+  const p3 = (pctFats/100) * c;
+
+  return `
+  <svg width="120" height="120" viewBox="0 0 120 120" aria-label="macro donut">
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="16" />
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--protein)" stroke-width="16"
+      stroke-dasharray="${p1} ${c-p1}" stroke-dashoffset="0"
+      transform="rotate(-90 60 60)" />
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--carbs)" stroke-width="16"
+      stroke-dasharray="${p2} ${c-p2}" stroke-dashoffset="${-p1}"
+      transform="rotate(-90 60 60)" />
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--fats)" stroke-width="16"
+      stroke-dasharray="${p3} ${c-p3}" stroke-dashoffset="${-(p1+p2)}"
+      transform="rotate(-90 60 60)" />
+    <circle cx="60" cy="60" r="30" fill="rgba(9,14,28,.95)" />
+    <text x="60" y="64" text-anchor="middle" font-size="10" fill="rgba(234,242,255,.9)" font-weight="800">Macros</text>
+  </svg>`;
+}
+
+/* =========================
+   RESULTS RENDER
+   ========================= */
+function renderResults(data){
+  const resultsEl = document.getElementById("results");
+  const targets = computeTargets(data);
+
+  const cuts = [];
+  const s1 = progressiveCutLabel("cut.sugary", habitPerWeek(data.snacks));
+  const s2 = progressiveCutLabel("cut.drinks", habitPerWeek(data.sodas));
+  const s3 = progressiveCutLabel("cut.fastfood", habitPerWeek(data.fastfood));
+  const s4 = progressiveCutLabel("cut.alcohol", habitPerWeek(data.alcohol));
+
+  [s1,s2,s3,s4].forEach(x => { if (x) cuts.push(x); });
+
+  const train = trainingProgression(data);
+  const steps = stepPlan(data.steps);
+  const sleep = sleepAdvice(data.sleep);
+  const swaps = swapsForHabits(data);
+  const meals = buildMealIdeas(data);
+
+  const whyText = buildWhyText(data, targets);
+  const resultsText = buildResultsText(data, targets);
+
+  const pK = targets.proteinG * 4;
+  const cK = targets.carbsG * 4;
+  const fK = targets.fatG * 9;
+  const totalK = Math.max(1, pK + cK + fK);
+
+  const pctPk = (pK/totalK)*100;
+  const pctCk = (cK/totalK)*100;
+  const pctFk = (fK/totalK)*100;
+
+  const donut = donutSVG(pctRound(pctPk), pctRound(pctCk), pctRound(pctFk));
+
+  const cutsHtml = cuts.length
+    ? cuts.map(c => `
+      <li><b>${escapeHtml(t(c.key))}:</b>
+        <br/>${escapeHtml(t("week.1"))}: <b>${c.week1}</b> ${escapeHtml(t("timesPerWeek"))}
+        <br/>${escapeHtml(t("week.2"))}: <b>${c.week2}</b> ${escapeHtml(t("timesPerWeek"))}
+      </li>
+    `).join("")
+    : "";
+
+  // CTA Block HTML with actual links
+  const ctaBlockHtml = `
+    <div class="ctaBox">
+      <div class="ctaItem">
+        <div class="ctaTitle">${t("cta.plan.title")}</div>
+        <a href="https://calendly.com/letzroar-info/game-plan-call" class="ctaBtn ctaPrimary" target="_blank">${t("cta.plan.btn")} →</a>
+      </div>
+      <div class="ctaDivider"></div>
+      <div class="ctaItem">
+        <div class="ctaTitle">${t("cta.community.title")}</div>
+        <div class="ctaDesc">${t("cta.community.desc")}</div>
+        <a href="https://www.skool.com/fitness-transformation-8222/classroom" class="ctaBtn ctaSecondary" target="_blank">${t("cta.community.btn")} →</a>
+      </div>
+    </div>
+  `;
+
+  resultsEl.innerHTML = `
+    <div class="warn">
+      <b>${t("results.notice.title")}</b> ${t("results.notice.text")}
+    </div>
+
+    <div class="adjustNote">
+      ${t("results.adjust.note")}
+    </div>
+
+    <h2>${t("results.bodyComp")}</h2>
+    <div class="grid2">
+      <div class="kpi">
+        <div class="small">${t("results.bfRange")}</div>
+        <b>${escapeHtml(data.bfRangeLabel || "-")}</b>
+      </div>
+      <div class="kpi">
+        <div class="small">${t("results.bfMidpoint")}</div>
+        <b>${Math.round(targets.bfPct)}%</b>
+      </div>
+    </div>
+
+    <h2>${t("results.calories")}</h2>
+    <div class="grid2">
+      <div class="kpi">
+        <div class="small">${t("results.bmr")}</div>
+        <b>${round(targets.bmr)} kcal/day</b>
+      </div>
+      <div class="kpi">
+        <div class="small">${t("results.maintenance")}</div>
+        <b>${round(targets.maintenance)} kcal/day</b>
+      </div>
+      <div class="kpi target span2">
+        <div class="small">${escapeHtml(goalLabelI18n(data.goal))}</div>
+        <b>${round(targets.targetCalories)} kcal/day</b>
+      </div>
+    </div>
+
+    <div class="drop" id="moreDrop">
+      <div class="dropHead" id="moreBtn">
+        ${t("results.more")} <span style="opacity:.8;font-weight:900" id="caret">▾</span>
+      </div>
+      <div class="dropBody"><pre class="mono">${escapeHtml(whyText)}</pre></div>
+    </div>
+
+    <h2>${t("results.macros")}</h2>
+    <div>
+      <span class="pill protein"><b>${t("results.protein")}</b> ${round(targets.proteinG)} g/day</span>
+      <span class="pill carbs"><b>${t("results.carbs")}</b> ${round(targets.carbsG)} g/day</span>
+      <span class="pill fats"><b>${t("results.fats")}</b> ${round(targets.fatG)} g/day</span>
+
+      <div class="note">${
+        t("results.macros.note")
+          .replace("{pf}", targets.pFactor.toFixed(1))
+          .replace("{fat}", String(Math.round(targets.fatPct*100)))
+      }</div>
+    </div>
+
+    <div class="donutRow">
+      <div class="donutCard">
+        <div class="donutHead"><b>${t("results.macro.chart.grams")}</b><span>${t("results.gramsDay")}</span></div>
+        <div class="donutWrap">
+          ${donut}
+          <div class="legend">
+            <div class="legItem"><span class="swatch swProtein"></span> ${t("results.protein")}: ${round(targets.proteinG)} g</div>
+            <div class="legItem"><span class="swatch swCarbs"></span> ${t("results.carbs")}: ${round(targets.carbsG)} g</div>
+            <div class="legItem"><span class="swatch swFats"></span> ${t("results.fats")}: ${round(targets.fatG)} g</div>
+            <div class="note">${t("results.donutNote")}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="donutCard">
+        <div class="donutHead">
+          <b>${t("results.macro.chart.calories")}</b>
+          <span>${t("results.pctCalories")}</span>
+        </div>
+        <div class="donutWrap">
+          ${donut}
+          <div class="legend">
+            <div class="legItem">
+              <span class="swatch swProtein"></span>
+              ${t("results.protein")}: ${round(pK)} kcal (${pctRound(pctPk)}%)
+            </div>
+            <div class="legItem">
+              <span class="swatch swCarbs"></span>
+              ${t("results.carbs")}: ${round(cK)} kcal (${pctRound(pctCk)}%)
+            </div>
+            <div class="legItem">
+              <span class="swatch swFats"></span>
+              ${t("results.fats")}: ${round(fK)} kcal (${pctRound(pctFk)}%)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIRST CTA BLOCK - After macros, before meals -->
+    ${ctaBlockHtml}
+
+    <div class="hr"></div>
+
+    <div class="mealsBox">
+      <div class="mealsTitle">
+        <span>${t("results.mealIdeas.tag")}</span> ${t("results.meals")}
+      </div>
+
+      ${meals.empty ? `
+        <div class="help">${t("results.noMealsMatch")}</div>
+      ` : `
+        <b>${t("results.breakfast")}:</b>
+        <ul class="list">
+          ${meals.breakfast.length
+            ? meals.breakfast.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
+            : `<li>${t("results.noOptions")}</li>`}
+        </ul>
+
+        <b>${t("results.lunch")}:</b>
+        <ul class="list">
+          ${meals.lunch.length
+            ? meals.lunch.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
+            : `<li>${t("results.noOptions")}</li>`}
+        </ul>
+
+        <b>${t("results.dinner")}:</b>
+        <ul class="list">
+          ${meals.dinner.length
+            ? meals.dinner.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
+            : `<li>${t("results.noOptions")}</li>`}
+        </ul>
+
+        <b>${t("results.snack")}:</b>
+        <ul class="list">
+          ${meals.snacks.length
+            ? meals.snacks.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
+            : `<li>${t("results.noOptions")}</li>`}
+        </ul>
+      `}
+    </div>
+
+    <div class="hr"></div>
+
+    <h2>${t("results.action.title")}</h2>
+
+    <h2 style="margin-top:10px">${t("results.action.cut")}</h2>
+    ${cuts.length
+      ? `<ul class="list">${cutsHtml}</ul>`
+      : `<div class="help">${t("swap.keep.sugary")}</div>`
+    }
+
+    <h2>${t("results.action.swaps")}</h2>
+    <ul class="list">${swaps.map(k=>`<li>${escapeHtml(t(k))}</li>`).join("")}</ul>
+
+    <h2>${t("results.action.training")}</h2>
+    <p class="note">${escapeHtml(t(train.noteKey))}</p>
+    <ul class="list">
+      <li><b>${t("week.1")}:</b> ${train.week1} ${t("training.workouts")}</li>
+      <li><b>${t("week.2")}:</b> ${train.week2} ${t("training.workouts")}</li>
+    </ul>
+
+    <h2>${t("results.action.steps")}</h2>
+    ${steps.mode === "keep" ? `
+      <div class="help">${escapeHtml(t(steps.noteKey))}</div>
+    ` : steps.mode === "to10k" ? `
+      <div class="help">${escapeHtml(t(steps.noteKey))}</div>
+    ` : `
+      <p class="note">${escapeHtml(t(steps.noteKey))}</p>
+      <ul class="list">
+        <li><b>${t("week.1")}:</b> ${t("results.action.steps.aim")} <b>${steps.week1.toLocaleString()}</b> ${t("results.action.steps.perday")}</li>
+        <li><b>${t("week.2")}:</b> ${t("results.action.steps.aim")} <b>${steps.week2.toLocaleString()}</b> ${t("results.action.steps.perday")}</li>
+        ${steps.showLongTerm ? `<li><b>${t("results.action.steps.after")}:</b> ${t("results.action.steps.add1k")}</li>` : ``}
+      </ul>
+    `}
+
+    <h2>${t("results.sleep")}</h2>
+    <div class="help">${escapeHtml(t(sleep.noteKey))}</div>
+
+    <!-- SECOND CTA BLOCK - After sleep, before send results -->
+    ${ctaBlockHtml}
+
+    <div class="hr"></div>
+
+    <h2>${t("results.send")}</h2>
+    <div class="field" style="margin-top:6px;">
+      <label class="check" style="padding:10px 12px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);">
+        <input type="checkbox" id="sendMeResults" />
+        ${t("results.send.yes")}
+      </label>
+    </div>
+
+    <div id="contactBlock" style="display:none">
+      <div class="row">
+        <div class="field">
+          <label>${t("contact.email")}</label>
+          <input type="email" id="emailInput" placeholder="name@email.com" />
+        </div>
+        <div class="field">
+          <label>${t("contact.phone")}</label>
+          <input type="tel" id="phoneInput" placeholder="+33 6 12 34 56 78" />
+        </div>
+      </div>
+
+      <div class="btnrow" style="border-top:none;padding-top:0;">
+        <button type="button" class="ghost mini" id="emailBtn">${t("contact.sendEmail")}</button>
+        <button type="button" class="primary mini" id="waBtn">${t("contact.sendWhatsApp")}</button>
+      </div>
+
+      <p class="note">${t("contact.note")}</p>
+    </div>
+
+    <div class="hr"></div>
+
+    <h2>${t("results.summary")}</h2>
+    <div class="help"><pre class="mono">${escapeHtml(resultsText)}</pre></div>
+  `;
+
+  // dropdown
+  const drop = document.getElementById("moreDrop");
+  const head = document.getElementById("moreBtn");
+  const caret = document.getElementById("caret");
+  head.addEventListener("click", ()=>{
+    drop.classList.toggle("open");
+    caret.textContent = drop.classList.contains("open") ? "▴" : "▾";
+  });
+
+  // send results
+  const sendMe = document.getElementById("sendMeResults");
+  const contactBlock = document.getElementById("contactBlock");
+  const emailBtn = document.getElementById("emailBtn");
+  const waBtn = document.getElementById("waBtn");
+
+   sendMe.addEventListener("change", () => {
+    contactBlock.style.display = sendMe.checked ? "" : "none";
+    if (sendMe.checked) contactBlock.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+
+  emailBtn.addEventListener("click", () => {
+    const email = document.getElementById("emailInput").value.trim();
+    if (!email) { alert("Please enter your email."); return; }
+    const subject = encodeURIComponent("Your Nutrition Assessment Results");
+    const body = encodeURIComponent(resultsText);
+    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
+  });
+
+  waBtn.addEventListener("click", () => {
+    let phone = document.getElementById("phoneInput").value.trim();
+    if (!phone) { alert("Please enter your phone number."); return; }
+    phone = phone.replace(/[^\d]/g, "");
+    if (phone.length < 8) { alert("Please enter a valid phone number in international format."); return; }
+    const msg = encodeURIComponent(resultsText);
+    window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
+  });
+}
+
+/* =========================
+   VALIDATION + DYNAMIC FIELDS
+   ========================= */
+function setVisible(id, on){
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = on ? "" : "none";
+}
+
+function scrollToElementTop(el) {
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function clearInvalidMarks(stepEl) {
+  stepEl.querySelectorAll(".invalid").forEach(x => x.classList.remove("invalid"));
+  stepEl.querySelectorAll(".invalid-label").forEach(x => x.classList.remove("invalid-label"));
+  const bfGrid = document.getElementById("bfGrid");
+  if (bfGrid) bfGrid.classList.remove("invalidGrid");
+}
+
+function markFieldInvalid(el) {
+  el.classList.add("invalid");
+  const fieldWrap = el.closest(".field");
+  if (fieldWrap) {
+    const lab = fieldWrap.querySelector("label");
+    if (lab) lab.classList.add("invalid-label");
+  }
+
+  // Special case: BF hidden fields => highlight the whole grid
+  if (el && (el.id === "bfMin" || el.id === "bfMax" || el.id === "bfRangeLabel")) {
+    const grid = document.getElementById("bfGrid");
+    if (grid) grid.classList.add("invalidGrid");
+  }
+}
+
+function showErrorBanner(missingLabels){
+  const b = document.getElementById("errBanner");
+  if (!missingLabels.length){
+    b.style.display = "none";
+    b.innerHTML = "";
+    return;
+  }
+  b.style.display = "block";
+  b.innerHTML = `<b>${escapeHtml(t("err.fill"))}</b> ${missingLabels.map(x=>`<span style="white-space:nowrap"> • ${escapeHtml(x)}</span>`).join("")}`;
+}
+
+function getCheckedAllergies(){
+  return Array.from(document.querySelectorAll('input[name="allergies"]:checked')).map(x => x.value);
+}
+
+function updateTrainingFields(){
+  const trainingNow = document.getElementById("trainingNow").value;
+  const trainedBefore = document.getElementById("trainedBefore").value;
+  const type = document.getElementById("trainingType").value;
+
+  setVisible("trainedBeforeWrap", trainingNow === "no");
+
+  const showType = (trainingNow === "yes") || (trainingNow === "no" && trainedBefore === "yes");
+  setVisible("trainingTypeWrap", showType);
+
+  const showSessions = (trainingNow === "yes");
+  setVisible("sessionsWrap", showSessions);
+  if (!showSessions) {
+    document.getElementById("sessionsPerWeek").value = "0";
+  }
+
+  const showDetails = showType && (type === "mixed" || type === "sport");
+  setVisible("trainingDetailsWrap", showDetails);
+
+  if (!showType) {
+    document.getElementById("trainingType").value = "";
+    document.getElementById("trainingDetails").value = "";
+  }
+  if (!showDetails) {
+    document.getElementById("trainingDetails").value = "";
+  }
+}
+
+function updateProduceAllergyField(){
+  const allergies = getCheckedAllergies();
+  setVisible("produceAllergyWrap", allergies.includes("fruits") || allergies.includes("vegetables"));
+}
+
+function updateCurrentCalsRequired(){
+  const tracks = document.getElementById("tracks").value;
+  const currentCals = document.getElementById("currentCals");
+  const currentCalsLabel = currentCals.closest(".field").querySelector("label");
+  
+  if (tracks === "sometimes" || tracks === "yes") {
+    currentCals.required = true;
+    currentCalsLabel.setAttribute("data-i18n", "s2.currentCals.required");
+    currentCalsLabel.innerHTML = t("s2.currentCals.required");
+  } else {
+    currentCals.required = false;
+    currentCalsLabel.setAttribute("data-i18n", "s2.currentCals");
+    currentCalsLabel.innerHTML = t("s2.currentCals");
+  }
+}
+
+function validateStep(i){
+  const step = document.getElementById(`step-${i}`);
+  clearInvalidMarks(step);
+
+  const required = Array.from(step.querySelectorAll("[required]"));
+  let firstInvalid = null;
+  const missingLabels = [];
+
+  for (const el of required) {
+    if (!el.value) {
+      if (!firstInvalid) firstInvalid = el;
+      markFieldInvalid(el);
+      const wrap = el.closest(".field");
+      const lab = wrap ? wrap.querySelector("label") : null;
+      
+      // Special label for BF fields
+      if (el.id === "bfMin" || el.id === "bfMax" || el.id === "bfRangeLabel") {
+        if (!missingLabels.includes(t("err.selectBf"))) {
+          missingLabels.push(t("err.selectBf"));
+        }
+      } else {
+        missingLabels.push(lab ? lab.textContent.trim() : "Missing field");
+      }
+    }
+  }
+
+  const tdWrap = document.getElementById("trainingDetailsWrap");
+  if (tdWrap && tdWrap.style.display !== "none") {
+    const td = document.getElementById("trainingDetails");
+    if (!td.value) {
+      if (!firstInvalid) firstInvalid = td;
+      markFieldInvalid(td);
+      missingLabels.push(t("s1.trainingDetails"));
+    }
+  }
+
+  const pWrap = document.getElementById("produceAllergyWrap");
+  if (pWrap && pWrap.style.display !== "none") {
+    const pd = document.getElementById("produceAllergyDetails");
+    if (!pd.value) {
+      if (!firstInvalid) firstInvalid = pd;
+      markFieldInvalid(pd);
+      missingLabels.push(t("s3.produce.details"));
+    }
+  }
+
+  if (firstInvalid) {
+    showErrorBanner(missingLabels);
+    scrollToElementTop(firstInvalid);
+    firstInvalid.focus({ preventScroll: true });
+    return false;
+  }
+
+  showErrorBanner([]);
+  return true;
+}
+
+/* =========================
+   BODY FAT VISUAL CARDS
+   ========================= */
+function initBfVisualCards(){
+  const grid = document.getElementById("bfGrid");
+  const prompt = document.getElementById("bfPrompt");
+  const bfMinEl = document.getElementById("bfMin");
+  const bfMaxEl = document.getElementById("bfMax");
+  const bfLabelEl = document.getElementById("bfRangeLabel");
+
+  if (!grid || !bfMinEl || !bfMaxEl || !bfLabelEl) return;
+
+  const cards = Array.from(grid.querySelectorAll(".bfCard"));
+
+  function clearSelection(){
+    bfMinEl.value = "";
+    bfMaxEl.value = "";
+    bfLabelEl.value = "";
+    cards.forEach(c => {
+      c.classList.remove("isSelected");
+      c.setAttribute("aria-checked", "false");
+    });
+  }
+
+  function setSelection(card){
+    bfMinEl.value = String(card.dataset.min || "");
+    bfMaxEl.value = String(card.dataset.max || "");
+    bfLabelEl.value = String(card.dataset.label || "");
+
+    // clear invalid styling
+    grid.classList.remove("invalidGrid");
+    bfMinEl.classList.remove("invalid");
+    bfMaxEl.classList.remove("invalid");
+    bfLabelEl.classList.remove("invalid");
+    const wrap = bfMinEl.closest(".field");
+    if (wrap){
+      const lab = wrap.querySelector("label");
+      if (lab) lab.classList.remove("invalid-label");
+    }
+
+    cards.forEach(c => {
+      const on = c === card;
+      c.classList.toggle("isSelected", on);
+      c.setAttribute("aria-checked", on ? "true" : "false");
+    });
+  }
+
+  function gateByGender(gender){
+    const g = (gender === "female") ? "female" : (gender === "male" ? "male" : "");
+    
+    // Show/hide prompt and grid
+    if (!g) {
+      if (prompt) prompt.style.display = "";
+      grid.style.display = "none";
+    } else {
+      if (prompt) prompt.style.display = "none";
+      grid.style.display = "";
+    }
+
+    cards.forEach(card => {
+      const show = g ? (card.dataset.gender === g) : false;
+      card.classList.toggle("isHidden", !show);
+    });
+
+    // If current selection doesn't match gender, clear it
+    const selected = cards.find(c => c.classList.contains("isSelected"));
+    if (selected && g && selected.dataset.gender !== g) {
+      clearSelection();
+    }
+  }
+
+  // click handlers
+  cards.forEach(card => {
+    card.addEventListener("click", () => setSelection(card));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        setSelection(card);
+      }
+    });
+  });
+
+  // expose gating function globally
+  window.__gateBfCardsByGender = gateByGender;
+
+  // initial gate
+  const genderSel = document.getElementById("gender");
+  gateByGender(genderSel ? genderSel.value : "");
+}
+
+/* =========================
+   WIZARD
+   ========================= */
+const stepsEls = Array.from(document.querySelectorAll(".step"));
+const stepper = document.getElementById("stepper");
+const backBtn = document.getElementById("backBtn");
+const nextBtn = document.getElementById("nextBtn");
+const form = document.getElementById("quizForm");
+let currentStep = 0;
+let lastResultsData = null;
+
+function renderStepper() {
+  stepper.innerHTML = "";
+  for (let i=0;i<stepsEls.length;i++){
+    const d = document.createElement("div");
+    d.className = "dot" + (i===currentStep ? " on" : "");
+    stepper.appendChild(d);
+  }
+}
+
+function showStep(i){
+  stepsEls.forEach((s, idx)=> s.style.display = idx===i ? "" : "none");
+  currentStep = i;
+  renderStepper();
+  backBtn.disabled = (i===0);
+  updateNavButtonText();
+  showErrorBanner([]);
+
+  // Show badges only on first step
+  const badges = document.getElementById("heroBadges");
+  if (badges) {
+    badges.style.display = (i === 0) ? "" : "none";
+  }
+
+  const stepEl = document.getElementById(`step-${i}`);
+  if (stepEl) stepEl.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function getFormData(){
+  const fd = new FormData(form);
+  const allergies = fd.getAll("allergies");
+  const data = Object.fromEntries(fd.entries());
+  data.allergies = allergies;
+
+  data.age = Number(data.age);
+  data.heightCm = Number(data.heightCm);
+  data.weightKg = Number(data.weightKg);
+
+  // BF min/max stored from cards
+  data.bfMin = Number(data.bfMin);
+  data.bfMax = Number(data.bfMax);
+  data.bfRangeLabel = String(data.bfRangeLabel || "");
+
+  if (data.trainingNow === "no") data.sessionsPerWeek = "0";
+
+  return data;
+}
+
+backBtn.addEventListener("click", ()=>{
+  if (currentStep>0) showStep(currentStep-1);
+});
+
+nextBtn.addEventListener("click", ()=>{
+  if (currentStep === stepsEls.length-1) {
+    form.reset();
+    document.getElementById("results").innerHTML = "";
+    
+    // Clear BF selection
+    const cards = document.querySelectorAll(".bfCard");
+    cards.forEach(c => {
+      c.classList.remove("isSelected");
+      c.setAttribute("aria-checked", "false");
+    });
+    document.getElementById("bfMin").value = "";
+    document.getElementById("bfMax").value = "";
+    document.getElementById("bfRangeLabel").value = "";
+    
+    // Reset gender gating
+    if (window.__gateBfCardsByGender) window.__gateBfCardsByGender("");
+    
+    updateTrainingFields();
+    updateProduceAllergyField();
+    updateCurrentCalsRequired();
+    showStep(0);
+    return;
+  }
+
+  if (currentStep < stepsEls.length-2) {
+    if (!validateStep(currentStep)) return;
+    showStep(currentStep+1);
+    return;
+  }
+
+  if (!validateStep(currentStep)) return;
+  const data = getFormData();
+  lastResultsData = data;
+  renderResults(data);
+  showStep(currentStep+1);
+});
+
+/* dynamic field events */
+document.getElementById("trainingNow").addEventListener("change", ()=>{
+  document.getElementById("trainedBefore").value = "";
+  document.getElementById("trainingType").value = "";
+  document.getElementById("trainingDetails").value = "";
+  updateTrainingFields();
+});
+
+document.getElementById("trainedBefore").addEventListener("change", ()=>{
+  document.getElementById("trainingType").value = "";
+  document.getElementById("trainingDetails").value = "";
+  updateTrainingFields();
+});
+
+document.getElementById("trainingType").addEventListener("change", ()=>{
+  document.getElementById("trainingDetails").value = "";
+  updateTrainingFields();
+});
+
+document.querySelectorAll('input[name="allergies"]').forEach(cb=>{
+  cb.addEventListener("change", updateProduceAllergyField);
+});
+
+document.getElementById("tracks").addEventListener("change", updateCurrentCalsRequired);
+
+document.getElementById("gender").addEventListener("change", (e) => {
+  if (window.__gateBfCardsByGender) window.__gateBfCardsByGender(e.target.value);
+});
+
+/* init */
+updateTrainingFields();
+updateProduceAllergyField();
+updateCurrentCalsRequired();
+initBfVisualCards();
+renderStepper();
+showStep(0);
+
+// init language
+const langSelect = document.getElementById("langSelect");
+if (langSelect){
+  langSelect.value = getLang();
+  langSelect.addEventListener("change", (e)=> setLang(e.target.value));
+}
+applyI18n();
+updateNavButtonText();
+
+</script>
+</body>
+</html>
