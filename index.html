@@ -681,7 +681,7 @@
                     <div class="bfTitle">20–24%</div>
                     <div class="bfTag" data-i18n="s1.gender.male">Male</div>
                   </div>
-                  <div class="bfDesc" data-i18n="s1.bf.male.20_24.desc">Average. No ab definition, softer look.</div>
+                  <div class="bfDesc" data-i18n="s1.bf.male.20_24.desc">Average. Little ab definition, softer look.</div>
                 </button>
 
                 <button type="button" class="bfCard" data-gender="male" data-min="25" data-max="30" data-label="25–30%" role="radio" aria-checked="false">
@@ -1037,6 +1037,136 @@
 
 <script>
 /* =========================
+   GOOGLE SHEETS TRACKING
+   ========================= */
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJu1dLX_VSNymLMLcYlhP5Uq9IJabjHobYMQSD6zEyMimIYzIJSPxpgn03luJi5ck7/exec';
+
+// Generate unique session ID
+function generateSessionId() {
+  return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+// Get or create session ID
+let sessionId = sessionStorage.getItem('quiz_session_id');
+if (!sessionId) {
+  sessionId = generateSessionId();
+  sessionStorage.setItem('quiz_session_id', sessionId);
+}
+
+// Track data to Google Sheets
+function trackToGoogleSheets(status, stepReached, additionalData = {}) {
+  const formData = getFormDataForTracking();
+  
+  const trackingData = {
+    sessionId: sessionId,
+    status: status,
+    stepReached: stepReached,
+    language: getLang(),
+    userAgent: navigator.userAgent,
+    ...formData,
+    ...additionalData
+  };
+
+  // Send data using fetch with no-cors mode (fire and forget)
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(trackingData)
+  }).catch(err => {
+    console.log('Tracking error (non-blocking):', err);
+  });
+}
+
+// Get form data for tracking (without validation)
+function getFormDataForTracking() {
+  const form = document.getElementById('quizForm');
+  const fd = new FormData(form);
+  const allergies = fd.getAll('allergies');
+  const data = Object.fromEntries(fd.entries());
+  data.allergies = allergies;
+  
+  return {
+    firstName: data.firstName || '',
+    age: data.age || '',
+    gender: data.gender || '',
+    heightCm: data.heightCm || '',
+    weightKg: data.weightKg || '',
+    bfRangeLabel: data.bfRangeLabel || '',
+    activity: data.activity || '',
+    experience: data.experience || '',
+    trainingNow: data.trainingNow || '',
+    trainedBefore: data.trainedBefore || '',
+    trainingType: data.trainingType || '',
+    trainingDetails: data.trainingDetails || '',
+    sessionsPerWeek: data.sessionsPerWeek || '',
+    steps: data.steps || '',
+    sleep: data.sleep || '',
+    goal: data.goal || '',
+    snacks: data.snacks || '',
+    sodas: data.sodas || '',
+    fastfood: data.fastfood || '',
+    alcohol: data.alcohol || '',
+    tracks: data.tracks || '',
+    currentCals: data.currentCals || '',
+    diet: data.diet || '',
+    allergies: allergies,
+    likes: data.likes || '',
+    dislikes: data.dislikes || ''
+  };
+}
+
+// Track on page load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    trackToGoogleSheets('started', 0);
+  }, 1000);
+});
+
+// Track on page unload (when user leaves)
+window.addEventListener('beforeunload', () => {
+  const data = {
+    sessionId: sessionId,
+    status: currentStep === stepsEls.length - 1 ? 'completed' : 'abandoned',
+    stepReached: currentStep,
+    language: getLang(),
+    userAgent: navigator.userAgent,
+    ...getFormDataForTracking()
+  };
+  
+  // Use sendBeacon for reliable tracking on page close
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(GOOGLE_SCRIPT_URL, JSON.stringify(data));
+  }
+});
+
+// Debounce function for field tracking
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Track field changes (debounced)
+const trackFieldChange = debounce(() => {
+  trackToGoogleSheets('in_progress', currentStep);
+}, 2000);
+
+// Add listeners to all form fields for tracking
+document.querySelectorAll('#quizForm input, #quizForm select, #quizForm textarea').forEach(field => {
+  field.addEventListener('change', trackFieldChange);
+  field.addEventListener('input', trackFieldChange);
+});
+
+/* =========================
    I18N (EN / FR / DE)
    ========================= */
 const I18N = {
@@ -1066,7 +1196,7 @@ const I18N = {
     "s1.bf.male.11_12.desc": "Lean. Clear abs, some vascularity.",
     "s1.bf.male.13_15.desc": "Athletic. Visible abs, defined muscles.",
     "s1.bf.male.16_19.desc": "Fit. Some ab definition, less separation.",
-    "s1.bf.male.20_24.desc": "Average. No definition, softer look.",
+    "s1.bf.male.20_24.desc": "Average. Little ab definition, softer look.",
     "s1.bf.male.25_30.desc": "Soft midsection. Noticeable fat around waist.",
     "s1.bf.male.35_40.desc": "Clear fat accumulation. Rounder midsection.",
     "s1.bf.female.10_12.desc": "Competition level. Extremely defined, visible striations.",
@@ -1355,7 +1485,7 @@ const I18N = {
     "s1.bf.male.11_12.desc": "Sec. Abdos clairs, quelques veines.",
     "s1.bf.male.13_15.desc": "Athlétique. Abdos visibles, muscles définis.",
     "s1.bf.male.16_19.desc": "Fit. Un peu de définition abdominale.",
-    "s1.bf.male.20_24.desc": "Moyen. Pas de définition, look plus doux.",
+    "s1.bf.male.20_24.desc": "Moyen. Peu de définition, look plus doux.",
     "s1.bf.male.25_30.desc": "Ventre mou. Graisse visible autour de la taille.",
     "s1.bf.male.35_40.desc": "Accumulation de graisse visible. Ventre plus rond.",
     "s1.bf.female.10_12.desc": "Niveau compétition. Très définie, striations visibles.",
@@ -1640,7 +1770,7 @@ const I18N = {
     "s1.bf.male.11_12.desc": "Schlank. Klare Bauchmuskeln, etwas Vaskularität.",
     "s1.bf.male.13_15.desc": "Athletisch. Sichtbare Bauchmuskeln, definierte Muskeln.",
     "s1.bf.male.16_19.desc": "Fit. Etwas Bauchmuskeldefinition.",
-    "s1.bf.male.20_24.desc": "Durchschnitt. Kein Definition, weicherer Look.",
+    "s1.bf.male.20_24.desc": "Durchschnitt. Wenig Definition, weicherer Look.",
     "s1.bf.male.25_30.desc": "Weiche Körpermitte. Sichtbares Fett um die Taille.",
     "s1.bf.male.35_40.desc": "Deutliche Fettansammlung. Rundere Körpermitte.",
     "s1.bf.female.10_12.desc": "Wettkampfniveau. Extrem definiert, sichtbare Striationen.",
@@ -1796,7 +1926,7 @@ const I18N = {
     "contact.sendEmail": "Per E-Mail senden",
     "contact.sendWhatsApp": "Per WhatsApp senden",
     "cut.sugary": "Zuckerhaltige Snacks",
-       "cut.drinks": "Gesüßte Getränke",
+    "cut.drinks": "Gesüßte Getränke",
     "cut.fastfood": "Fast Food / Burger",
     "cut.alcohol": "Alkohol",
     "cut.note": "Woche 1 = weniger. Woche 2 = noch weniger.",
@@ -1945,14 +2075,13 @@ function updateNavButtonText(){
 }
 
 /* =========================
-   CALCULATION RULES (UPDATED)
+   CALCULATION RULES
    ========================= */
-// Updated activity factors per your requirements
 const ACTIVITY_FACTOR = { 
   sedentary: 1.2, 
   light: 1.35, 
   moderate: 1.55, 
-  very: 1.825  // Using midpoint of 1.75-1.9
+  very: 1.825
 };
 
 const GOAL_MULT = { lose: 0.80, maintain: 1.00, gain: 1.15 };
@@ -1965,9 +2094,6 @@ function mifflinBMR({ gender, weightKg, heightCm, age }) {
   return gender === "male" ? base + 5 : base - 161;
 }
 
-/* =========================
-   BF / PROTEIN / FAT CALCULATION (UPDATED - based on BW, not LBM)
-   ========================= */
 function bfMidpointPct(data){
   const min = Number(data.bfMin);
   const max = Number(data.bfMax);
@@ -1975,7 +2101,6 @@ function bfMidpointPct(data){
   return (min + max) / 2;
 }
 
-// NEW: Protein factor based on body fat % and gender (g/kg BODY WEIGHT)
 function proteinFactorGPerKgBW(bfPct, gender){
   if (gender === "male") {
     if (bfPct <= 7) return 2.4;
@@ -1985,9 +2110,8 @@ function proteinFactorGPerKgBW(bfPct, gender){
     if (bfPct <= 19) return 2.2;
     if (bfPct <= 24) return 2.0;
     if (bfPct <= 30) return 2.0;
-    return 1.6; // 35-40%+
+    return 1.6;
   } else {
-    // Female
     if (bfPct <= 12) return 2.4;
     if (bfPct <= 17) return 2.4;
     if (bfPct <= 20) return 2.4;
@@ -1996,11 +2120,10 @@ function proteinFactorGPerKgBW(bfPct, gender){
     if (bfPct <= 29) return 2.0;
     if (bfPct <= 35) return 1.6;
     if (bfPct <= 40) return 1.6;
-    return 1.6; // 50%+
+    return 1.6;
   }
 }
 
-// NEW: Fat percentage based on body fat % and gender
 function fatPctFromBF(bfPct, gender){
   if (gender === "male") {
     if (bfPct <= 7) return 0.225;
@@ -2010,9 +2133,8 @@ function fatPctFromBF(bfPct, gender){
     if (bfPct <= 19) return 0.25;
     if (bfPct <= 24) return 0.25;
     if (bfPct <= 30) return 0.30;
-    return 0.30; // 35-40%+
+    return 0.30;
   } else {
-    // Female
     if (bfPct <= 12) return 0.225;
     if (bfPct <= 17) return 0.225;
     if (bfPct <= 20) return 0.25;
@@ -2021,29 +2143,24 @@ function fatPctFromBF(bfPct, gender){
     if (bfPct <= 29) return 0.275;
     if (bfPct <= 35) return 0.275;
     if (bfPct <= 40) return 0.30;
-    return 0.30; // 50%+
+    return 0.30;
   }
 }
 
 function computeTargets(data) {
   const bmr = mifflinBMR(data);
-  // Updated default to 1.2 (sedentary) if activity is missing
   const maintenance = bmr * (ACTIVITY_FACTOR[data.activity] ?? 1.2);
   const targetCalories = maintenance * (GOAL_MULT[data.goal] ?? 1.0);
 
-  // Get body fat percentage
   const bfPct = bfMidpointPct(data) ?? (data.gender === "female" ? 28 : 20);
 
-  // Calculate protein based on body weight (not LBM)
   const pFactor = proteinFactorGPerKgBW(bfPct, data.gender);
   const proteinG = data.weightKg * pFactor;
 
-  // Calculate fat based on body fat percentage
   const fatPct = fatPctFromBF(bfPct, data.gender);
   const fatKcal = targetCalories * fatPct;
   const fatG = fatKcal / 9;
 
-  // Calculate carbs from remaining calories
   const proteinKcal = proteinG * 4;
   const carbKcal = Math.max(0, targetCalories - proteinKcal - fatKcal);
   const carbsG = carbKcal / 4;
@@ -2056,7 +2173,7 @@ function computeTargets(data) {
 }
 
 /* =========================
-   MEAL IDEAS (with translations)
+   MEAL IDEAS
    ========================= */
 function getMealIdeas() {
   const lang = getLang();
@@ -2699,6 +2816,14 @@ function renderResults(data){
   const resultsEl = document.getElementById("results");
   const targets = computeTargets(data);
 
+  // Track completed with calculated values
+  trackToGoogleSheets('completed', 3, {
+    targetCalories: Math.round(targets.targetCalories),
+    proteinG: Math.round(targets.proteinG),
+    carbsG: Math.round(targets.carbsG),
+    fatG: Math.round(targets.fatG)
+  });
+
   const cuts = [];
   const s1 = progressiveCutLabel("cut.sugary", habitPerWeek(data.snacks));
   const s2 = progressiveCutLabel("cut.drinks", habitPerWeek(data.sodas));
@@ -2736,7 +2861,6 @@ function renderResults(data){
     `).join("")
     : "";
 
-  // CTA Block HTML with actual links
   const ctaBlockHtml = `
     <div class="ctaBox">
       <div class="ctaItem">
@@ -2982,7 +3106,7 @@ function renderResults(data){
   const emailBtn = document.getElementById("emailBtn");
   const waBtn = document.getElementById("waBtn");
 
-   sendMe.addEventListener("change", () => {
+  sendMe.addEventListener("change", () => {
     contactBlock.style.display = sendMe.checked ? "" : "none";
     if (sendMe.checked) contactBlock.scrollIntoView({ behavior:"smooth", block:"start" });
   });
@@ -3033,7 +3157,6 @@ function markFieldInvalid(el) {
     if (lab) lab.classList.add("invalid-label");
   }
 
-  // Special case: BF hidden fields => highlight the whole grid
   if (el && (el.id === "bfMin" || el.id === "bfMax" || el.id === "bfRangeLabel")) {
     const grid = document.getElementById("bfGrid");
     if (grid) grid.classList.add("invalidGrid");
@@ -3119,7 +3242,6 @@ function validateStep(i){
       const wrap = el.closest(".field");
       const lab = wrap ? wrap.querySelector("label") : null;
       
-      // Special label for BF fields
       if (el.id === "bfMin" || el.id === "bfMax" || el.id === "bfRangeLabel") {
         if (!missingLabels.includes(t("err.selectBf"))) {
           missingLabels.push(t("err.selectBf"));
@@ -3190,7 +3312,6 @@ function initBfVisualCards(){
     bfMaxEl.value = String(card.dataset.max || "");
     bfLabelEl.value = String(card.dataset.label || "");
 
-    // clear invalid styling
     grid.classList.remove("invalidGrid");
     bfMinEl.classList.remove("invalid");
     bfMaxEl.classList.remove("invalid");
@@ -3206,12 +3327,14 @@ function initBfVisualCards(){
       c.classList.toggle("isSelected", on);
       c.setAttribute("aria-checked", on ? "true" : "false");
     });
+    
+    // Track body fat selection
+    trackFieldChange();
   }
 
   function gateByGender(gender){
     const g = (gender === "female") ? "female" : (gender === "male" ? "male" : "");
     
-    // Show/hide prompt and grid
     if (!g) {
       if (prompt) prompt.style.display = "";
       grid.style.display = "none";
@@ -3225,14 +3348,12 @@ function initBfVisualCards(){
       card.classList.toggle("isHidden", !show);
     });
 
-    // If current selection doesn't match gender, clear it
     const selected = cards.find(c => c.classList.contains("isSelected"));
     if (selected && g && selected.dataset.gender !== g) {
       clearSelection();
     }
   }
 
-  // click handlers
   cards.forEach(card => {
     card.addEventListener("click", () => setSelection(card));
     card.addEventListener("keydown", (e) => {
@@ -3243,10 +3364,8 @@ function initBfVisualCards(){
     });
   });
 
-  // expose gating function globally
   window.__gateBfCardsByGender = gateByGender;
 
-  // initial gate
   const genderSel = document.getElementById("gender");
   gateByGender(genderSel ? genderSel.value : "");
 }
@@ -3279,7 +3398,6 @@ function showStep(i){
   updateNavButtonText();
   showErrorBanner([]);
 
-  // Show badges only on first step
   const badges = document.getElementById("heroBadges");
   if (badges) {
     badges.style.display = (i === 0) ? "" : "none";
@@ -3287,6 +3405,11 @@ function showStep(i){
 
   const stepEl = document.getElementById(`step-${i}`);
   if (stepEl) stepEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  
+  // Track step change
+  if (i > 0 && i < stepsEls.length - 1) {
+    trackToGoogleSheets('in_progress', i);
+  }
 }
 
 function getFormData(){
@@ -3299,7 +3422,6 @@ function getFormData(){
   data.heightCm = Number(data.heightCm);
   data.weightKg = Number(data.weightKg);
 
-  // BF min/max stored from cards
   data.bfMin = Number(data.bfMin);
   data.bfMax = Number(data.bfMax);
   data.bfRangeLabel = String(data.bfRangeLabel || "");
@@ -3315,10 +3437,13 @@ backBtn.addEventListener("click", ()=>{
 
 nextBtn.addEventListener("click", ()=>{
   if (currentStep === stepsEls.length-1) {
+    // Reset and start new session
+    sessionId = generateSessionId();
+    sessionStorage.setItem('quiz_session_id', sessionId);
+    
     form.reset();
     document.getElementById("results").innerHTML = "";
     
-    // Clear BF selection
     const cards = document.querySelectorAll(".bfCard");
     cards.forEach(c => {
       c.classList.remove("isSelected");
@@ -3328,13 +3453,15 @@ nextBtn.addEventListener("click", ()=>{
     document.getElementById("bfMax").value = "";
     document.getElementById("bfRangeLabel").value = "";
     
-    // Reset gender gating
     if (window.__gateBfCardsByGender) window.__gateBfCardsByGender("");
     
     updateTrainingFields();
     updateProduceAllergyField();
     updateCurrentCalsRequired();
     showStep(0);
+    
+    // Track new session start
+    trackToGoogleSheets('started', 0);
     return;
   }
 
