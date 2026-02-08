@@ -1039,7 +1039,7 @@
 /* =========================
    GOOGLE SHEETS TRACKING
    ========================= */
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJu1dLX_VSNymLMLcYlhP5Uq9IJabjHobYMQSD6zEyMimIYzIJSPxpgn03luJi5ck7/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwai0sBu1k667wOjjUMQre6CY5wQdAWXwkSQuncb5daRrto-HXiXRGaydUIaeyPTbxh/exec';
 
 // Generate unique session ID
 function generateSessionId() {
@@ -1053,6 +1053,21 @@ if (!sessionId) {
   sessionStorage.setItem('quiz_session_id', sessionId);
 }
 
+// Store contact info for tracking
+let userContactInfo = {
+  email: '',
+  phone: ''
+};
+
+// Store CTA clicks for tracking
+let ctaClicks = {
+  calendly: false,
+  skool: false,
+  sendEmail: false,
+  sendWhatsApp: false,
+  sendResultsChecked: false
+};
+
 // Track data to Google Sheets
 function trackToGoogleSheets(status, stepReached, additionalData = {}) {
   const formData = getFormDataForTracking();
@@ -1063,6 +1078,15 @@ function trackToGoogleSheets(status, stepReached, additionalData = {}) {
     stepReached: stepReached,
     language: getLang(),
     userAgent: navigator.userAgent,
+    // Contact info
+    contactEmail: userContactInfo.email,
+    contactPhone: userContactInfo.phone,
+    // CTA tracking
+    clickedCalendly: ctaClicks.calendly,
+    clickedSkool: ctaClicks.skool,
+    clickedSendEmail: ctaClicks.sendEmail,
+    clickedSendWhatsApp: ctaClicks.sendWhatsApp,
+    wantsResults: ctaClicks.sendResultsChecked,
     ...formData,
     ...additionalData
   };
@@ -1077,6 +1101,28 @@ function trackToGoogleSheets(status, stepReached, additionalData = {}) {
     body: JSON.stringify(trackingData)
   }).catch(err => {
     console.log('Tracking error (non-blocking):', err);
+  });
+}
+
+// Track CTA click specifically
+function trackCtaClick(ctaType) {
+  ctaClicks[ctaType] = true;
+  trackToGoogleSheets('cta_click', currentStep, {
+    ctaClicked: ctaType,
+    ctaClickTime: new Date().toISOString()
+  });
+}
+
+// Track contact info update
+function trackContactInfo(type, value) {
+  if (type === 'email') {
+    userContactInfo.email = value;
+  } else if (type === 'phone') {
+    userContactInfo.phone = value;
+  }
+  trackToGoogleSheets('contact_info_entered', currentStep, {
+    contactType: type,
+    contactValue: value
   });
 }
 
@@ -1133,6 +1179,13 @@ window.addEventListener('beforeunload', () => {
     stepReached: currentStep,
     language: getLang(),
     userAgent: navigator.userAgent,
+    contactEmail: userContactInfo.email,
+    contactPhone: userContactInfo.phone,
+    clickedCalendly: ctaClicks.calendly,
+    clickedSkool: ctaClicks.skool,
+    clickedSendEmail: ctaClicks.sendEmail,
+    clickedSendWhatsApp: ctaClicks.sendWhatsApp,
+    wantsResults: ctaClicks.sendResultsChecked,
     ...getFormDataForTracking()
   };
   
@@ -1181,7 +1234,7 @@ const I18N = {
     "s1.title": "1) Personal Data",
     "p.name": "Name",
     "p.name_ph": "e.g., Sarah",
-        "s1.age": "Age (years)",
+    "s1.age": "Age (years)",
     "s1.gender": "Gender",
     "s1.gender.select": "Select",
     "s1.gender.male": "Male",
@@ -2861,17 +2914,18 @@ function renderResults(data){
     `).join("")
     : "";
 
+  // CTA block with tracking data attributes
   const ctaBlockHtml = `
     <div class="ctaBox">
       <div class="ctaItem">
         <div class="ctaTitle">${t("cta.plan.title")}</div>
-        <a href="https://calendly.com/letzroar-info/game-plan-call" class="ctaBtn ctaPrimary" target="_blank">${t("cta.plan.btn")} →</a>
+        <a href="https://calendly.com/letzroar-info/game-plan-call" class="ctaBtn ctaPrimary cta-calendly" target="_blank" data-cta="calendly">${t("cta.plan.btn")} →</a>
       </div>
       <div class="ctaDivider"></div>
       <div class="ctaItem">
         <div class="ctaTitle">${t("cta.community.title")}</div>
         <div class="ctaDesc">${t("cta.community.desc")}</div>
-        <a href="https://www.skool.com/fitness-transformation-8222/classroom" class="ctaBtn ctaSecondary" target="_blank">${t("cta.community.btn")} →</a>
+        <a href="https://www.skool.com/fitness-transformation-8222/classroom" class="ctaBtn ctaSecondary cta-skool" target="_blank" data-cta="skool">${t("cta.community.btn")} →</a>
       </div>
     </div>
   `;
@@ -3100,28 +3154,96 @@ function renderResults(data){
     caret.textContent = drop.classList.contains("open") ? "▴" : "▾";
   });
 
+  // Track CTA link clicks
+  document.querySelectorAll('.cta-calendly').forEach(link => {
+    link.addEventListener('click', () => {
+      trackCtaClick('calendly');
+    });
+  });
+
+  document.querySelectorAll('.cta-skool').forEach(link => {
+    link.addEventListener('click', () => {
+      trackCtaClick('skool');
+    });
+  });
+
   // send results
   const sendMe = document.getElementById("sendMeResults");
   const contactBlock = document.getElementById("contactBlock");
   const emailBtn = document.getElementById("emailBtn");
   const waBtn = document.getElementById("waBtn");
+  const emailInput = document.getElementById("emailInput");
+  const phoneInput = document.getElementById("phoneInput");
 
+  // Track when user checks "send me results"
   sendMe.addEventListener("change", () => {
     contactBlock.style.display = sendMe.checked ? "" : "none";
-    if (sendMe.checked) contactBlock.scrollIntoView({ behavior:"smooth", block:"start" });
+    if (sendMe.checked) {
+      ctaClicks.sendResultsChecked = true;
+      trackToGoogleSheets('send_results_checked', currentStep);
+      contactBlock.scrollIntoView({ behavior:"smooth", block:"start" });
+    }
+  });
+
+  // Track email input changes (debounced)
+  const trackEmailDebounced = debounce(() => {
+    const email = emailInput.value.trim();
+    if (email && email.includes('@')) {
+      trackContactInfo('email', email);
+    }
+  }, 1500);
+
+  emailInput.addEventListener('input', trackEmailDebounced);
+  emailInput.addEventListener('blur', () => {
+    const email = emailInput.value.trim();
+    if (email && email.includes('@')) {
+      trackContactInfo('email', email);
+    }
+  });
+
+  // Track phone input changes (debounced)
+  const trackPhoneDebounced = debounce(() => {
+    const phone = phoneInput.value.trim();
+    if (phone && phone.length >= 8) {
+      trackContactInfo('phone', phone);
+    }
+  }, 1500);
+
+  phoneInput.addEventListener('input', trackPhoneDebounced);
+  phoneInput.addEventListener('blur', () => {
+    const phone = phoneInput.value.trim();
+    if (phone && phone.length >= 8) {
+      trackContactInfo('phone', phone);
+    }
   });
 
   emailBtn.addEventListener("click", () => {
-    const email = document.getElementById("emailInput").value.trim();
+    const email = emailInput.value.trim();
     if (!email) { alert("Please enter your email."); return; }
+    
+    // Track email send click
+    userContactInfo.email = email;
+    ctaClicks.sendEmail = true;
+    trackToGoogleSheets('send_email_clicked', currentStep, {
+      contactEmail: email
+    });
+    
     const subject = encodeURIComponent("Your Nutrition Assessment Results");
     const body = encodeURIComponent(resultsText);
     window.location.href = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
   });
 
   waBtn.addEventListener("click", () => {
-    let phone = document.getElementById("phoneInput").value.trim();
+    let phone = phoneInput.value.trim();
     if (!phone) { alert("Please enter your phone number."); return; }
+    
+    // Track WhatsApp send click
+    userContactInfo.phone = phone;
+    ctaClicks.sendWhatsApp = true;
+    trackToGoogleSheets('send_whatsapp_clicked', currentStep, {
+      contactPhone: phone
+    });
+    
     phone = phone.replace(/[^\d]/g, "");
     if (phone.length < 8) { alert("Please enter a valid phone number in international format."); return; }
     const msg = encodeURIComponent(resultsText);
@@ -3440,6 +3562,19 @@ nextBtn.addEventListener("click", ()=>{
     // Reset and start new session
     sessionId = generateSessionId();
     sessionStorage.setItem('quiz_session_id', sessionId);
+    
+    // Reset CTA tracking
+    ctaClicks = {
+      calendly: false,
+      skool: false,
+      sendEmail: false,
+      sendWhatsApp: false,
+      sendResultsChecked: false
+    };
+    userContactInfo = {
+      email: '',
+      phone: ''
+    };
     
     form.reset();
     document.getElementById("results").innerHTML = "";
