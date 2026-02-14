@@ -358,7 +358,6 @@
       gap: 8px;
     }
 
-    /* ===== Body fat visual selector (cards) ===== */
     .bfGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -425,7 +424,6 @@
       line-height: 1.45;
     }
 
-    /* selected */
     .bfCard.isSelected{
       border-color: rgba(52,211,153,.55);
       box-shadow: 0 0 0 3px rgba(52,211,153,.14), 0 18px 45px rgba(0,0,0,.25);
@@ -435,17 +433,14 @@
         rgba(9,14,28,.92);
     }
 
-    /* hidden by gender gating */
     .bfCard.isHidden{ display:none; }
 
-    /* invalid highlight wrapper */
     .bfGrid.invalidGrid{
       border-radius: 16px;
       box-shadow: 0 0 0 3px rgba(251,113,133,.18);
       padding: 6px;
     }
 
-    /* Prompt to select gender first */
     .bfPrompt{
       padding: 20px;
       text-align: center;
@@ -455,7 +450,6 @@
       border-radius: 14px;
     }
 
-    /* CTA Boxes */
     .ctaBox{
       border: 1px solid rgba(96,165,250,.35);
       background:
@@ -572,6 +566,13 @@
                 <input id="firstName" type="text" name="firstName" required data-i18n-placeholder="p.name_ph" placeholder="e.g., Sarah" />
               </div>
               <div class="field">
+                <label for="userEmail" data-i18n="p.email">Email (optional)</label>
+                <input id="userEmail" type="email" name="userEmail" data-i18n-placeholder="p.email_ph" placeholder="name@email.com" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
                 <label for="age" data-i18n="s1.age">Age (years)</label>
                 <input id="age" type="number" min="13" max="90" name="age" required />
               </div>
@@ -581,6 +582,208 @@
                   <option value="" data-i18n="s1.gender.select">Select</option>
                   <option value="male" data-i18n="s1.gender.male">Male</option>
                   <option value="female" data-i18n="s1.gender.female">Female</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="country" data-i18n="p.country">Country</label>
+                <select id="country" name="country" required>
+                  <option value="" data-i18n="p.country.select">Select</option>
+                  <option value="AF">Afghanistan</option>
+                  <option value="AL">Albania</option>
+                  <option value="DZ">Algeria</option>
+                  <option value="AD">Andorra</option>
+                  <option value="AO">Angola</option>
+                  <option value="AG">Antigua and Barbuda</option>
+                  <option value="AR">Argentina</option>
+                  <option value="AM">Armenia</option>
+                  <option value="AU">Australia</option>
+                  <option value="AT">Austria</option>
+                  <option value="AZ">Azerbaijan</option>
+                  <option value="BS">Bahamas</option>
+                  <option value="BH">Bahrain</option>
+                  <option value="BD">Bangladesh</option>
+                  <option value="BB">Barbados</option>
+                  <option value="BY">Belarus</option>
+                  <option value="BE">Belgium</option>
+                  <option value="BZ">Belize</option>
+                  <option value="BJ">Benin</option>
+                  <option value="BT">Bhutan</option>
+                  <option value="BO">Bolivia</option>
+                  <option value="BA">Bosnia and Herzegovina</option>
+                  <option value="BW">Botswana</option>
+                  <option value="BR">Brazil</option>
+                  <option value="BN">Brunei</option>
+                  <option value="BG">Bulgaria</option>
+                  <option value="BF">Burkina Faso</option>
+                  <option value="BI">Burundi</option>
+                  <option value="CV">Cabo Verde</option>
+                  <option value="KH">Cambodia</option>
+                  <option value="CM">Cameroon</option>
+                  <option value="CA">Canada</option>
+                  <option value="CF">Central African Republic</option>
+                  <option value="TD">Chad</option>
+                  <option value="CL">Chile</option>
+                  <option value="CN">China</option>
+                  <option value="CO">Colombia</option>
+                  <option value="KM">Comoros</option>
+                  <option value="CG">Congo</option>
+                  <option value="CD">Congo (DRC)</option>
+                  <option value="CR">Costa Rica</option>
+                  <option value="CI">Côte d'Ivoire</option>
+                  <option value="HR">Croatia</option>
+                  <option value="CU">Cuba</option>
+                  <option value="CY">Cyprus</option>
+                  <option value="CZ">Czech Republic</option>
+                  <option value="DK">Denmark</option>
+                  <option value="DJ">Djibouti</option>
+                  <option value="DM">Dominica</option>
+                  <option value="DO">Dominican Republic</option>
+                  <option value="EC">Ecuador</option>
+                  <option value="EG">Egypt</option>
+                  <option value="SV">El Salvador</option>
+                  <option value="GQ">Equatorial Guinea</option>
+                  <option value="ER">Eritrea</option>
+                  <option value="EE">Estonia</option>
+                  <option value="SZ">Eswatini</option>
+                  <option value="ET">Ethiopia</option>
+                  <option value="FJ">Fiji</option>
+                  <option value="FI">Finland</option>
+                  <option value="FR">France</option>
+                  <option value="GA">Gabon</option>
+                  <option value="GM">Gambia</option>
+                  <option value="GE">Georgia</option>
+                  <option value="DE">Germany</option>
+                  <option value="GH">Ghana</option>
+                  <option value="GR">Greece</option>
+                  <option value="GD">Grenada</option>
+                  <option value="GT">Guatemala</option>
+                  <option value="GN">Guinea</option>
+                  <option value="GW">Guinea-Bissau</option>
+                  <option value="GY">Guyana</option>
+                  <option value="HT">Haiti</option>
+                  <option value="HN">Honduras</option>
+                  <option value="HU">Hungary</option>
+                  <option value="IS">Iceland</option>
+                  <option value="IN">India</option>
+                  <option value="ID">Indonesia</option>
+                  <option value="IR">Iran</option>
+                  <option value="IQ">Iraq</option>
+                  <option value="IE">Ireland</option>
+                  <option value="IL">Israel</option>
+                  <option value="IT">Italy</option>
+                  <option value="JM">Jamaica</option>
+                  <option value="JP">Japan</option>
+                  <option value="JO">Jordan</option>
+                  <option value="KZ">Kazakhstan</option>
+                  <option value="KE">Kenya</option>
+                  <option value="KI">Kiribati</option>
+                  <option value="KP">Korea (North)</option>
+                  <option value="KR">Korea (South)</option>
+                  <option value="KW">Kuwait</option>
+                  <option value="KG">Kyrgyzstan</option>
+                  <option value="LA">Laos</option>
+                  <option value="LV">Latvia</option>
+                  <option value="LB">Lebanon</option>
+                  <option value="LS">Lesotho</option>
+                  <option value="LR">Liberia</option>
+                  <option value="LY">Libya</option>
+                  <option value="LI">Liechtenstein</option>
+                  <option value="LT">Lithuania</option>
+                  <option value="LU">Luxembourg</option>
+                  <option value="MG">Madagascar</option>
+                  <option value="MW">Malawi</option>
+                  <option value="MY">Malaysia</option>
+                  <option value="MV">Maldives</option>
+                  <option value="ML">Mali</option>
+                  <option value="MT">Malta</option>
+                  <option value="MH">Marshall Islands</option>
+                  <option value="MR">Mauritania</option>
+                  <option value="MU">Mauritius</option>
+                  <option value="MX">Mexico</option>
+                  <option value="FM">Micronesia</option>
+                  <option value="MD">Moldova</option>
+                  <option value="MC">Monaco</option>
+                  <option value="MN">Mongolia</option>
+                  <option value="ME">Montenegro</option>
+                  <option value="MA">Morocco</option>
+                  <option value="MZ">Mozambique</option>
+                  <option value="MM">Myanmar</option>
+                  <option value="NA">Namibia</option>
+                  <option value="NR">Nauru</option>
+                  <option value="NP">Nepal</option>
+                  <option value="NL">Netherlands</option>
+                  <option value="NZ">New Zealand</option>
+                  <option value="NI">Nicaragua</option>
+                  <option value="NE">Niger</option>
+                  <option value="NG">Nigeria</option>
+                  <option value="MK">North Macedonia</option>
+                  <option value="NO">Norway</option>
+                  <option value="OM">Oman</option>
+                  <option value="PK">Pakistan</option>
+                  <option value="PW">Palau</option>
+                  <option value="PS">Palestine</option>
+                  <option value="PA">Panama</option>
+                  <option value="PG">Papua New Guinea</option>
+                  <option value="PY">Paraguay</option>
+                  <option value="PE">Peru</option>
+                  <option value="PH">Philippines</option>
+                  <option value="PL">Poland</option>
+                  <option value="PT">Portugal</option>
+                  <option value="QA">Qatar</option>
+                  <option value="RO">Romania</option>
+                  <option value="RU">Russia</option>
+                  <option value="RW">Rwanda</option>
+                  <option value="KN">Saint Kitts and Nevis</option>
+                  <option value="LC">Saint Lucia</option>
+                  <option value="VC">Saint Vincent</option>
+                  <option value="WS">Samoa</option>
+                  <option value="SM">San Marino</option>
+                  <option value="ST">São Tomé and Príncipe</option>
+                  <option value="SA">Saudi Arabia</option>
+                  <option value="SN">Senegal</option>
+                  <option value="RS">Serbia</option>
+                  <option value="SC">Seychelles</option>
+                  <option value="SL">Sierra Leone</option>
+                  <option value="SG">Singapore</option>
+                  <option value="SK">Slovakia</option>
+                  <option value="SI">Slovenia</option>
+                  <option value="SB">Solomon Islands</option>
+                  <option value="SO">Somalia</option>
+                  <option value="ZA">South Africa</option>
+                  <option value="SS">South Sudan</option>
+                  <option value="ES">Spain</option>
+                  <option value="LK">Sri Lanka</option>
+                  <option value="SD">Sudan</option>
+                  <option value="SR">Suriname</option>
+                  <option value="SE">Sweden</option>
+                  <option value="CH">Switzerland</option>
+                  <option value="SY">Syria</option>
+                  <option value="TW">Taiwan</option>
+                  <option value="TJ">Tajikistan</option>
+                  <option value="TZ">Tanzania</option>
+                  <option value="TH">Thailand</option>
+                  <option value="TL">Timor-Leste</option>
+                  <option value="TG">Togo</option>
+                  <option value="TO">Tonga</option>
+                  <option value="TT">Trinidad and Tobago</option>
+                  <option value="TN">Tunisia</option>
+                  <option value="TR">Turkey</option>
+                  <option value="TM">Turkmenistan</option>
+                  <option value="TV">Tuvalu</option>
+                  <option value="UG">Uganda</option>
+                  <option value="UA">Ukraine</option>
+                  <option value="AE">United Arab Emirates</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="US">United States</option>
+                  <option value="UY">Uruguay</option>
+                  <option value="UZ">Uzbekistan</option>
+                  <option value="VU">Vanuatu</option>
+                  <option value="VA">Vatican City</option>
+                  <option value="VE">Venezuela</option>
+                  <option value="VN">Vietnam</option>
+                  <option value="YE">Yemen</option>
+                  <option value="ZM">Zambia</option>
+                  <option value="ZW">Zimbabwe</option>
                 </select>
               </div>
             </div>
@@ -617,12 +820,10 @@
             <div class="field" id="bfFieldWrap">
               <label data-i18n="s1.bfVisual.label">Body fat estimate (visual)</label>
 
-              <!-- Hidden required inputs for validation -->
               <input type="hidden" id="bfMin" name="bfMin" required />
               <input type="hidden" id="bfMax" name="bfMax" required />
               <input type="hidden" id="bfRangeLabel" name="bfRangeLabel" required />
 
-              <!-- Prompt shown when no gender selected -->
               <div class="bfPrompt" id="bfPrompt" data-i18n="s1.bfVisual.selectGender">
                 Please select your gender first to see body fat options.
               </div>
@@ -798,7 +999,7 @@
                   <option value="" data-i18n="s1.experience.select">Select</option>
                   <option value="none" data-i18n="s1.experience.none">None</option>
                   <option value="beginner" data-i18n="s1.experience.beginner">Beginner (0–2 yrs)</option>
-                  <option value="intermediate" data-i18n="s1.experience.intermediate">Intermediate (2–5 yrs)</option>
+                                <option value="intermediate" data-i18n="s1.experience.intermediate">Intermediate (2–5 yrs)</option>
                   <option value="advanced" data-i18n="s1.experience.advanced">Advanced (5+ yrs)</option>
                 </select>
               </div>
@@ -881,7 +1082,7 @@
                 <select id="goal" name="goal" required>
                   <option value="" data-i18n="common.select">Select</option>
                   <option value="lose" data-i18n="s1.goal.lose">Lose fat</option>
-                  <option value="maintain" data-i18n="s1.goal.maintain">Maintain / recomposition</option>
+                  <option value="maintain" data-i18n="s1.goal.maintain">Recomposition (Lose fat / build muscle)</option>
                   <option value="gain" data-i18n="s1.goal.gain">Build lean muscle mass</option>
                 </select>
               </div>
@@ -1041,179 +1242,100 @@
    ========================= */
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwai0sBu1k667wOjjUMQre6CY5wQdAWXwkSQuncb5daRrto-HXiXRGaydUIaeyPTbxh/exec';
 
-// Generate unique session ID
 function generateSessionId() {
   return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 }
 
-// Get or create session ID
 let sessionId = sessionStorage.getItem('quiz_session_id');
 if (!sessionId) {
   sessionId = generateSessionId();
   sessionStorage.setItem('quiz_session_id', sessionId);
 }
 
-// Store contact info for tracking
-let userContactInfo = {
-  email: '',
-  phone: ''
-};
+let userContactInfo = { email: '', phone: '' };
 
-// Store CTA clicks for tracking
 let ctaClicks = {
-  calendly: false,
-  skool: false,
-  sendEmail: false,
-  sendWhatsApp: false,
-  sendResultsChecked: false
+  calendly: false, skool: false, sendEmail: false,
+  sendWhatsApp: false, sendResultsChecked: false
 };
 
-// Track data to Google Sheets
 function trackToGoogleSheets(status, stepReached, additionalData = {}) {
   const formData = getFormDataForTracking();
-  
   const trackingData = {
-    sessionId: sessionId,
-    status: status,
-    stepReached: stepReached,
-    language: getLang(),
-    userAgent: navigator.userAgent,
-    // Contact info
-    contactEmail: userContactInfo.email,
-    contactPhone: userContactInfo.phone,
-    // CTA tracking
-    clickedCalendly: ctaClicks.calendly,
-    clickedSkool: ctaClicks.skool,
-    clickedSendEmail: ctaClicks.sendEmail,
-    clickedSendWhatsApp: ctaClicks.sendWhatsApp,
+    sessionId, status, stepReached,
+    language: getLang(), userAgent: navigator.userAgent,
+    contactEmail: userContactInfo.email, contactPhone: userContactInfo.phone,
+    clickedCalendly: ctaClicks.calendly, clickedSkool: ctaClicks.skool,
+    clickedSendEmail: ctaClicks.sendEmail, clickedSendWhatsApp: ctaClicks.sendWhatsApp,
     wantsResults: ctaClicks.sendResultsChecked,
-    ...formData,
-    ...additionalData
+    ...formData, ...additionalData
   };
-
-  // Send data using fetch with no-cors mode (fire and forget)
   fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    method: 'POST', mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(trackingData)
-  }).catch(err => {
-    console.log('Tracking error (non-blocking):', err);
-  });
+  }).catch(err => { console.log('Tracking error (non-blocking):', err); });
 }
 
-// Track CTA click specifically
 function trackCtaClick(ctaType) {
   ctaClicks[ctaType] = true;
-  trackToGoogleSheets('cta_click', currentStep, {
-    ctaClicked: ctaType,
-    ctaClickTime: new Date().toISOString()
-  });
+  trackToGoogleSheets('cta_click', currentStep, { ctaClicked: ctaType, ctaClickTime: new Date().toISOString() });
 }
 
-// Track contact info update
 function trackContactInfo(type, value) {
-  if (type === 'email') {
-    userContactInfo.email = value;
-  } else if (type === 'phone') {
-    userContactInfo.phone = value;
-  }
-  trackToGoogleSheets('contact_info_entered', currentStep, {
-    contactType: type,
-    contactValue: value
-  });
+  if (type === 'email') userContactInfo.email = value;
+  else if (type === 'phone') userContactInfo.phone = value;
+  trackToGoogleSheets('contact_info_entered', currentStep, { contactType: type, contactValue: value });
 }
 
-// Get form data for tracking (without validation)
 function getFormDataForTracking() {
   const form = document.getElementById('quizForm');
   const fd = new FormData(form);
   const allergies = fd.getAll('allergies');
   const data = Object.fromEntries(fd.entries());
   data.allergies = allergies;
-  
   return {
-    firstName: data.firstName || '',
-    age: data.age || '',
-    gender: data.gender || '',
-    heightCm: data.heightCm || '',
-    weightKg: data.weightKg || '',
-    bfRangeLabel: data.bfRangeLabel || '',
-    activity: data.activity || '',
-    experience: data.experience || '',
-    trainingNow: data.trainingNow || '',
-    trainedBefore: data.trainedBefore || '',
-    trainingType: data.trainingType || '',
-    trainingDetails: data.trainingDetails || '',
-    sessionsPerWeek: data.sessionsPerWeek || '',
-    steps: data.steps || '',
-    sleep: data.sleep || '',
-    goal: data.goal || '',
-    snacks: data.snacks || '',
-    sodas: data.sodas || '',
-    fastfood: data.fastfood || '',
-    alcohol: data.alcohol || '',
-    tracks: data.tracks || '',
-    currentCals: data.currentCals || '',
-    diet: data.diet || '',
-    allergies: allergies,
-    likes: data.likes || '',
-    dislikes: data.dislikes || ''
+    firstName: data.firstName || '', userEmail: data.userEmail || '',
+    country: data.country || '', age: data.age || '',
+    gender: data.gender || '', heightCm: data.heightCm || '',
+    weightKg: data.weightKg || '', bfRangeLabel: data.bfRangeLabel || '',
+    activity: data.activity || '', experience: data.experience || '',
+    trainingNow: data.trainingNow || '', trainedBefore: data.trainedBefore || '',
+    trainingType: data.trainingType || '', trainingDetails: data.trainingDetails || '',
+    sessionsPerWeek: data.sessionsPerWeek || '', steps: data.steps || '',
+    sleep: data.sleep || '', goal: data.goal || '',
+    snacks: data.snacks || '', sodas: data.sodas || '',
+    fastfood: data.fastfood || '', alcohol: data.alcohol || '',
+    tracks: data.tracks || '', currentCals: data.currentCals || '',
+    diet: data.diet || '', allergies: allergies,
+    likes: data.likes || '', dislikes: data.dislikes || ''
   };
 }
 
-// Track on page load
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    trackToGoogleSheets('started', 0);
-  }, 1000);
-});
+window.addEventListener('load', () => { setTimeout(() => { trackToGoogleSheets('started', 0); }, 1000); });
 
-// Track on page unload (when user leaves)
 window.addEventListener('beforeunload', () => {
   const data = {
-    sessionId: sessionId,
-    status: currentStep === stepsEls.length - 1 ? 'completed' : 'abandoned',
-    stepReached: currentStep,
-    language: getLang(),
-    userAgent: navigator.userAgent,
-    contactEmail: userContactInfo.email,
-    contactPhone: userContactInfo.phone,
-    clickedCalendly: ctaClicks.calendly,
-    clickedSkool: ctaClicks.skool,
-    clickedSendEmail: ctaClicks.sendEmail,
-    clickedSendWhatsApp: ctaClicks.sendWhatsApp,
-    wantsResults: ctaClicks.sendResultsChecked,
-    ...getFormDataForTracking()
+    sessionId, status: currentStep === stepsEls.length - 1 ? 'completed' : 'abandoned',
+    stepReached: currentStep, language: getLang(), userAgent: navigator.userAgent,
+    contactEmail: userContactInfo.email, contactPhone: userContactInfo.phone,
+    clickedCalendly: ctaClicks.calendly, clickedSkool: ctaClicks.skool,
+    clickedSendEmail: ctaClicks.sendEmail, clickedSendWhatsApp: ctaClicks.sendWhatsApp,
+    wantsResults: ctaClicks.sendResultsChecked, ...getFormDataForTracking()
   };
-  
-  // Use sendBeacon for reliable tracking on page close
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon(GOOGLE_SCRIPT_URL, JSON.stringify(data));
-  }
+  if (navigator.sendBeacon) navigator.sendBeacon(GOOGLE_SCRIPT_URL, JSON.stringify(data));
 });
 
-// Debounce function for field tracking
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
+    const later = () => { clearTimeout(timeout); func(...args); };
+    clearTimeout(timeout); timeout = setTimeout(later, wait);
   };
 }
 
-// Track field changes (debounced)
-const trackFieldChange = debounce(() => {
-  trackToGoogleSheets('in_progress', currentStep);
-}, 2000);
+const trackFieldChange = debounce(() => { trackToGoogleSheets('in_progress', currentStep); }, 2000);
 
-// Add listeners to all form fields for tracking
 document.querySelectorAll('#quizForm input, #quizForm select, #quizForm textarea').forEach(field => {
   field.addEventListener('change', trackFieldChange);
   field.addEventListener('input', trackFieldChange);
@@ -1234,6 +1356,10 @@ const I18N = {
     "s1.title": "1) Personal Data",
     "p.name": "Name",
     "p.name_ph": "e.g., Sarah",
+    "p.email": "Email (optional)",
+    "p.email_ph": "name@email.com",
+    "p.country": "Country",
+    "p.country.select": "Select",
     "s1.age": "Age (years)",
     "s1.gender": "Gender",
     "s1.gender.select": "Select",
@@ -1267,11 +1393,7 @@ const I18N = {
     "s1.activity.light": "Lightly active",
     "s1.activity.moderate": "Moderately active",
     "s1.activity.very": "Very active",
-    "s1.activity.help": `<b>Examples:</b><br/>
-<b>Sedentary:</b> desk job, little walking, no/rare training.<br/>
-<b>Light:</b> desk job + regular walks, training 1–3×/week.<br/>
-<b>Moderate:</b> active days + training 3–5×/week (or lots of walking).<br/>
-<b>Very active:</b> physical job OR high movement + frequent training.`,
+    "s1.activity.help": `<b>Examples:</b><br/><b>Sedentary:</b> desk job, little walking, no/rare training.<br/><b>Light:</b> desk job + regular walks, training 1–3×/week.<br/><b>Moderate:</b> active days + training 3–5×/week (or lots of walking).<br/><b>Very active:</b> physical job OR high movement + frequent training.`,
     "s1.experience": "Training experience",
     "s1.experience.select": "Select",
     "s1.experience.none": "None",
@@ -1305,7 +1427,7 @@ const I18N = {
     "s1.sleep.8plus": "8h+",
     "s1.goal": "Goal",
     "s1.goal.lose": "Lose fat",
-    "s1.goal.maintain": "Maintain / recomposition",
+    "s1.goal.maintain": "Recomposition (Lose fat / build muscle)",
     "s1.goal.gain": "Build lean muscle mass",
     "s2.title": "2) Nutrition & Eating Habits",
     "s2.note": "Choose what best matches your average week.",
@@ -1366,7 +1488,7 @@ const I18N = {
     "results.maintenance": "Estimated maintenance",
     "results.target.lose": "Target calories to lose fat:",
     "results.target.gain": "Target calories to build lean muscle mass:",
-    "results.target.maintain": "Target calories to maintain / recomp:",
+    "results.target.maintain": "Target calories for recomposition:",
     "results.more": "More (why these numbers?)",
     "results.macros": "Macro targets",
     "results.macro.chart.grams": "Macro chart (grams)",
@@ -1447,6 +1569,8 @@ const I18N = {
     "sleep.note.aim": "Sleep: aim for 7–9 hours when possible.",
     "recap.title": "Nutrition Assessment Results",
     "recap.name": "Name",
+    "recap.email": "Email",
+    "recap.country": "Country",
     "recap.age": "Age",
     "recap.gender": "Gender",
     "recap.height": "Height",
@@ -1465,7 +1589,7 @@ const I18N = {
     "recap.target": "Target",
     "recap.macros": "Macros",
     "goal.lose": "Lose fat",
-    "goal.maintain": "Maintain / recomposition",
+    "goal.maintain": "Recomposition (Lose fat / build muscle)",
     "goal.gain": "Build lean muscle mass",
     "activity.sedentary": "Sedentary",
     "activity.light": "Lightly active",
@@ -1492,7 +1616,7 @@ const I18N = {
     "why.calories.goal": "Goal shifts the target",
     "why.calories.lose": "To lose fat, we go below maintenance so your body uses stored fat for energy.",
     "why.calories.gain": "To build lean muscle, we go above maintenance to support training and recovery.",
-    "why.calories.maintain": "To maintain/recomp, we stay near maintenance to improve body composition with training + protein.",
+    "why.calories.maintain": "For recomposition, we stay near maintenance to improve body composition with training + protein.",
     "why.protein.title": "Protein",
     "why.protein.text": "Protein is based on body weight (BW) and adjusted for your body fat level using standard guidelines.",
     "why.fat.title": "Fat",
@@ -1523,6 +1647,10 @@ const I18N = {
     "s1.title": "1) Données personnelles",
     "p.name": "Prénom",
     "p.name_ph": "ex. Sarah",
+    "p.email": "Email (optionnel)",
+    "p.email_ph": "nom@email.com",
+    "p.country": "Pays",
+    "p.country.select": "Sélectionner",
     "s1.age": "Âge (années)",
     "s1.gender": "Sexe",
     "s1.gender.select": "Sélectionner",
@@ -1590,7 +1718,7 @@ const I18N = {
     "s1.sleep.8plus": "8 h+",
     "s1.goal": "Objectif",
     "s1.goal.lose": "Perdre de la graisse",
-    "s1.goal.maintain": "Maintien / recomposition",
+    "s1.goal.maintain": "Recomposition (Perdre du gras / construire du muscle)",
     "s1.goal.gain": "Construire de la masse musculaire",
     "s2.title": "2) Nutrition & Habitudes alimentaires",
     "s2.note": "Choisissez ce qui correspond le mieux à votre semaine moyenne.",
@@ -1651,7 +1779,7 @@ const I18N = {
     "results.maintenance": "Maintenance estimée",
     "results.target.lose": "Apport cible pour perdre de la graisse :",
     "results.target.gain": "Apport cible pour développer de la masse musculaire :",
-    "results.target.maintain": "Apport cible pour maintien / recomposition :",
+    "results.target.maintain": "Apport cible pour recomposition :",
     "results.more": "Plus de détails (pourquoi ces chiffres ?)",
     "results.macros": "Objectifs en macronutriments",
     "results.macro.chart.grams": "Répartition des macros (grammes)",
@@ -1715,7 +1843,7 @@ const I18N = {
     "swap.alc.water": "Alterner l'alcool avec de l'eau pétillante",
     "swap.alc.meal": "Manger un repas riche en protéines avant de boire",
     "swap.keep.sugary": "Snacks sucrés : continue comme ça ✅",
-    "swap.keep.drinks": "Boissons sucrées : continue comme ça ✅",
+       "swap.keep.drinks": "Boissons sucrées : continue comme ça ✅",
     "swap.keep.fastfood": "Fast-food / burgers : continue comme ça ✅",
     "swap.keep.alcohol": "Alcool : continue comme ça ✅",
     "training.workouts": "séance(s)",
@@ -1732,6 +1860,8 @@ const I18N = {
     "sleep.note.aim": "Sommeil : vise 7–9 h quand c'est possible.",
     "recap.title": "Résultats de l'évaluation nutritionnelle",
     "recap.name": "Prénom",
+    "recap.email": "Email",
+    "recap.country": "Pays",
     "recap.age": "Âge",
     "recap.gender": "Sexe",
     "recap.height": "Taille",
@@ -1750,7 +1880,7 @@ const I18N = {
     "recap.target": "Cible",
     "recap.macros": "Macros",
     "goal.lose": "Perdre de la graisse",
-    "goal.maintain": "Maintien / recomposition",
+    "goal.maintain": "Recomposition (Perdre du gras / construire du muscle)",
     "goal.gain": "Construire de la masse musculaire",
     "activity.sedentary": "Sédentaire",
     "activity.light": "Légèrement actif",
@@ -1777,7 +1907,7 @@ const I18N = {
     "why.calories.goal": "L'objectif ajuste la cible",
     "why.calories.lose": "Pour perdre de la graisse, on descend sous la maintenance afin que le corps utilise les réserves.",
     "why.calories.gain": "Pour construire du muscle, on dépasse la maintenance pour soutenir l'entraînement et la récupération.",
-    "why.calories.maintain": "Pour maintien/recomposition, on reste proche de la maintenance pour améliorer la composition corporelle avec l'entraînement + protéines.",
+    "why.calories.maintain": "Pour la recomposition, on reste proche de la maintenance pour améliorer la composition corporelle avec l'entraînement + protéines.",
     "why.protein.title": "Protéines",
     "why.protein.text": "Basées sur le poids corporel (PC) et ajustées selon votre taux de graisse corporelle selon les recommandations standards.",
     "why.fat.title": "Lipides",
@@ -1808,6 +1938,10 @@ const I18N = {
     "s1.title": "1) Persönliche Daten",
     "p.name": "Name",
     "p.name_ph": "z. B. Sarah",
+    "p.email": "E-Mail (optional)",
+    "p.email_ph": "name@email.com",
+    "p.country": "Land",
+    "p.country.select": "Auswählen",
     "s1.age": "Alter (Jahre)",
     "s1.gender": "Geschlecht",
     "s1.gender.select": "Auswählen",
@@ -1875,7 +2009,7 @@ const I18N = {
     "s1.sleep.8plus": "8 Std.+",
     "s1.goal": "Ziel",
     "s1.goal.lose": "Fett verlieren",
-    "s1.goal.maintain": "Erhalt / Rekomposition",
+    "s1.goal.maintain": "Rekomposition (Fett verlieren / Muskeln aufbauen)",
     "s1.goal.gain": "Muskelmasse aufbauen",
     "s2.title": "2) Ernährung & Essgewohnheiten",
     "s2.note": "Wähle, was am besten zu deiner durchschnittlichen Woche passt.",
@@ -1936,7 +2070,7 @@ const I18N = {
     "results.maintenance": "Geschätzter Erhaltungsbedarf",
     "results.target.lose": "Zielkalorien für Fettverlust:",
     "results.target.gain": "Zielkalorien für Muskelaufbau:",
-    "results.target.maintain": "Zielkalorien für Erhalt / Rekomposition:",
+    "results.target.maintain": "Zielkalorien für Rekomposition:",
     "results.more": "Mehr Infos (warum diese Werte?)",
     "results.macros": "Makroziele",
     "results.macro.chart.grams": "Makroübersicht (Gramm)",
@@ -2017,6 +2151,8 @@ const I18N = {
     "sleep.note.aim": "Schlaf: wenn möglich 7–9 Stunden anpeilen.",
     "recap.title": "Ergebnisse der Ernährungsanalyse",
     "recap.name": "Name",
+    "recap.email": "E-Mail",
+    "recap.country": "Land",
     "recap.age": "Alter",
     "recap.gender": "Geschlecht",
     "recap.height": "Größe",
@@ -2035,7 +2171,7 @@ const I18N = {
     "recap.target": "Ziel",
     "recap.macros": "Makros",
     "goal.lose": "Fett verlieren",
-    "goal.maintain": "Erhalt / Rekomposition",
+    "goal.maintain": "Rekomposition (Fett verlieren / Muskeln aufbauen)",
     "goal.gain": "Muskelmasse aufbauen",
     "activity.sedentary": "Sitzend",
     "activity.light": "Leicht aktiv",
@@ -2062,7 +2198,7 @@ const I18N = {
     "why.calories.goal": "Das Ziel verschiebt den Bedarf",
     "why.calories.lose": "Für Fettverlust gehen wir unter den Erhalt, damit der Körper gespeichertes Fett nutzt.",
     "why.calories.gain": "Für Muskelaufbau gehen wir über den Erhalt, um Training und Regeneration zu unterstützen.",
-    "why.calories.maintain": "Für Erhalt/Rekomposition bleiben wir nahe am Erhalt, um die Körperkomposition mit Training + Protein zu verbessern.",
+    "why.calories.maintain": "Für Rekomposition bleiben wir nahe am Erhalt, um die Körperkomposition mit Training + Protein zu verbessern.",
     "why.protein.title": "Protein",
     "why.protein.text": "Basierend auf Körpergewicht (KG) und angepasst an deinen Körperfettanteil nach Standardrichtlinien.",
     "why.fat.title": "Fett",
@@ -2091,52 +2227,36 @@ function t(key){
   return (I18N[lang] && I18N[lang][key]) || (I18N.en[key]) || key;
 }
 
-function getLang(){
-  return localStorage.getItem(LANG_KEY) || "en";
-}
+function getLang(){ return localStorage.getItem(LANG_KEY) || "en"; }
 
 function setLang(lang){
   localStorage.setItem(LANG_KEY, lang);
   applyI18n();
   updateNavButtonText();
-  if (currentStep === stepsEls.length - 1 && lastResultsData) {
-    renderResults(lastResultsData);
-  }
+  if (currentStep === stepsEls.length - 1 && lastResultsData) renderResults(lastResultsData);
 }
 
 function applyI18n(){
   document.documentElement.lang = getLang();
   document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const key = el.getAttribute("data-i18n");
-    el.innerHTML = t(key);
+    el.innerHTML = t(el.getAttribute("data-i18n"));
   });
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
-    const key = el.getAttribute("data-i18n-placeholder");
-    el.setAttribute("placeholder", t(key));
+    el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
   });
 }
 
 function updateNavButtonText(){
-  if (currentStep === stepsEls.length-1) {
-    nextBtn.textContent = t("btn.restart");
-  } else if (currentStep === stepsEls.length-2) {
-    nextBtn.textContent = t("btn.results");
-  } else {
-    nextBtn.textContent = t("btn.next");
-  }
+  if (currentStep === stepsEls.length-1) nextBtn.textContent = t("btn.restart");
+  else if (currentStep === stepsEls.length-2) nextBtn.textContent = t("btn.results");
+  else nextBtn.textContent = t("btn.next");
   backBtn.textContent = t("btn.back");
 }
 
 /* =========================
    CALCULATION RULES
    ========================= */
-const ACTIVITY_FACTOR = { 
-  sedentary: 1.2, 
-  light: 1.35, 
-  moderate: 1.55, 
-  very: 1.825
-};
-
+const ACTIVITY_FACTOR = { sedentary: 1.2, light: 1.35, moderate: 1.55, very: 1.825 };
 const GOAL_MULT = { lose: 0.80, maintain: 1.00, gain: 1.15 };
 
 function round(n){ return Math.round(n); }
@@ -2156,46 +2276,30 @@ function bfMidpointPct(data){
 
 function proteinFactorGPerKgBW(bfPct, gender){
   if (gender === "male") {
-    if (bfPct <= 7) return 2.4;
-    if (bfPct <= 10) return 2.4;
-    if (bfPct <= 12) return 2.4;
-    if (bfPct <= 15) return 2.2;
-    if (bfPct <= 19) return 2.2;
-    if (bfPct <= 24) return 2.0;
-    if (bfPct <= 30) return 2.0;
-    return 1.6;
+    if (bfPct <= 7) return 2.4; if (bfPct <= 10) return 2.4;
+    if (bfPct <= 12) return 2.4; if (bfPct <= 15) return 2.2;
+    if (bfPct <= 19) return 2.2; if (bfPct <= 24) return 2.0;
+    if (bfPct <= 30) return 2.0; return 1.6;
   } else {
-    if (bfPct <= 12) return 2.4;
-    if (bfPct <= 17) return 2.4;
-    if (bfPct <= 20) return 2.4;
-    if (bfPct <= 23) return 2.2;
-    if (bfPct <= 26) return 2.2;
-    if (bfPct <= 29) return 2.0;
-    if (bfPct <= 35) return 1.6;
-    if (bfPct <= 40) return 1.6;
+    if (bfPct <= 12) return 2.4; if (bfPct <= 17) return 2.4;
+    if (bfPct <= 20) return 2.4; if (bfPct <= 23) return 2.2;
+    if (bfPct <= 26) return 2.2; if (bfPct <= 29) return 2.0;
+    if (bfPct <= 35) return 1.6; if (bfPct <= 40) return 1.6;
     return 1.6;
   }
 }
 
 function fatPctFromBF(bfPct, gender){
   if (gender === "male") {
-    if (bfPct <= 7) return 0.225;
-    if (bfPct <= 10) return 0.225;
-    if (bfPct <= 12) return 0.225;
-    if (bfPct <= 15) return 0.25;
-    if (bfPct <= 19) return 0.25;
-    if (bfPct <= 24) return 0.25;
-    if (bfPct <= 30) return 0.30;
-    return 0.30;
+    if (bfPct <= 7) return 0.225; if (bfPct <= 10) return 0.225;
+    if (bfPct <= 12) return 0.225; if (bfPct <= 15) return 0.25;
+    if (bfPct <= 19) return 0.25; if (bfPct <= 24) return 0.25;
+    if (bfPct <= 30) return 0.30; return 0.30;
   } else {
-    if (bfPct <= 12) return 0.225;
-    if (bfPct <= 17) return 0.225;
-    if (bfPct <= 20) return 0.25;
-    if (bfPct <= 23) return 0.25;
-    if (bfPct <= 26) return 0.25;
-    if (bfPct <= 29) return 0.275;
-    if (bfPct <= 35) return 0.275;
-    if (bfPct <= 40) return 0.30;
+    if (bfPct <= 12) return 0.225; if (bfPct <= 17) return 0.225;
+    if (bfPct <= 20) return 0.25; if (bfPct <= 23) return 0.25;
+    if (bfPct <= 26) return 0.25; if (bfPct <= 29) return 0.275;
+    if (bfPct <= 35) return 0.275; if (bfPct <= 40) return 0.30;
     return 0.30;
   }
 }
@@ -2204,25 +2308,16 @@ function computeTargets(data) {
   const bmr = mifflinBMR(data);
   const maintenance = bmr * (ACTIVITY_FACTOR[data.activity] ?? 1.2);
   const targetCalories = maintenance * (GOAL_MULT[data.goal] ?? 1.0);
-
   const bfPct = bfMidpointPct(data) ?? (data.gender === "female" ? 28 : 20);
-
   const pFactor = proteinFactorGPerKgBW(bfPct, data.gender);
   const proteinG = data.weightKg * pFactor;
-
   const fatPct = fatPctFromBF(bfPct, data.gender);
   const fatKcal = targetCalories * fatPct;
   const fatG = fatKcal / 9;
-
   const proteinKcal = proteinG * 4;
   const carbKcal = Math.max(0, targetCalories - proteinKcal - fatKcal);
   const carbsG = carbKcal / 4;
-
-  return {
-    bmr, maintenance, targetCalories,
-    proteinG, carbsG, fatG,
-    bfPct, fatPct, pFactor
-  };
+  return { bmr, maintenance, targetCalories, proteinG, carbsG, fatG, bfPct, fatPct, pFactor };
 }
 
 /* =========================
@@ -2230,248 +2325,91 @@ function computeTargets(data) {
    ========================= */
 function getMealIdeas() {
   const lang = getLang();
-  
   const MEAL_IDEAS_I18N = {
     en: {
       vegetarian: {
-        breakfast: [
-          "Greek yogurt, oats, blueberries, chia seeds, peanut butter",
-          "Eggs, spinach, mushrooms, whole-grain toast",
-          "Cottage cheese, banana, almond butter, cinnamon"
-        ],
-        lunch: [
-          "Lentils, quinoa, cucumber, cherry tomatoes, feta, olive oil",
-          "Halloumi cheese, mixed greens, roasted sweet potato",
-          "Chickpeas, tahini, lemon juice, parsley, whole-wheat pita"
-        ],
-        dinner: [
-          "Paneer cheese, tomato sauce, basmati rice, spices",
-          "Eggplant, lentils, garlic, olive oil",
-          "Ricotta cheese, zucchini, whole-wheat pasta"
-        ],
-        snacks: [
-          "Greek yogurt, almonds",
-          "Cheese slices, apple",
-          "Whey protein (animal-based), water, cinnamon"
-        ]
+        breakfast: ["Greek yogurt, oats, blueberries, chia seeds, peanut butter","Eggs, spinach, mushrooms, whole-grain toast","Cottage cheese, banana, almond butter, cinnamon"],
+        lunch: ["Lentils, quinoa, cucumber, cherry tomatoes, feta, olive oil","Halloumi cheese, mixed greens, roasted sweet potato","Chickpeas, tahini, lemon juice, parsley, whole-wheat pita"],
+        dinner: ["Paneer cheese, tomato sauce, basmati rice, spices","Eggplant, lentils, garlic, olive oil","Ricotta cheese, zucchini, whole-wheat pasta"],
+        snacks: ["Greek yogurt, almonds","Cheese slices, apple","Whey protein (animal-based), water, cinnamon"]
       },
       vegan: {
-        breakfast: [
-          "Tofu scramble, turmeric, bell peppers, onions, spinach",
-          "Rolled oats, soy milk, flaxseed, strawberries",
-          "Chickpea flour, water, cumin, scallions, olive oil"
-        ],
-        lunch: [
-          "Black beans, brown rice, avocado, cilantro, lime",
-          "Tempeh, broccoli, garlic, sesame oil",
-          "Hummus, roasted vegetables, whole-grain wrap"
-        ],
-        dinner: [
-          "Tofu, coconut milk, curry spices, spinach",
-          "Lentil pasta, homemade marinara sauce, mushrooms",
-          "Seitan, bell peppers, onions, tamari"
-        ],
-        snacks: [
-          "Roasted edamame",
-          "Peanut butter, rice cakes",
-          "Protein powder (plant-based: pea + rice blend), almond milk"
-        ]
+        breakfast: ["Tofu scramble, turmeric, bell peppers, onions, spinach","Rolled oats, soy milk, flaxseed, strawberries","Chickpea flour, water, cumin, scallions, olive oil"],
+        lunch: ["Black beans, brown rice, avocado, cilantro, lime","Tempeh, broccoli, garlic, sesame oil","Hummus, roasted vegetables, whole-grain wrap"],
+        dinner: ["Tofu, coconut milk, curry spices, spinach","Lentil pasta, homemade marinara sauce, mushrooms","Seitan, bell peppers, onions, tamari"],
+        snacks: ["Roasted edamame","Peanut butter, rice cakes","Protein powder (plant-based: pea + rice blend), almond milk"]
       },
       omnivore: {
-        breakfast: [
-          "Eggs, smoked salmon, avocado, rye bread",
-          "Skyr yogurt, raspberries, walnuts",
-          "Egg whites, turkey bacon, tomatoes, sourdough"
-        ],
-        lunch: [
-          "Chicken breast, jasmine rice, green beans",
-          "Tuna, olive oil, mixed greens, chickpeas",
-          "Lean beef, roasted potatoes, carrots"
-        ],
-        dinner: [
-          "Salmon, lemon, asparagus, olive oil",
-          "Chicken breast, quinoa, roasted Brussels sprouts",
-          "Shrimp, garlic, olive oil, rice noodles"
-        ],
-        snacks: [
-          "Beef jerky",
-          "Hard-boiled eggs",
-          "Whey protein (animal-based), banana"
-        ]
+        breakfast: ["Eggs, smoked salmon, avocado, rye bread","Skyr yogurt, raspberries, walnuts","Egg whites, turkey bacon, tomatoes, sourdough"],
+        lunch: ["Chicken breast, jasmine rice, green beans","Tuna, olive oil, mixed greens, chickpeas","Lean beef, roasted potatoes, carrots"],
+        dinner: ["Salmon, lemon, asparagus, olive oil","Chicken breast, quinoa, roasted Brussels sprouts","Shrimp, garlic, olive oil, rice noodles"],
+        snacks: ["Beef jerky","Hard-boiled eggs","Whey protein (animal-based), banana"]
       }
     },
     fr: {
       vegetarian: {
-        breakfast: [
-          "Yaourt grec, flocons d'avoine, myrtilles, graines de chia, beurre de cacahuète",
-          "Œufs, épinards, champignons, pain complet grillé",
-          "Fromage blanc, banane, purée d'amande, cannelle"
-        ],
-        lunch: [
-          "Lentilles, quinoa, concombre, tomates cerises, feta, huile d'olive",
-          "Halloumi, salade verte, patate douce rôtie",
-          "Pois chiches, tahini, jus de citron, persil, pain pita complet"
-        ],
-        dinner: [
-          "Paneer, sauce tomate, riz basmati, épices",
-          "Aubergine, lentilles, ail, huile d'olive",
-          "Ricotta, courgette, pâtes complètes"
-        ],
-        snacks: [
-          "Yaourt grec, amandes",
-          "Tranches de fromage, pomme",
-          "Whey protéine, eau, cannelle"
-        ]
+        breakfast: ["Yaourt grec, flocons d'avoine, myrtilles, graines de chia, beurre de cacahuète","Œufs, épinards, champignons, pain complet grillé","Fromage blanc, banane, purée d'amande, cannelle"],
+        lunch: ["Lentilles, quinoa, concombre, tomates cerises, feta, huile d'olive","Halloumi, salade verte, patate douce rôtie","Pois chiches, tahini, jus de citron, persil, pain pita complet"],
+        dinner: ["Paneer, sauce tomate, riz basmati, épices","Aubergine, lentilles, ail, huile d'olive","Ricotta, courgette, pâtes complètes"],
+        snacks: ["Yaourt grec, amandes","Tranches de fromage, pomme","Whey protéine, eau, cannelle"]
       },
       vegan: {
-        breakfast: [
-          "Tofu brouillé, curcuma, poivrons, oignons, épinards",
-          "Flocons d'avoine, lait de soja, graines de lin, fraises",
-          "Farine de pois chiches, eau, cumin, oignons verts, huile d'olive"
-        ],
-        lunch: [
-          "Haricots noirs, riz complet, avocat, coriandre, citron vert",
-          "Tempeh, brocoli, ail, huile de sésame",
-          "Houmous, légumes rôtis, wrap complet"
-        ],
-        dinner: [
-          "Tofu, lait de coco, épices curry, épinards",
-          "Pâtes aux lentilles, sauce marinara maison, champignons",
-          "Seitan, poivrons, oignons, tamari"
-        ],
-        snacks: [
-          "Edamame grillés",
-          "Beurre de cacahuète, galettes de riz",
-          "Protéine végétale (pois + riz), lait d'amande"
-        ]
+        breakfast: ["Tofu brouillé, curcuma, poivrons, oignons, épinards","Flocons d'avoine, lait de soja, graines de lin, fraises","Farine de pois chiches, eau, cumin, oignons verts, huile d'olive"],
+        lunch: ["Haricots noirs, riz complet, avocat, coriandre, citron vert","Tempeh, brocoli, ail, huile de sésame","Houmous, légumes rôtis, wrap complet"],
+        dinner: ["Tofu, lait de coco, épices curry, épinards","Pâtes aux lentilles, sauce marinara maison, champignons","Seitan, poivrons, oignons, tamari"],
+        snacks: ["Edamame grillés","Beurre de cacahuète, galettes de riz","Protéine végétale (pois + riz), lait d'amande"]
       },
       omnivore: {
-        breakfast: [
-          "Œufs, saumon fumé, avocat, pain de seigle",
-          "Skyr, framboises, noix",
-          "Blancs d'œufs, bacon de dinde, tomates, pain au levain"
-        ],
-        lunch: [
-          "Blanc de poulet, riz jasmin, haricots verts",
-          "Thon, huile d'olive, salade verte, pois chiches",
-          "Bœuf maigre, pommes de terre rôties, carottes"
-        ],
-        dinner: [
-          "Saumon, citron, asperges, huile d'olive",
-          "Blanc de poulet, quinoa, choux de Bruxelles rôtis",
-          "Crevettes, ail, huile d'olive, nouilles de riz"
-        ],
-        snacks: [
-          "Viande séchée",
-          "Œufs durs",
-          "Whey protéine, banane"
-        ]
+        breakfast: ["Œufs, saumon fumé, avocat, pain de seigle","Skyr, framboises, noix","Blancs d'œufs, bacon de dinde, tomates, pain au levain"],
+        lunch: ["Blanc de poulet, riz jasmin, haricots verts","Thon, huile d'olive, salade verte, pois chiches","Bœuf maigre, pommes de terre rôties, carottes"],
+        dinner: ["Saumon, citron, asperges, huile d'olive","Blanc de poulet, quinoa, choux de Bruxelles rôtis","Crevettes, ail, huile d'olive, nouilles de riz"],
+        snacks: ["Viande séchée","Œufs durs","Whey protéine, banane"]
       }
     },
     de: {
       vegetarian: {
-        breakfast: [
-          "Griechischer Joghurt, Haferflocken, Blaubeeren, Chiasamen, Erdnussbutter",
-          "Eier, Spinat, Pilze, Vollkorntoast",
-          "Hüttenkäse, Banane, Mandelbutter, Zimt"
-        ],
-        lunch: [
-          "Linsen, Quinoa, Gurke, Kirschtomaten, Feta, Olivenöl",
-          "Halloumi, gemischter Salat, geröstete Süßkartoffel",
-          "Kichererbsen, Tahini, Zitronensaft, Petersilie, Vollkorn-Pita"
-        ],
-        dinner: [
-          "Paneer, Tomatensauce, Basmatireis, Gewürze",
-          "Aubergine, Linsen, Knoblauch, Olivenöl",
-          "Ricotta, Zucchini, Vollkornnudeln"
-        ],
-        snacks: [
-          "Griechischer Joghurt, Mandeln",
-          "Käsescheiben, Apfel",
-          "Whey-Protein, Wasser, Zimt"
-        ]
+        breakfast: ["Griechischer Joghurt, Haferflocken, Blaubeeren, Chiasamen, Erdnussbutter","Eier, Spinat, Pilze, Vollkorntoast","Hüttenkäse, Banane, Mandelbutter, Zimt"],
+        lunch: ["Linsen, Quinoa, Gurke, Kirschtomaten, Feta, Olivenöl","Halloumi, gemischter Salat, geröstete Süßkartoffel","Kichererbsen, Tahini, Zitronensaft, Petersilie, Vollkorn-Pita"],
+        dinner: ["Paneer, Tomatensauce, Basmatireis, Gewürze","Aubergine, Linsen, Knoblauch, Olivenöl","Ricotta, Zucchini, Vollkornnudeln"],
+        snacks: ["Griechischer Joghurt, Mandeln","Käsescheiben, Apfel","Whey-Protein, Wasser, Zimt"]
       },
       vegan: {
-        breakfast: [
-          "Tofu-Rührei, Kurkuma, Paprika, Zwiebeln, Spinat",
-          "Haferflocken, Sojamilch, Leinsamen, Erdbeeren",
-          "Kichererbsenmehl, Wasser, Kreuzkümmel, Frühlingszwiebeln, Olivenöl"
-        ],
-        lunch: [
-          "Schwarze Bohnen, brauner Reis, Avocado, Koriander, Limette",
-          "Tempeh, Brokkoli, Knoblauch, Sesamöl",
-          "Hummus, geröstetes Gemüse, Vollkorn-Wrap"
-        ],
-        dinner: [
-          "Tofu, Kokosmilch, Currygewürze, Spinat",
-          "Linsennudeln, hausgemachte Marinara-Sauce, Pilze",
-          "Seitan, Paprika, Zwiebeln, Tamari"
-        ],
-        snacks: [
-          "Geröstete Edamame",
-          "Erdnussbutter, Reiswaffeln",
-          "Pflanzliches Protein (Erbsen + Reis), Mandelmilch"
-        ]
+        breakfast: ["Tofu-Rührei, Kurkuma, Paprika, Zwiebeln, Spinat","Haferflocken, Sojamilch, Leinsamen, Erdbeeren","Kichererbsenmehl, Wasser, Kreuzkümmel, Frühlingszwiebeln, Olivenöl"],
+        lunch: ["Schwarze Bohnen, brauner Reis, Avocado, Koriander, Limette","Tempeh, Brokkoli, Knoblauch, Sesamöl","Hummus, geröstetes Gemüse, Vollkorn-Wrap"],
+        dinner: ["Tofu, Kokosmilch, Currygewürze, Spinat","Linsennudeln, hausgemachte Marinara-Sauce, Pilze","Seitan, Paprika, Zwiebeln, Tamari"],
+        snacks: ["Geröstete Edamame","Erdnussbutter, Reiswaffeln","Pflanzliches Protein (Erbsen + Reis), Mandelmilch"]
       },
       omnivore: {
-        breakfast: [
-          "Eier, Räucherlachs, Avocado, Roggenbrot",
-          "Skyr, Himbeeren, Walnüsse",
-          "Eiweiß, Putenbacon, Tomaten, Sauerteigbrot"
-        ],
-        lunch: [
-          "Hähnchenbrust, Jasminreis, grüne Bohnen",
-          "Thunfisch, Olivenöl, gemischter Salat, Kichererbsen",
-          "Mageres Rindfleisch, Bratkartoffeln, Karotten"
-        ],
-        dinner: [
-          "Lachs, Zitrone, Spargel, Olivenöl",
-          "Hähnchenbrust, Quinoa, gerösteter Rosenkohl",
-          "Garnelen, Knoblauch, Olivenöl, Reisnudeln"
-        ],
-        snacks: [
-          "Beef Jerky",
-          "Hartgekochte Eier",
-          "Whey-Protein, Banane"
-        ]
+        breakfast: ["Eier, Räucherlachs, Avocado, Roggenbrot","Skyr, Himbeeren, Walnüsse","Eiweiß, Putenbacon, Tomaten, Sauerteigbrot"],
+        lunch: ["Hähnchenbrust, Jasminreis, grüne Bohnen","Thunfisch, Olivenöl, gemischter Salat, Kichererbsen","Mageres Rindfleisch, Bratkartoffeln, Karotten"],
+        dinner: ["Lachs, Zitrone, Spargel, Olivenöl","Hähnchenbrust, Quinoa, gerösteter Rosenkohl","Garnelen, Knoblauch, Olivenöl, Reisnudeln"],
+        snacks: ["Beef Jerky","Hartgekochte Eier","Whey-Protein, Banane"]
       }
     }
   };
-  
   return MEAL_IDEAS_I18N[lang] || MEAL_IDEAS_I18N.en;
 }
 
 function normalizeWord(w){
   w = String(w || "").trim().toLowerCase();
-  w = w.replace(/[^a-z0-9\s]/g, " ");
-  w = w.replace(/\s+/g, " ").trim();
+  w = w.replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
   if (w.endsWith("s") && w.length > 3) w = w.slice(0, -1);
   return w;
 }
 
 const FOOD_FAMILIES = {
-  berries: ["strawberry", "strawberries", "blueberry", "blueberries", "raspberry", "raspberries", "blackberry", "blackberries", "cranberry", "cranberries"],
+  berries: ["strawberry","strawberries","blueberry","blueberries","raspberry","raspberries","blackberry","blackberries","cranberry","cranberries"],
   citrus: ["orange","oranges","lemon","lemons","lime","limes","grapefruit"],
   nuts: ["almond","almonds","walnut","walnuts","cashew","cashews","hazelnut","hazelnuts","pecan","pecans","pistachio","pistachios"]
 };
 
 function expandFoodNeedles(tokens){
   const expanded = new Set();
-  tokens.forEach(tRaw => {
-    const t = normalizeWord(tRaw);
-    expanded.add(t);
-    if (FOOD_FAMILIES[t]) FOOD_FAMILIES[t].forEach(x => expanded.add(normalizeWord(x)));
-  });
+  tokens.forEach(tRaw => { const t = normalizeWord(tRaw); expanded.add(t); if (FOOD_FAMILIES[t]) FOOD_FAMILIES[t].forEach(x => expanded.add(normalizeWord(x))); });
   return Array.from(expanded);
 }
-
-function tokenizeCSV(text){
-  return String(text || "").split(",").map(normalizeWord).filter(Boolean);
-}
-
-function splitMealParts(mealText){
-  return String(mealText || "").split(",").map(p => p.trim()).filter(Boolean);
-}
+function tokenizeCSV(text){ return String(text || "").split(",").map(normalizeWord).filter(Boolean); }
+function splitMealParts(mealText){ return String(mealText || "").split(",").map(p => p.trim()).filter(Boolean); }
 
 function containsAnyDislike(mealText, dislikes){
   const expanded = expandFoodNeedles(dislikes);
@@ -2480,122 +2418,51 @@ function containsAnyDislike(mealText, dislikes){
   return parts.some(p => expanded.some(d => d && p.includes(d)));
 }
 
-function partHasAnyNeedle(part, needles){
-  const p = normalizeWord(part);
-  return needles.some(n => n && p.includes(normalizeWord(n)));
-}
+function partHasAnyNeedle(part, needles){ const p = normalizeWord(part); return needles.some(n => n && p.includes(normalizeWord(n))); }
 
 function sanitizeMealForAllergies(mealText, data){
   const allergies = data.allergies || [];
   let parts = splitMealParts(mealText);
-
-  const hasGluten = allergies.includes("gluten");
-  const hasWheat  = allergies.includes("wheat");
-
+  const hasGluten = allergies.includes("gluten"); const hasWheat = allergies.includes("wheat");
   if (hasGluten) parts = parts.map(applyGlutenFreeSwap);
-  if (hasWheat)  parts = parts.map(applyWheatFreeSwap);
-
+  if (hasWheat) parts = parts.map(applyWheatFreeSwap);
   const produceNeedles = [];
   if ((allergies.includes("fruits") || allergies.includes("vegetables")) && data.produceAllergyDetails) {
-    const tokens = String(data.produceAllergyDetails).split(/[,/]/g).map(normalizeWord).filter(Boolean);
-    produceNeedles.push(...expandFoodNeedles(tokens));
+    produceNeedles.push(...expandFoodNeedles(String(data.produceAllergyDetails).split(/[,/]/g).map(normalizeWord).filter(Boolean)));
   }
-
   const removeNeedles = [];
-
-  if (allergies.includes("milk")) {
-    removeNeedles.push("yogurt","greek yogurt","skyr","cottage cheese","cheese","feta","ricotta","paneer","halloumi","milk");
-  }
-  if (allergies.includes("egg")) {
-    removeNeedles.push("egg","eggs","egg whites","hard-boiled eggs");
-  }
-  if (allergies.includes("soy")) {
-    removeNeedles.push("soy","soy milk","tofu","tempeh","edamame","tamari");
-  }
-  if (allergies.includes("peanut")) {
-    removeNeedles.push("peanut","peanut butter");
-  }
-  if (allergies.includes("treenuts")) {
-    removeNeedles.push("almond","almonds","almond butter","walnut","walnuts");
-  }
-  if (allergies.includes("sesame")) {
-    removeNeedles.push("sesame","tahini");
-  }
-  if (allergies.includes("fish")) {
-    removeNeedles.push("fish","salmon","smoked salmon","tuna");
-  }
-  if (allergies.includes("shellfish")) {
-    removeNeedles.push("shrimp","shellfish");
-  }
-
-  if (allergies.includes("fruits") || allergies.includes("vegetables")) {
-    removeNeedles.push(...produceNeedles);
-  }
-
-  if (hasGluten) {
-    removeNeedles.push("seitan");
-  }
-
+  if (allergies.includes("milk")) removeNeedles.push("yogurt","greek yogurt","skyr","cottage cheese","cheese","feta","ricotta","paneer","halloumi","milk");
+  if (allergies.includes("egg")) removeNeedles.push("egg","eggs","egg whites","hard-boiled eggs");
+  if (allergies.includes("soy")) removeNeedles.push("soy","soy milk","tofu","tempeh","edamame","tamari");
+  if (allergies.includes("peanut")) removeNeedles.push("peanut","peanut butter");
+  if (allergies.includes("treenuts")) removeNeedles.push("almond","almonds","almond butter","walnut","walnuts");
+  if (allergies.includes("sesame")) removeNeedles.push("sesame","tahini");
+  if (allergies.includes("fish")) removeNeedles.push("fish","salmon","smoked salmon","tuna");
+  if (allergies.includes("shellfish")) removeNeedles.push("shrimp","shellfish");
+  if (allergies.includes("fruits") || allergies.includes("vegetables")) removeNeedles.push(...produceNeedles);
+  if (hasGluten) removeNeedles.push("seitan");
   const kept = parts.filter(part => !partHasAnyNeedle(part, removeNeedles));
-
   if (!kept.length) return null;
   return kept.join(", ");
 }
 
 function applyGlutenFreeSwap(part){
   let p = part;
-  const swaps = [
-    [/\bwhole[-\s]?wheat\s+pasta\b/i, "gluten-free pasta"],
-    [/\bpasta\b/i, "gluten-free pasta"],
-    [/\bwhole[-\s]?wheat\s+wrap\b/i, "gluten-free wrap"],
-    [/\bwrap\b/i, "gluten-free wrap"],
-    [/\bpita\b/i, "gluten-free pita"],
-    [/\bwhole[-\s]?grain\s+toast\b/i, "gluten-free toast"],
-    [/\btoast\b/i, "gluten-free toast"],
-    [/\bsourdough\b/i, "gluten-free sourdough"],
-    [/\brye\s+bread\b/i, "gluten-free bread"],
-    [/\brye\b/i, "gluten-free bread"],
-    [/\bbread\b/i, "gluten-free bread"],
-    [/\brolled\s+oats\b/i, "gluten-free oats"],
-    [/\boats\b/i, "gluten-free oats"],
-    [/\btamari\b/i, "gluten-free tamari"],
-    [/\bsoy\s+sauce\b/i, "gluten-free soy sauce"]
-  ];
-  for (const [re, rep] of swaps) {
-    if (re.test(p)) p = p.replace(re, rep);
-  }
+  const swaps = [[/\bwhole[-\s]?wheat\s+pasta\b/i,"gluten-free pasta"],[/\bpasta\b/i,"gluten-free pasta"],[/\bwhole[-\s]?wheat\s+wrap\b/i,"gluten-free wrap"],[/\bwrap\b/i,"gluten-free wrap"],[/\bpita\b/i,"gluten-free pita"],[/\bwhole[-\s]?grain\s+toast\b/i,"gluten-free toast"],[/\btoast\b/i,"gluten-free toast"],[/\bsourdough\b/i,"gluten-free sourdough"],[/\brye\s+bread\b/i,"gluten-free bread"],[/\brye\b/i,"gluten-free bread"],[/\bbread\b/i,"gluten-free bread"],[/\brolled\s+oats\b/i,"gluten-free oats"],[/\boats\b/i,"gluten-free oats"],[/\btamari\b/i,"gluten-free tamari"],[/\bsoy\s+sauce\b/i,"gluten-free soy sauce"]];
+  for (const [re, rep] of swaps) { if (re.test(p)) p = p.replace(re, rep); }
   return p;
 }
 
 function applyWheatFreeSwap(part){
   let p = part;
-  const swaps = [
-    [/\bwhole[-\s]?wheat\s+pasta\b/i, "rice pasta"],
-    [/\bpasta\b/i, "rice pasta"],
-    [/\bwhole[-\s]?wheat\s+wrap\b/i, "corn tortilla"],
-    [/\bwrap\b/i, "corn tortilla"],
-    [/\bpita\b/i, "corn tortilla"],
-    [/\bwhole[-\s]?grain\s+toast\b/i, "wheat-free toast"],
-    [/\btoast\b/i, "wheat-free toast"],
-    [/\bsourdough\b/i, "wheat-free sourdough"],
-    [/\brye\s+bread\b/i, "wheat-free bread"],
-    [/\brye\b/i, "wheat-free bread"],
-    [/\bbread\b/i, "wheat-free bread"],
-    [/\brolled\s+oats\b/i, "certified wheat-free oats"],
-    [/\boats\b/i, "certified wheat-free oats"]
-  ];
-  for (const [re, rep] of swaps) {
-    if (re.test(p)) p = p.replace(re, rep);
-  }
+  const swaps = [[/\bwhole[-\s]?wheat\s+pasta\b/i,"rice pasta"],[/\bpasta\b/i,"rice pasta"],[/\bwhole[-\s]?wheat\s+wrap\b/i,"corn tortilla"],[/\bwrap\b/i,"corn tortilla"],[/\bpita\b/i,"corn tortilla"],[/\bwhole[-\s]?grain\s+toast\b/i,"wheat-free toast"],[/\btoast\b/i,"wheat-free toast"],[/\bsourdough\b/i,"wheat-free sourdough"],[/\brye\s+bread\b/i,"wheat-free bread"],[/\brye\b/i,"wheat-free bread"],[/\bbread\b/i,"wheat-free bread"],[/\brolled\s+oats\b/i,"certified wheat-free oats"],[/\boats\b/i,"certified wheat-free oats"]];
+  for (const [re, rep] of swaps) { if (re.test(p)) p = p.replace(re, rep); }
   return p;
 }
 
 function pickN(arr, n){
   const copy = arr.slice();
-  for (let i=copy.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
+  for (let i=copy.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [copy[i], copy[j]] = [copy[j], copy[i]]; }
   return copy.slice(0, Math.min(n, copy.length));
 }
 
@@ -2603,152 +2470,70 @@ function buildMealIdeas(data){
   const dislikes = tokenizeCSV(data.dislikes);
   const MEAL_IDEAS = getMealIdeas();
   const ideas = MEAL_IDEAS[data.diet] || MEAL_IDEAS.omnivore;
-
-  const cleanList = (list) => list
-    .filter(x => !containsAnyDislike(x, dislikes))
-    .map(x => sanitizeMealForAllergies(x, data))
-    .filter(Boolean);
-
-  const breakfast = cleanList(ideas.breakfast);
-  const lunch     = cleanList(ideas.lunch);
-  const dinner    = cleanList(ideas.dinner);
-  const snacks    = cleanList(ideas.snacks);
-
-  return {
-    breakfast: pickN(breakfast, 2),
-    lunch: pickN(lunch, 2),
-    dinner: pickN(dinner, 2),
-    snacks: pickN(snacks, 2),
-    empty: (!breakfast.length && !lunch.length && !dinner.length && !snacks.length)
-  };
+  const cleanList = (list) => list.filter(x => !containsAnyDislike(x, dislikes)).map(x => sanitizeMealForAllergies(x, data)).filter(Boolean);
+  const breakfast = cleanList(ideas.breakfast); const lunch = cleanList(ideas.lunch);
+  const dinner = cleanList(ideas.dinner); const snacks = cleanList(ideas.snacks);
+  return { breakfast: pickN(breakfast, 2), lunch: pickN(lunch, 2), dinner: pickN(dinner, 2), snacks: pickN(snacks, 2), empty: (!breakfast.length && !lunch.length && !dinner.length && !snacks.length) };
 }
 
 /* =========================
    ACTION PLAN
    ========================= */
 function habitPerWeek(v){
-  if (v === "none") return 0;
-  if (v === "1") return 1;
-  if (v === "2") return 2;
-  if (v === "3-4") return 3.5;
-  if (v === "3-5") return 4;
-  if (v === "5+") return 5.5;
-  if (v === "daily") return 7;
-  return 0;
+  if (v==="none") return 0; if (v==="1") return 1; if (v==="2") return 2;
+  if (v==="3-4") return 3.5; if (v==="3-5") return 4; if (v==="5+") return 5.5;
+  if (v==="daily") return 7; return 0;
 }
 
 function progressiveCutLabel(itemName, n){
   if (n <= 0) return null;
   let week1 = n, week2 = n;
-
   if (n === 1) { week1 = 1; week2 = 1; }
   else if (n === 2) { week1 = 1; week2 = 1; }
   else if (n > 2 && n <= 5) { week1 = 2; week2 = 1; }
   else if (n > 5) { week1 = 3; week2 = 2; }
-
   return { key: itemName, week1, week2 };
 }
 
 function trainingProgression(data){
-  if (data.trainingNow === "no" && (data.trainedBefore === "no" || !data.trainedBefore)) {
-    return { week1: 3, week2: 3, noteKey: "training.note.start" };
-  }
-
+  if (data.trainingNow === "no" && (data.trainedBefore === "no" || !data.trainedBefore)) return { week1: 3, week2: 3, noteKey: "training.note.start" };
   const sessions = data.sessionsPerWeek || "0";
-
-  if (sessions === "0" || sessions === "1-2" || sessions === "" || sessions == null) {
-    return { week1: 3, week2: 3, noteKey: "training.note.start" };
-  }
-
-  if (sessions === "3") {
-    return { week1: 4, week2: 4, noteKey: "training.note.add1" };
-  }
-
-  if (sessions === "4") {
-    return { week1: 5, week2: 5, noteKey: "training.note.add1" };
-  }
-
-  if (sessions === "5-6") {
-    return { week1: 5, week2: 6, noteKey: "training.note.maintain" };
-  }
-
+  if (sessions === "0" || sessions === "1-2" || sessions === "" || sessions == null) return { week1: 3, week2: 3, noteKey: "training.note.start" };
+  if (sessions === "3") return { week1: 4, week2: 4, noteKey: "training.note.add1" };
+  if (sessions === "4") return { week1: 5, week2: 5, noteKey: "training.note.add1" };
+  if (sessions === "5-6") return { week1: 5, week2: 6, noteKey: "training.note.maintain" };
   return { week1: 6, week2: 6, noteKey: "training.note.progress" };
 }
 
 function baseStepsFromBand(band){
-  if (band === "none") return 2000;
-  if (band === "2k") return 2000;
-  if (band === "lt4k") return 3000;
-  if (band === "4to8k") return 6000;
-  if (band === "8to12k") return 9000;
-  if (band === "gt12k") return 12000;
-  return 6000;
+  if (band==="none") return 2000; if (band==="2k") return 2000; if (band==="lt4k") return 3000;
+  if (band==="4to8k") return 6000; if (band==="8to12k") return 9000; if (band==="gt12k") return 12000; return 6000;
 }
 
 function stepPlan(stepsBand){
-  if (stepsBand === "8to12k") {
-    return { mode: "to10k", noteKey: "steps.note.to10k" };
-  }
-
+  if (stepsBand === "8to12k") return { mode: "to10k", noteKey: "steps.note.to10k" };
   const start = baseStepsFromBand(stepsBand);
-
-  if (start >= 10000) {
-    return { mode: "keep", noteKey: "steps.note.keep" };
-  }
-
-  return {
-    mode: "progress",
-    week1: start,
-    week2: Math.min(10000, start + 1000),
-    noteKey: "steps.note.progress",
-    showLongTerm: true
-  };
+  if (start >= 10000) return { mode: "keep", noteKey: "steps.note.keep" };
+  return { mode: "progress", week1: start, week2: Math.min(10000, start + 1000), noteKey: "steps.note.progress", showLongTerm: true };
 }
 
 function sleepAdvice(sleepBand){
-  if (sleepBand === "6to8" || sleepBand === "8plus") {
-    return { noteKey: "sleep.note.keep" };
-  }
-  if (sleepBand === "4to6") {
-    return { noteKey: "sleep.note.add30" };
-  }
-  if (sleepBand === "lt4") {
-    return { noteKey: "sleep.note.add45_60" };
-  }
+  if (sleepBand === "6to8" || sleepBand === "8plus") return { noteKey: "sleep.note.keep" };
+  if (sleepBand === "4to6") return { noteKey: "sleep.note.add30" };
+  if (sleepBand === "lt4") return { noteKey: "sleep.note.add45_60" };
   return { noteKey: "sleep.note.aim" };
 }
 
 function swapsForHabits(data){
   const swaps = [];
-  const sugarN = habitPerWeek(data.snacks);
-  const sodaN = habitPerWeek(data.sodas);
-  const fastN = habitPerWeek(data.fastfood);
-  const alcN  = habitPerWeek(data.alcohol);
-
-  if (sugarN > 0){
-    swaps.push("swap.sweet", "swap.chocolate", "swap.cookies", "swap.dessert");
-  } else {
-    swaps.push("swap.keep.sugary");
-  }
-
-  if (sodaN > 0){
-    swaps.push("swap.soda", "swap.sweetDrink", "swap.energy");
-  } else {
-    swaps.push("swap.keep.drinks");
-  }
-
-  if (fastN > 0){
-    swaps.push("swap.fastfood", "swap.burger", "swap.notime");
-  } else {
-    swaps.push("swap.keep.fastfood");
-  }
-
-  if (alcN > 0){
-    swaps.push("swap.alc.limit", "swap.alc.water", "swap.alc.meal");
-  } else {
-    swaps.push("swap.keep.alcohol");
-  }
-
+  if (habitPerWeek(data.snacks) > 0) swaps.push("swap.sweet","swap.chocolate","swap.cookies","swap.dessert");
+  else swaps.push("swap.keep.sugary");
+  if (habitPerWeek(data.sodas) > 0) swaps.push("swap.soda","swap.sweetDrink","swap.energy");
+  else swaps.push("swap.keep.drinks");
+  if (habitPerWeek(data.fastfood) > 0) swaps.push("swap.fastfood","swap.burger","swap.notime");
+  else swaps.push("swap.keep.fastfood");
+  if (habitPerWeek(data.alcohol) > 0) swaps.push("swap.alc.limit","swap.alc.water","swap.alc.meal");
+  else swaps.push("swap.keep.alcohol");
   return swaps;
 }
 
@@ -2759,36 +2544,16 @@ function goalLabelI18n(goal){
 }
 
 function buildWhyText(data, targets){
-  const goalKey = data.goal || "maintain";
-  const g = t("goal." + goalKey);
+  const g = t("goal." + (data.goal || "maintain"));
+  const whyCalories = data.goal === "lose" ? t("why.calories.lose") : data.goal === "gain" ? t("why.calories.gain") : t("why.calories.maintain");
+  return `${t("why.title")}\n\n• ${t("why.calories.title")}:\n  - ${t("why.calories.bmr")}\n  - ${t("why.calories.maintenance")}\n  - ${t("why.calories.goal")} (${g})\n  - ${whyCalories}\n\n• ${t("why.protein.title")}:\n  - ${t("why.protein.text")}\n\n• ${t("why.fat.title")}:\n  - ${t("why.fat.text")}\n\n• ${t("why.carbs.title")}:\n    - ${t("why.carbs.text")}\n\n${t("why.reminder")}`;
+}
 
-  const whyCalories =
-    data.goal === "lose"
-      ? t("why.calories.lose")
-      : data.goal === "gain"
-        ? t("why.calories.gain")
-        : t("why.calories.maintain");
-
-  return `
-${t("why.title")}
-
-• ${t("why.calories.title")}:
-  - ${t("why.calories.bmr")}
-  - ${t("why.calories.maintenance")}
-  - ${t("why.calories.goal")} (${g})
-  - ${whyCalories}
-
-• ${t("why.protein.title")}:
-  - ${t("why.protein.text")}
-
-• ${t("why.fat.title")}:
-  - ${t("why.fat.text")}
-
-• ${t("why.carbs.title")}:
-  - ${t("why.carbs.text")}
-
-${t("why.reminder")}
-`.trim();
+function getCountryName(code) {
+  const sel = document.getElementById("country");
+  if (!sel) return code || "-";
+  const opt = sel.querySelector(`option[value="${code}"]`);
+  return opt ? opt.textContent : (code || "-");
 }
 
 function buildResultsText(data, targets){
@@ -2800,6 +2565,8 @@ function buildResultsText(data, targets){
   return `${t("recap.title")}
 
 ${t("recap.name")}: ${data.firstName || "-"}
+${t("recap.email")}: ${data.userEmail || "-"}
+${t("recap.country")}: ${getCountryName(data.country)}
 ${t("recap.age")}: ${data.age || "-"} | ${t("recap.gender")}: ${data.gender === "male" ? t("s1.gender.male") : data.gender === "female" ? t("s1.gender.female") : "-"}
 ${t("recap.height")}: ${data.heightCm || "-"} cm | ${t("recap.weight")}: ${data.weightKg || "-"} kg
 ${t("recap.bodyFat")}: ${data.bfRangeLabel || "-"} (~${Math.round(targets.bfPct)}%)
@@ -2824,13 +2591,7 @@ ${t("recap.macros")}:
 }
 
 function escapeHtml(s){
-  return String(s || "").replace(/[&<>"']/g, (c)=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c]));
+  return String(s || "").replace(/[&<>"']/g, (c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
 
 /* =========================
@@ -2839,24 +2600,14 @@ function escapeHtml(s){
 function pctRound(x){ return Math.max(0, Math.round(x)); }
 
 function donutSVG(pctProtein, pctCarbs, pctFats){
-  const r = 44;
-  const c = 2 * Math.PI * r;
-  const p1 = (pctProtein/100) * c;
-  const p2 = (pctCarbs/100) * c;
-  const p3 = (pctFats/100) * c;
-
+  const r = 44; const c = 2 * Math.PI * r;
+  const p1 = (pctProtein/100) * c; const p2 = (pctCarbs/100) * c; const p3 = (pctFats/100) * c;
   return `
   <svg width="120" height="120" viewBox="0 0 120 120" aria-label="macro donut">
     <circle cx="60" cy="60" r="${r}" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="16" />
-    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--protein)" stroke-width="16"
-      stroke-dasharray="${p1} ${c-p1}" stroke-dashoffset="0"
-      transform="rotate(-90 60 60)" />
-    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--carbs)" stroke-width="16"
-      stroke-dasharray="${p2} ${c-p2}" stroke-dashoffset="${-p1}"
-      transform="rotate(-90 60 60)" />
-    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--fats)" stroke-width="16"
-      stroke-dasharray="${p3} ${c-p3}" stroke-dashoffset="${-(p1+p2)}"
-      transform="rotate(-90 60 60)" />
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--protein)" stroke-width="16" stroke-dasharray="${p1} ${c-p1}" stroke-dashoffset="0" transform="rotate(-90 60 60)" />
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--carbs)" stroke-width="16" stroke-dasharray="${p2} ${c-p2}" stroke-dashoffset="${-p1}" transform="rotate(-90 60 60)" />
+    <circle cx="60" cy="60" r="${r}" fill="none" stroke="var(--fats)" stroke-width="16" stroke-dasharray="${p3} ${c-p3}" stroke-dashoffset="${-(p1+p2)}" transform="rotate(-90 60 60)" />
     <circle cx="60" cy="60" r="30" fill="rgba(9,14,28,.95)" />
     <text x="60" y="64" text-anchor="middle" font-size="10" fill="rgba(234,242,255,.9)" font-weight="800">Macros</text>
   </svg>`;
@@ -2869,7 +2620,6 @@ function renderResults(data){
   const resultsEl = document.getElementById("results");
   const targets = computeTargets(data);
 
-  // Track completed with calculated values
   trackToGoogleSheets('completed', 3, {
     targetCalories: Math.round(targets.targetCalories),
     proteinG: Math.round(targets.proteinG),
@@ -2882,7 +2632,6 @@ function renderResults(data){
   const s2 = progressiveCutLabel("cut.drinks", habitPerWeek(data.sodas));
   const s3 = progressiveCutLabel("cut.fastfood", habitPerWeek(data.fastfood));
   const s4 = progressiveCutLabel("cut.alcohol", habitPerWeek(data.alcohol));
-
   [s1,s2,s3,s4].forEach(x => { if (x) cuts.push(x); });
 
   const train = trainingProgression(data);
@@ -2890,31 +2639,18 @@ function renderResults(data){
   const sleep = sleepAdvice(data.sleep);
   const swaps = swapsForHabits(data);
   const meals = buildMealIdeas(data);
-
   const whyText = buildWhyText(data, targets);
   const resultsText = buildResultsText(data, targets);
 
-  const pK = targets.proteinG * 4;
-  const cK = targets.carbsG * 4;
-  const fK = targets.fatG * 9;
+  const pK = targets.proteinG * 4; const cK = targets.carbsG * 4; const fK = targets.fatG * 9;
   const totalK = Math.max(1, pK + cK + fK);
-
-  const pctPk = (pK/totalK)*100;
-  const pctCk = (cK/totalK)*100;
-  const pctFk = (fK/totalK)*100;
-
+  const pctPk = (pK/totalK)*100; const pctCk = (cK/totalK)*100; const pctFk = (fK/totalK)*100;
   const donut = donutSVG(pctRound(pctPk), pctRound(pctCk), pctRound(pctFk));
 
   const cutsHtml = cuts.length
-    ? cuts.map(c => `
-      <li><b>${escapeHtml(t(c.key))}:</b>
-        <br/>${escapeHtml(t("week.1"))}: <b>${c.week1}</b> ${escapeHtml(t("timesPerWeek"))}
-        <br/>${escapeHtml(t("week.2"))}: <b>${c.week2}</b> ${escapeHtml(t("timesPerWeek"))}
-      </li>
-    `).join("")
+    ? cuts.map(c => `<li><b>${escapeHtml(t(c.key))}:</b><br/>${escapeHtml(t("week.1"))}: <b>${c.week1}</b> ${escapeHtml(t("timesPerWeek"))}<br/>${escapeHtml(t("week.2"))}: <b>${c.week2}</b> ${escapeHtml(t("timesPerWeek"))}</li>`).join("")
     : "";
 
-  // CTA block with tracking data attributes
   const ctaBlockHtml = `
     <div class="ctaBox">
       <div class="ctaItem">
@@ -2927,6 +2663,35 @@ function renderResults(data){
         <div class="ctaDesc">${t("cta.community.desc")}</div>
         <a href="https://www.skool.com/fitness-transformation-8222/classroom" class="ctaBtn ctaSecondary cta-skool" target="_blank" data-cta="skool">${t("cta.community.btn")} →</a>
       </div>
+    </div>
+  `;
+
+  // Build the send results + summary block as a reusable string
+  const sendResultsBlockHtml = `
+    <h2>${t("results.send")}</h2>
+    <div class="field" style="margin-top:6px;">
+      <label class="check" style="padding:10px 12px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);">
+        <input type="checkbox" class="sendMeResultsCheckbox" />
+        ${t("results.send.yes")}
+      </label>
+    </div>
+
+    <div class="contactBlockInstance" style="display:none">
+      <div class="row">
+        <div class="field">
+          <label>${t("contact.email")}</label>
+          <input type="email" class="emailInputField" placeholder="name@email.com" />
+        </div>
+        <div class="field">
+          <label>${t("contact.phone")}</label>
+          <input type="tel" class="phoneInputField" placeholder="+33 6 12 34 56 78" />
+        </div>
+      </div>
+      <div class="btnrow" style="border-top:none;padding-top:0;">
+        <button type="button" class="ghost mini emailBtnAction">${t("contact.sendEmail")}</button>
+        <button type="button" class="primary mini waBtnAction">${t("contact.sendWhatsApp")}</button>
+      </div>
+      <p class="note">${t("contact.note")}</p>
     </div>
   `;
 
@@ -2979,12 +2744,7 @@ function renderResults(data){
       <span class="pill protein"><b>${t("results.protein")}</b> ${round(targets.proteinG)} g/day</span>
       <span class="pill carbs"><b>${t("results.carbs")}</b> ${round(targets.carbsG)} g/day</span>
       <span class="pill fats"><b>${t("results.fats")}</b> ${round(targets.fatG)} g/day</span>
-
-      <div class="note">${
-        t("results.macros.note")
-          .replace("{pf}", targets.pFactor.toFixed(1))
-          .replace("{fat}", String(Math.round(targets.fatPct*100)))
-      }</div>
+      <div class="note">${t("results.macros.note").replace("{pf}", targets.pFactor.toFixed(1)).replace("{fat}", String(Math.round(targets.fatPct*100)))}</div>
     </div>
 
     <div class="donutRow">
@@ -3000,34 +2760,26 @@ function renderResults(data){
           </div>
         </div>
       </div>
-
       <div class="donutCard">
-        <div class="donutHead">
-          <b>${t("results.macro.chart.calories")}</b>
-          <span>${t("results.pctCalories")}</span>
-        </div>
+        <div class="donutHead"><b>${t("results.macro.chart.calories")}</b><span>${t("results.pctCalories")}</span></div>
         <div class="donutWrap">
           ${donut}
           <div class="legend">
-            <div class="legItem">
-              <span class="swatch swProtein"></span>
-              ${t("results.protein")}: ${round(pK)} kcal (${pctRound(pctPk)}%)
-            </div>
-            <div class="legItem">
-              <span class="swatch swCarbs"></span>
-              ${t("results.carbs")}: ${round(cK)} kcal (${pctRound(pctCk)}%)
-            </div>
-            <div class="legItem">
-              <span class="swatch swFats"></span>
-              ${t("results.fats")}: ${round(fK)} kcal (${pctRound(pctFk)}%)
-            </div>
+            <div class="legItem"><span class="swatch swProtein"></span> ${t("results.protein")}: ${round(pK)} kcal (${pctRound(pctPk)}%)</div>
+            <div class="legItem"><span class="swatch swCarbs"></span> ${t("results.carbs")}: ${round(cK)} kcal (${pctRound(pctCk)}%)</div>
+            <div class="legItem"><span class="swatch swFats"></span> ${t("results.fats")}: ${round(fK)} kcal (${pctRound(pctFk)}%)</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- FIRST CTA BLOCK - After macros, before meals -->
+    <!-- FIRST CTA BLOCK - After macros -->
     ${ctaBlockHtml}
+
+    <div class="hr"></div>
+
+    <!-- FIRST send results block -->
+    ${sendResultsBlockHtml}
 
     <div class="hr"></div>
 
@@ -3035,37 +2787,15 @@ function renderResults(data){
       <div class="mealsTitle">
         <span>${t("results.mealIdeas.tag")}</span> ${t("results.meals")}
       </div>
-
-      ${meals.empty ? `
-        <div class="help">${t("results.noMealsMatch")}</div>
-      ` : `
+      ${meals.empty ? `<div class="help">${t("results.noMealsMatch")}</div>` : `
         <b>${t("results.breakfast")}:</b>
-        <ul class="list">
-          ${meals.breakfast.length
-            ? meals.breakfast.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
-            : `<li>${t("results.noOptions")}</li>`}
-        </ul>
-
+        <ul class="list">${meals.breakfast.length ? meals.breakfast.map(m=>`<li>${escapeHtml(m)}</li>`).join("") : `<li>${t("results.noOptions")}</li>`}</ul>
         <b>${t("results.lunch")}:</b>
-        <ul class="list">
-          ${meals.lunch.length
-            ? meals.lunch.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
-            : `<li>${t("results.noOptions")}</li>`}
-        </ul>
-
+        <ul class="list">${meals.lunch.length ? meals.lunch.map(m=>`<li>${escapeHtml(m)}</li>`).join("") : `<li>${t("results.noOptions")}</li>`}</ul>
         <b>${t("results.dinner")}:</b>
-        <ul class="list">
-          ${meals.dinner.length
-            ? meals.dinner.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
-            : `<li>${t("results.noOptions")}</li>`}
-        </ul>
-
+        <ul class="list">${meals.dinner.length ? meals.dinner.map(m=>`<li>${escapeHtml(m)}</li>`).join("") : `<li>${t("results.noOptions")}</li>`}</ul>
         <b>${t("results.snack")}:</b>
-        <ul class="list">
-          ${meals.snacks.length
-            ? meals.snacks.map(m=>`<li>${escapeHtml(m)}</li>`).join("")
-            : `<li>${t("results.noOptions")}</li>`}
-        </ul>
+        <ul class="list">${meals.snacks.length ? meals.snacks.map(m=>`<li>${escapeHtml(m)}</li>`).join("") : `<li>${t("results.noOptions")}</li>`}</ul>
       `}
     </div>
 
@@ -3074,10 +2804,7 @@ function renderResults(data){
     <h2>${t("results.action.title")}</h2>
 
     <h2 style="margin-top:10px">${t("results.action.cut")}</h2>
-    ${cuts.length
-      ? `<ul class="list">${cutsHtml}</ul>`
-      : `<div class="help">${t("swap.keep.sugary")}</div>`
-    }
+    ${cuts.length ? `<ul class="list">${cutsHtml}</ul>` : `<div class="help">${t("swap.keep.sugary")}</div>`}
 
     <h2>${t("results.action.swaps")}</h2>
     <ul class="list">${swaps.map(k=>`<li>${escapeHtml(t(k))}</li>`).join("")}</ul>
@@ -3090,54 +2817,26 @@ function renderResults(data){
     </ul>
 
     <h2>${t("results.action.steps")}</h2>
-    ${steps.mode === "keep" ? `
-      <div class="help">${escapeHtml(t(steps.noteKey))}</div>
-    ` : steps.mode === "to10k" ? `
-      <div class="help">${escapeHtml(t(steps.noteKey))}</div>
-    ` : `
-      <p class="note">${escapeHtml(t(steps.noteKey))}</p>
+    ${steps.mode === "keep" ? `<div class="help">${escapeHtml(t(steps.noteKey))}</div>`
+      : steps.mode === "to10k" ? `<div class="help">${escapeHtml(t(steps.noteKey))}</div>`
+      : `<p class="note">${escapeHtml(t(steps.noteKey))}</p>
       <ul class="list">
         <li><b>${t("week.1")}:</b> ${t("results.action.steps.aim")} <b>${steps.week1.toLocaleString()}</b> ${t("results.action.steps.perday")}</li>
         <li><b>${t("week.2")}:</b> ${t("results.action.steps.aim")} <b>${steps.week2.toLocaleString()}</b> ${t("results.action.steps.perday")}</li>
         ${steps.showLongTerm ? `<li><b>${t("results.action.steps.after")}:</b> ${t("results.action.steps.add1k")}</li>` : ``}
-      </ul>
-    `}
+      </ul>`
+    }
 
     <h2>${t("results.sleep")}</h2>
     <div class="help">${escapeHtml(t(sleep.noteKey))}</div>
 
-    <!-- SECOND CTA BLOCK - After sleep, before send results -->
+    <!-- SECOND CTA BLOCK - After sleep -->
     ${ctaBlockHtml}
 
     <div class="hr"></div>
 
-    <h2>${t("results.send")}</h2>
-    <div class="field" style="margin-top:6px;">
-      <label class="check" style="padding:10px 12px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.04);">
-        <input type="checkbox" id="sendMeResults" />
-        ${t("results.send.yes")}
-      </label>
-    </div>
-
-    <div id="contactBlock" style="display:none">
-      <div class="row">
-        <div class="field">
-          <label>${t("contact.email")}</label>
-          <input type="email" id="emailInput" placeholder="name@email.com" />
-        </div>
-        <div class="field">
-          <label>${t("contact.phone")}</label>
-          <input type="tel" id="phoneInput" placeholder="+33 6 12 34 56 78" />
-        </div>
-      </div>
-
-      <div class="btnrow" style="border-top:none;padding-top:0;">
-        <button type="button" class="ghost mini" id="emailBtn">${t("contact.sendEmail")}</button>
-        <button type="button" class="primary mini" id="waBtn">${t("contact.sendWhatsApp")}</button>
-      </div>
-
-      <p class="note">${t("contact.note")}</p>
-    </div>
+    <!-- FIRST send results + summary block -->
+    ${sendResultsBlockHtml}
 
     <div class="hr"></div>
 
@@ -3156,99 +2855,118 @@ function renderResults(data){
 
   // Track CTA link clicks
   document.querySelectorAll('.cta-calendly').forEach(link => {
-    link.addEventListener('click', () => {
-      trackCtaClick('calendly');
-    });
+    link.addEventListener('click', () => { trackCtaClick('calendly'); });
   });
-
   document.querySelectorAll('.cta-skool').forEach(link => {
-    link.addEventListener('click', () => {
-      trackCtaClick('skool');
+    link.addEventListener('click', () => { trackCtaClick('skool'); });
+  });
+
+  // Wire up ALL send results checkbox + contact blocks (supports multiple instances)
+  const allCheckboxes = document.querySelectorAll('.sendMeResultsCheckbox');
+  const allContactBlocks = document.querySelectorAll('.contactBlockInstance');
+
+  allCheckboxes.forEach((cb, idx) => {
+    const contactBlock = allContactBlocks[idx];
+    if (!contactBlock) return;
+
+    cb.addEventListener("change", () => {
+      contactBlock.style.display = cb.checked ? "" : "none";
+      // Sync all checkboxes
+      allCheckboxes.forEach(otherCb => { otherCb.checked = cb.checked; });
+      allContactBlocks.forEach(otherBlock => { otherBlock.style.display = cb.checked ? "" : "none"; });
+      
+      if (cb.checked) {
+        ctaClicks.sendResultsChecked = true;
+        trackToGoogleSheets('send_results_checked', currentStep);
+        contactBlock.scrollIntoView({ behavior:"smooth", block:"start" });
+      }
     });
   });
 
-  // send results
-  const sendMe = document.getElementById("sendMeResults");
-  const contactBlock = document.getElementById("contactBlock");
-  const emailBtn = document.getElementById("emailBtn");
-  const waBtn = document.getElementById("waBtn");
-  const emailInput = document.getElementById("emailInput");
-  const phoneInput = document.getElementById("phoneInput");
+  // Wire up ALL email/phone inputs and send buttons
+  const allEmailInputs = document.querySelectorAll('.emailInputField');
+  const allPhoneInputs = document.querySelectorAll('.phoneInputField');
+  const allEmailBtns = document.querySelectorAll('.emailBtnAction');
+  const allWaBtns = document.querySelectorAll('.waBtnAction');
 
-  // Track when user checks "send me results"
-  sendMe.addEventListener("change", () => {
-    contactBlock.style.display = sendMe.checked ? "" : "none";
-    if (sendMe.checked) {
-      ctaClicks.sendResultsChecked = true;
-      trackToGoogleSheets('send_results_checked', currentStep);
-      contactBlock.scrollIntoView({ behavior:"smooth", block:"start" });
-    }
-  });
-
-  // Track email input changes (debounced)
-  const trackEmailDebounced = debounce(() => {
-    const email = emailInput.value.trim();
-    if (email && email.includes('@')) {
-      trackContactInfo('email', email);
-    }
-  }, 1500);
-
-  emailInput.addEventListener('input', trackEmailDebounced);
-  emailInput.addEventListener('blur', () => {
-    const email = emailInput.value.trim();
-    if (email && email.includes('@')) {
-      trackContactInfo('email', email);
-    }
-  });
-
-  // Track phone input changes (debounced)
-  const trackPhoneDebounced = debounce(() => {
-    const phone = phoneInput.value.trim();
-    if (phone && phone.length >= 8) {
-      trackContactInfo('phone', phone);
-    }
-  }, 1500);
-
-  phoneInput.addEventListener('input', trackPhoneDebounced);
-  phoneInput.addEventListener('blur', () => {
-    const phone = phoneInput.value.trim();
-    if (phone && phone.length >= 8) {
-      trackContactInfo('phone', phone);
-    }
-  });
-
-  emailBtn.addEventListener("click", () => {
-    const email = emailInput.value.trim();
-    if (!email) { alert("Please enter your email."); return; }
-    
-    // Track email send click
-    userContactInfo.email = email;
-    ctaClicks.sendEmail = true;
-    trackToGoogleSheets('send_email_clicked', currentStep, {
-      contactEmail: email
+  // Sync email inputs across instances
+  allEmailInputs.forEach(input => {
+    const trackEmailDebounced = debounce(() => {
+      const email = input.value.trim();
+      if (email && email.includes('@')) {
+        trackContactInfo('email', email);
+        // Sync to other instances
+        allEmailInputs.forEach(other => { if (other !== input) other.value = input.value; });
+      }
+    }, 1500);
+    input.addEventListener('input', trackEmailDebounced);
+    input.addEventListener('blur', () => {
+      const email = input.value.trim();
+      if (email && email.includes('@')) {
+        trackContactInfo('email', email);
+        allEmailInputs.forEach(other => { if (other !== input) other.value = input.value; });
+      }
     });
-    
-    const subject = encodeURIComponent("Your Nutrition Assessment Results");
-    const body = encodeURIComponent(resultsText);
-    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
   });
 
-  waBtn.addEventListener("click", () => {
-    let phone = phoneInput.value.trim();
-    if (!phone) { alert("Please enter your phone number."); return; }
-    
-    // Track WhatsApp send click
-    userContactInfo.phone = phone;
-    ctaClicks.sendWhatsApp = true;
-    trackToGoogleSheets('send_whatsapp_clicked', currentStep, {
-      contactPhone: phone
+  // Sync phone inputs across instances
+  allPhoneInputs.forEach(input => {
+    const trackPhoneDebounced = debounce(() => {
+      const phone = input.value.trim();
+      if (phone && phone.length >= 8) {
+        trackContactInfo('phone', phone);
+        allPhoneInputs.forEach(other => { if (other !== input) other.value = input.value; });
+      }
+    }, 1500);
+    input.addEventListener('input', trackPhoneDebounced);
+    input.addEventListener('blur', () => {
+      const phone = input.value.trim();
+      if (phone && phone.length >= 8) {
+        trackContactInfo('phone', phone);
+        allPhoneInputs.forEach(other => { if (other !== input) other.value = input.value; });
+      }
     });
-    
-    phone = phone.replace(/[^\d]/g, "");
-    if (phone.length < 8) { alert("Please enter a valid phone number in international format."); return; }
-    const msg = encodeURIComponent(resultsText);
-    window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
   });
+
+  // Email send buttons
+  allEmailBtns.forEach((btn, idx) => {
+    btn.addEventListener("click", () => {
+      // Get email from the closest input in the same contact block
+      const parentBlock = btn.closest('.contactBlockInstance');
+      const emailInput = parentBlock ? parentBlock.querySelector('.emailInputField') : allEmailInputs[0];
+      const email = emailInput ? emailInput.value.trim() : "";
+      if (!email) { alert("Please enter your email."); return; }
+      userContactInfo.email = email;
+      ctaClicks.sendEmail = true;
+      trackToGoogleSheets('send_email_clicked', currentStep, { contactEmail: email });
+      const subject = encodeURIComponent("Your Nutrition Assessment Results");
+      const body = encodeURIComponent(resultsText);
+      window.location.href = `mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
+    });
+  });
+
+  // WhatsApp send buttons
+  allWaBtns.forEach((btn, idx) => {
+    btn.addEventListener("click", () => {
+      const parentBlock = btn.closest('.contactBlockInstance');
+      const phoneInput = parentBlock ? parentBlock.querySelector('.phoneInputField') : allPhoneInputs[0];
+      let phone = phoneInput ? phoneInput.value.trim() : "";
+      if (!phone) { alert("Please enter your phone number."); return; }
+      userContactInfo.phone = phone;
+      ctaClicks.sendWhatsApp = true;
+      trackToGoogleSheets('send_whatsapp_clicked', currentStep, { contactPhone: phone });
+      phone = phone.replace(/[^\d]/g, "");
+      if (phone.length < 8) { alert("Please enter a valid phone number in international format."); return; }
+      const msg = encodeURIComponent(resultsText);
+      window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
+    });
+  });
+
+  // Pre-fill email from quiz if provided
+  const quizEmail = data.userEmail || "";
+  if (quizEmail) {
+    allEmailInputs.forEach(input => { input.value = quizEmail; });
+  }
 }
 
 /* =========================
@@ -3260,9 +2978,7 @@ function setVisible(id, on){
   el.style.display = on ? "" : "none";
 }
 
-function scrollToElementTop(el) {
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
+function scrollToElementTop(el) { el.scrollIntoView({ behavior: "smooth", block: "start" }); }
 
 function clearInvalidMarks(stepEl) {
   stepEl.querySelectorAll(".invalid").forEach(x => x.classList.remove("invalid"));
@@ -3274,58 +2990,35 @@ function clearInvalidMarks(stepEl) {
 function markFieldInvalid(el) {
   el.classList.add("invalid");
   const fieldWrap = el.closest(".field");
-  if (fieldWrap) {
-    const lab = fieldWrap.querySelector("label");
-    if (lab) lab.classList.add("invalid-label");
-  }
-
+  if (fieldWrap) { const lab = fieldWrap.querySelector("label"); if (lab) lab.classList.add("invalid-label"); }
   if (el && (el.id === "bfMin" || el.id === "bfMax" || el.id === "bfRangeLabel")) {
-    const grid = document.getElementById("bfGrid");
-    if (grid) grid.classList.add("invalidGrid");
+    const grid = document.getElementById("bfGrid"); if (grid) grid.classList.add("invalidGrid");
   }
 }
 
 function showErrorBanner(missingLabels){
   const b = document.getElementById("errBanner");
-  if (!missingLabels.length){
-    b.style.display = "none";
-    b.innerHTML = "";
-    return;
-  }
+  if (!missingLabels.length){ b.style.display = "none"; b.innerHTML = ""; return; }
   b.style.display = "block";
   b.innerHTML = `<b>${escapeHtml(t("err.fill"))}</b> ${missingLabels.map(x=>`<span style="white-space:nowrap"> • ${escapeHtml(x)}</span>`).join("")}`;
 }
 
-function getCheckedAllergies(){
-  return Array.from(document.querySelectorAll('input[name="allergies"]:checked')).map(x => x.value);
-}
+function getCheckedAllergies(){ return Array.from(document.querySelectorAll('input[name="allergies"]:checked')).map(x => x.value); }
 
 function updateTrainingFields(){
   const trainingNow = document.getElementById("trainingNow").value;
   const trainedBefore = document.getElementById("trainedBefore").value;
   const type = document.getElementById("trainingType").value;
-
   setVisible("trainedBeforeWrap", trainingNow === "no");
-
   const showType = (trainingNow === "yes") || (trainingNow === "no" && trainedBefore === "yes");
   setVisible("trainingTypeWrap", showType);
-
   const showSessions = (trainingNow === "yes");
   setVisible("sessionsWrap", showSessions);
-  if (!showSessions) {
-    document.getElementById("sessionsPerWeek").value = "0";
-  }
-
+  if (!showSessions) document.getElementById("sessionsPerWeek").value = "0";
   const showDetails = showType && (type === "mixed" || type === "sport");
   setVisible("trainingDetailsWrap", showDetails);
-
-  if (!showType) {
-    document.getElementById("trainingType").value = "";
-    document.getElementById("trainingDetails").value = "";
-  }
-  if (!showDetails) {
-    document.getElementById("trainingDetails").value = "";
-  }
+  if (!showType) { document.getElementById("trainingType").value = ""; document.getElementById("trainingDetails").value = ""; }
+  if (!showDetails) document.getElementById("trainingDetails").value = "";
 }
 
 function updateProduceAllergyField(){
@@ -3337,7 +3030,6 @@ function updateCurrentCalsRequired(){
   const tracks = document.getElementById("tracks").value;
   const currentCals = document.getElementById("currentCals");
   const currentCalsLabel = currentCals.closest(".field").querySelector("label");
-  
   if (tracks === "sometimes" || tracks === "yes") {
     currentCals.required = true;
     currentCalsLabel.setAttribute("data-i18n", "s2.currentCals.required");
@@ -3352,7 +3044,6 @@ function updateCurrentCalsRequired(){
 function validateStep(i){
   const step = document.getElementById(`step-${i}`);
   clearInvalidMarks(step);
-
   const required = Array.from(step.querySelectorAll("[required]"));
   let firstInvalid = null;
   const missingLabels = [];
@@ -3363,11 +3054,8 @@ function validateStep(i){
       markFieldInvalid(el);
       const wrap = el.closest(".field");
       const lab = wrap ? wrap.querySelector("label") : null;
-      
       if (el.id === "bfMin" || el.id === "bfMax" || el.id === "bfRangeLabel") {
-        if (!missingLabels.includes(t("err.selectBf"))) {
-          missingLabels.push(t("err.selectBf"));
-        }
+        if (!missingLabels.includes(t("err.selectBf"))) missingLabels.push(t("err.selectBf"));
       } else {
         missingLabels.push(lab ? lab.textContent.trim() : "Missing field");
       }
@@ -3377,21 +3065,13 @@ function validateStep(i){
   const tdWrap = document.getElementById("trainingDetailsWrap");
   if (tdWrap && tdWrap.style.display !== "none") {
     const td = document.getElementById("trainingDetails");
-    if (!td.value) {
-      if (!firstInvalid) firstInvalid = td;
-      markFieldInvalid(td);
-      missingLabels.push(t("s1.trainingDetails"));
-    }
+    if (!td.value) { if (!firstInvalid) firstInvalid = td; markFieldInvalid(td); missingLabels.push(t("s1.trainingDetails")); }
   }
 
   const pWrap = document.getElementById("produceAllergyWrap");
   if (pWrap && pWrap.style.display !== "none") {
     const pd = document.getElementById("produceAllergyDetails");
-    if (!pd.value) {
-      if (!firstInvalid) firstInvalid = pd;
-      markFieldInvalid(pd);
-      missingLabels.push(t("s3.produce.details"));
-    }
+    if (!pd.value) { if (!firstInvalid) firstInvalid = pd; markFieldInvalid(pd); missingLabels.push(t("s3.produce.details")); }
   }
 
   if (firstInvalid) {
@@ -3400,7 +3080,6 @@ function validateStep(i){
     firstInvalid.focus({ preventScroll: true });
     return false;
   }
-
   showErrorBanner([]);
   return true;
 }
@@ -3414,80 +3093,41 @@ function initBfVisualCards(){
   const bfMinEl = document.getElementById("bfMin");
   const bfMaxEl = document.getElementById("bfMax");
   const bfLabelEl = document.getElementById("bfRangeLabel");
-
   if (!grid || !bfMinEl || !bfMaxEl || !bfLabelEl) return;
-
   const cards = Array.from(grid.querySelectorAll(".bfCard"));
 
   function clearSelection(){
-    bfMinEl.value = "";
-    bfMaxEl.value = "";
-    bfLabelEl.value = "";
-    cards.forEach(c => {
-      c.classList.remove("isSelected");
-      c.setAttribute("aria-checked", "false");
-    });
+    bfMinEl.value = ""; bfMaxEl.value = ""; bfLabelEl.value = "";
+    cards.forEach(c => { c.classList.remove("isSelected"); c.setAttribute("aria-checked", "false"); });
   }
 
   function setSelection(card){
     bfMinEl.value = String(card.dataset.min || "");
     bfMaxEl.value = String(card.dataset.max || "");
     bfLabelEl.value = String(card.dataset.label || "");
-
     grid.classList.remove("invalidGrid");
-    bfMinEl.classList.remove("invalid");
-    bfMaxEl.classList.remove("invalid");
-    bfLabelEl.classList.remove("invalid");
+    bfMinEl.classList.remove("invalid"); bfMaxEl.classList.remove("invalid"); bfLabelEl.classList.remove("invalid");
     const wrap = bfMinEl.closest(".field");
-    if (wrap){
-      const lab = wrap.querySelector("label");
-      if (lab) lab.classList.remove("invalid-label");
-    }
-
-    cards.forEach(c => {
-      const on = c === card;
-      c.classList.toggle("isSelected", on);
-      c.setAttribute("aria-checked", on ? "true" : "false");
-    });
-    
-    // Track body fat selection
+    if (wrap){ const lab = wrap.querySelector("label"); if (lab) lab.classList.remove("invalid-label"); }
+    cards.forEach(c => { const on = c === card; c.classList.toggle("isSelected", on); c.setAttribute("aria-checked", on ? "true" : "false"); });
     trackFieldChange();
   }
 
   function gateByGender(gender){
     const g = (gender === "female") ? "female" : (gender === "male" ? "male" : "");
-    
-    if (!g) {
-      if (prompt) prompt.style.display = "";
-      grid.style.display = "none";
-    } else {
-      if (prompt) prompt.style.display = "none";
-      grid.style.display = "";
-    }
-
-    cards.forEach(card => {
-      const show = g ? (card.dataset.gender === g) : false;
-      card.classList.toggle("isHidden", !show);
-    });
-
+    if (!g) { if (prompt) prompt.style.display = ""; grid.style.display = "none"; }
+    else { if (prompt) prompt.style.display = "none"; grid.style.display = ""; }
+    cards.forEach(card => { card.classList.toggle("isHidden", g ? (card.dataset.gender !== g) : true); });
     const selected = cards.find(c => c.classList.contains("isSelected"));
-    if (selected && g && selected.dataset.gender !== g) {
-      clearSelection();
-    }
+    if (selected && g && selected.dataset.gender !== g) clearSelection();
   }
 
   cards.forEach(card => {
     card.addEventListener("click", () => setSelection(card));
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setSelection(card);
-      }
-    });
+    card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelection(card); } });
   });
 
   window.__gateBfCardsByGender = gateByGender;
-
   const genderSel = document.getElementById("gender");
   gateByGender(genderSel ? genderSel.value : "");
 }
@@ -3519,19 +3159,11 @@ function showStep(i){
   backBtn.disabled = (i===0);
   updateNavButtonText();
   showErrorBanner([]);
-
   const badges = document.getElementById("heroBadges");
-  if (badges) {
-    badges.style.display = (i === 0) ? "" : "none";
-  }
-
+  if (badges) badges.style.display = (i === 0) ? "" : "none";
   const stepEl = document.getElementById(`step-${i}`);
   if (stepEl) stepEl.scrollIntoView({ behavior: "smooth", block: "start" });
-  
-  // Track step change
-  if (i > 0 && i < stepsEls.length - 1) {
-    trackToGoogleSheets('in_progress', i);
-  }
+  if (i > 0 && i < stepsEls.length - 1) trackToGoogleSheets('in_progress', i);
 }
 
 function getFormData(){
@@ -3539,73 +3171,44 @@ function getFormData(){
   const allergies = fd.getAll("allergies");
   const data = Object.fromEntries(fd.entries());
   data.allergies = allergies;
-
   data.age = Number(data.age);
   data.heightCm = Number(data.heightCm);
   data.weightKg = Number(data.weightKg);
-
   data.bfMin = Number(data.bfMin);
   data.bfMax = Number(data.bfMax);
   data.bfRangeLabel = String(data.bfRangeLabel || "");
-
   if (data.trainingNow === "no") data.sessionsPerWeek = "0";
-
   return data;
 }
 
-backBtn.addEventListener("click", ()=>{
-  if (currentStep>0) showStep(currentStep-1);
-});
+backBtn.addEventListener("click", ()=>{ if (currentStep>0) showStep(currentStep-1); });
 
 nextBtn.addEventListener("click", ()=>{
   if (currentStep === stepsEls.length-1) {
-    // Reset and start new session
     sessionId = generateSessionId();
     sessionStorage.setItem('quiz_session_id', sessionId);
-    
-    // Reset CTA tracking
-    ctaClicks = {
-      calendly: false,
-      skool: false,
-      sendEmail: false,
-      sendWhatsApp: false,
-      sendResultsChecked: false
-    };
-    userContactInfo = {
-      email: '',
-      phone: ''
-    };
-    
+    ctaClicks = { calendly: false, skool: false, sendEmail: false, sendWhatsApp: false, sendResultsChecked: false };
+    userContactInfo = { email: '', phone: '' };
     form.reset();
     document.getElementById("results").innerHTML = "";
-    
     const cards = document.querySelectorAll(".bfCard");
-    cards.forEach(c => {
-      c.classList.remove("isSelected");
-      c.setAttribute("aria-checked", "false");
-    });
+    cards.forEach(c => { c.classList.remove("isSelected"); c.setAttribute("aria-checked", "false"); });
     document.getElementById("bfMin").value = "";
     document.getElementById("bfMax").value = "";
     document.getElementById("bfRangeLabel").value = "";
-    
     if (window.__gateBfCardsByGender) window.__gateBfCardsByGender("");
-    
     updateTrainingFields();
     updateProduceAllergyField();
     updateCurrentCalsRequired();
     showStep(0);
-    
-    // Track new session start
     trackToGoogleSheets('started', 0);
     return;
   }
-
   if (currentStep < stepsEls.length-2) {
     if (!validateStep(currentStep)) return;
     showStep(currentStep+1);
     return;
   }
-
   if (!validateStep(currentStep)) return;
   const data = getFormData();
   lastResultsData = data;
@@ -3620,24 +3223,17 @@ document.getElementById("trainingNow").addEventListener("change", ()=>{
   document.getElementById("trainingDetails").value = "";
   updateTrainingFields();
 });
-
 document.getElementById("trainedBefore").addEventListener("change", ()=>{
   document.getElementById("trainingType").value = "";
   document.getElementById("trainingDetails").value = "";
   updateTrainingFields();
 });
-
 document.getElementById("trainingType").addEventListener("change", ()=>{
   document.getElementById("trainingDetails").value = "";
   updateTrainingFields();
 });
-
-document.querySelectorAll('input[name="allergies"]').forEach(cb=>{
-  cb.addEventListener("change", updateProduceAllergyField);
-});
-
+document.querySelectorAll('input[name="allergies"]').forEach(cb=>{ cb.addEventListener("change", updateProduceAllergyField); });
 document.getElementById("tracks").addEventListener("change", updateCurrentCalsRequired);
-
 document.getElementById("gender").addEventListener("change", (e) => {
   if (window.__gateBfCardsByGender) window.__gateBfCardsByGender(e.target.value);
 });
@@ -3650,7 +3246,6 @@ initBfVisualCards();
 renderStepper();
 showStep(0);
 
-// init language
 const langSelect = document.getElementById("langSelect");
 if (langSelect){
   langSelect.value = getLang();
