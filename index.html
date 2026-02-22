@@ -46,7 +46,7 @@
       mix-blend-mode: overlay;
     }
 
-    .wrap{ max-width: 1100px; margin:0 auto; padding: 26px 18px 60px; }
+    .wrap{ max-width: 1100px; margin:0 auto; padding: 26px 18px 120px; }
     .hero{ display:flex; flex-direction:column; gap:12px; margin-bottom: 14px; }
     .brandline{ display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap; justify-content:space-between; }
     .badge{
@@ -514,6 +514,96 @@
       background: rgba(255,255,255,.10);
       margin: 14px 0;
     }
+	
+	.stickyFloat{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 320px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(52,211,153,.45);
+  background:
+    linear-gradient(135deg, rgba(15,25,48,.97), rgba(10,16,32,.97));
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.45),
+    0 0 0 1px rgba(52,211,153,.25);
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  animation: stickyPulse 3s ease-in-out infinite;
+}
+.stickyFloat:hover{
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+  box-shadow:
+    0 12px 40px rgba(52,211,153,.25),
+    0 0 0 1px rgba(52,211,153,.4);
+}
+.stickyFloat:active{
+  transform: translateY(0px);
+}
+@keyframes stickyPulse{
+  0%, 100%{ box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 0 0 1px rgba(52,211,153,.25); }
+  50%{ box-shadow: 0 8px 32px rgba(52,211,153,.3), 0 0 0 3px rgba(52,211,153,.2); }
+}
+.stickyIcon{
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(52,211,153,.85), rgba(96,165,250,.85));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.stickyText{
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.stickyText b{
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.stickyClose{
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(15,25,48,.95);
+  color: var(--muted);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .12s ease;
+}
+.stickyClose:hover{
+  background: rgba(251,113,133,.3);
+  color: var(--text);
+}
+@media (max-width: 480px){
+  .stickyFloat{
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}
   </style>
 </head>
 
@@ -1235,6 +1325,17 @@
       </div>
     </div>
   </div>
+  
+<a href="https://www.shop.letzroar.com/28-days-letz-roar-kickstart/"
+   target="_blank"
+   class="stickyFloat"
+   id="stickyFloat">
+  <span class="stickyIcon">🔥</span>
+  <span class="stickyText">
+    <b data-i18n="sticky.title">28‑Day Lët'z Roar Kickstart</b>
+    <span data-i18n="sticky.desc">Earn your money back & Win Lët'z Roar signature Hoodie →</span>
+  </span>
+</a>
 
 <script>
 /* =========================
@@ -1255,7 +1356,7 @@ if (!sessionId) {
 let userContactInfo = { email: '', phone: '' };
 
 let ctaClicks = {
-  calendly: false, skool: false, sendEmail: false,
+  kickstart: false, skool: false, sendEmail: false,
   sendWhatsApp: false, sendResultsChecked: false
 };
 
@@ -1265,7 +1366,7 @@ function trackToGoogleSheets(status, stepReached, additionalData = {}) {
     sessionId, status, stepReached,
     language: getLang(), userAgent: navigator.userAgent,
     contactEmail: userContactInfo.email, contactPhone: userContactInfo.phone,
-    clickedCalendly: ctaClicks.calendly, clickedSkool: ctaClicks.skool,
+    clickedKickstart: ctaClicks.kickstart, clickedSkool: ctaClicks.skool,
     clickedSendEmail: ctaClicks.sendEmail, clickedSendWhatsApp: ctaClicks.sendWhatsApp,
     wantsResults: ctaClicks.sendResultsChecked,
     ...formData, ...additionalData
@@ -1319,7 +1420,7 @@ window.addEventListener('beforeunload', () => {
     sessionId, status: currentStep === stepsEls.length - 1 ? 'completed' : 'abandoned',
     stepReached: currentStep, language: getLang(), userAgent: navigator.userAgent,
     contactEmail: userContactInfo.email, contactPhone: userContactInfo.phone,
-    clickedCalendly: ctaClicks.calendly, clickedSkool: ctaClicks.skool,
+clickedKickstart: ctaClicks.kickstart, clickedSkool: ctaClicks.skool,
     clickedSendEmail: ctaClicks.sendEmail, clickedSendWhatsApp: ctaClicks.sendWhatsApp,
     wantsResults: ctaClicks.sendResultsChecked, ...getFormDataForTracking()
   };
@@ -1630,11 +1731,14 @@ const I18N = {
     "btn.restart": "Restart",
     "err.fill": "Please fill these fields:",
     "err.selectBf": "Body fat estimate",
-    "cta.plan.title": "Want this turned into a simple 12‑week plan done with you?",
-    "cta.plan.btn": "Book your free 30‑min Game Plan Call",
+	"err.invalidEmail": "Please enter a valid email address (e.g. name@email.com)",
+  "cta.plan.title": "28‑Day Lët'z Roar Kickstart — Earn your money back & Win Lët'z Roar signature Hoodie",
+    "cta.plan.btn": "Book your Game Plan Call",
     "cta.community.title": "Not ready for 1‑1 yet?",
     "cta.community.desc": "Join my free Skool community with courses on nutrition and body recomposition.",
-    "cta.community.btn": "Join the Free Coaching Group"
+    "cta.community.btn": "Join the Free Coaching Group",
+	"sticky.title": "28‑Day Lët'z Roar Kickstart",
+"sticky.desc": "Earn your money back & Win Lët'z Roar signature Hoodie →"
   },
   fr: {
     "lang.label": "Langue",
@@ -1921,11 +2025,14 @@ const I18N = {
     "btn.restart": "Recommencer",
     "err.fill": "Veuillez remplir ces champs :",
     "err.selectBf": "Estimation graisse corporelle",
-    "cta.plan.title": "Tu veux transformer ça en un plan simple de 12 semaines, fait avec toi ?",
-    "cta.plan.btn": "Réserve ton appel gratuit de 30 min",
+	"err.invalidEmail": "Veuillez entrer une adresse email valide (ex. nom@email.com)",
+ "cta.plan.title": "28‑Day Lët'z Roar Kickstart — Récupère ton argent & Gagne Lët'z Roar signature Hoodie",
+"cta.plan.btn": "Réserve ton appel gratuit",
     "cta.community.title": "Pas encore prêt pour du 1-1 ?",
     "cta.community.desc": "Rejoins ma communauté Skool gratuite avec des cours sur la nutrition et la recomposition corporelle.",
-    "cta.community.btn": "Rejoindre le groupe gratuit"
+    "cta.community.btn": "Rejoindre le groupe gratuit",
+	"sticky.title": "28‑Day Lët'z Roar Kickstart",
+"sticky.desc": "Récupère ton argent & Gagne Lët'z Roar signature Hoodie →"
   },
   de: {
     "lang.label": "Sprache",
@@ -2212,11 +2319,14 @@ const I18N = {
     "btn.restart": "Neu starten",
     "err.fill": "Bitte fülle diese Felder aus:",
     "err.selectBf": "Körperfett-Schätzung",
-    "cta.plan.title": "Willst du das in einen einfachen 12-Wochen-Plan umwandeln – gemeinsam mit dir?",
-    "cta.plan.btn": "Buche dein kostenloses 30-Min Strategiegespräch",
+	"err.invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein (z. B. name@email.com)",
+"cta.plan.title": "28‑Day Lët'z Roar Kickstart — Verdiene dein Geld zurück & Gewinne den Lët'z Roar Signature Hoodie",
+"cta.plan.btn": "Buche dein kostenloses Strategiegespräch",
     "cta.community.title": "Noch nicht bereit für 1-1?",
     "cta.community.desc": "Tritt meiner kostenlosen Skool-Community bei – mit Kursen zu Ernährung und Körperrekomposition.",
-    "cta.community.btn": "Kostenlose Coaching-Gruppe beitreten"
+    "cta.community.btn": "Kostenlose Coaching-Gruppe beitreten",
+	"sticky.title": "28‑Day Lët'z Roar Kickstart",
+"sticky.desc": "Verdiene dein Geld zurück & Gewinne den Lët'z Roar Signature Hoodie →"
   }
 };
 
@@ -2590,6 +2700,11 @@ ${t("recap.macros")}:
 `;
 }
 
+function isValidEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  return re.test(String(email).trim());
+}
+
 function escapeHtml(s){
   return String(s || "").replace(/[&<>"']/g, (c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
@@ -2655,7 +2770,7 @@ function renderResults(data){
     <div class="ctaBox">
       <div class="ctaItem">
         <div class="ctaTitle">${t("cta.plan.title")}</div>
-        <a href="https://calendly.com/letzroar-info/game-plan-call" class="ctaBtn ctaPrimary cta-calendly" target="_blank" data-cta="calendly">${t("cta.plan.btn")} →</a>
+   <a href="https://www.shop.letzroar.com/28-days-letz-roar-kickstart/" class="ctaBtn ctaPrimary cta-kickstart" target="_blank" data-cta="kickstart">${t("cta.plan.btn")} →</a>
       </div>
       <div class="ctaDivider"></div>
       <div class="ctaItem">
@@ -2854,9 +2969,9 @@ function renderResults(data){
   });
 
   // Track CTA link clicks
-  document.querySelectorAll('.cta-calendly').forEach(link => {
-    link.addEventListener('click', () => { trackCtaClick('calendly'); });
-  });
+document.querySelectorAll('.cta-kickstart').forEach(link => {
+    link.addEventListener('click', () => { trackCtaClick('kickstart'); });
+});
   document.querySelectorAll('.cta-skool').forEach(link => {
     link.addEventListener('click', () => { trackCtaClick('skool'); });
   });
@@ -3059,6 +3174,13 @@ function validateStep(i){
       } else {
         missingLabels.push(lab ? lab.textContent.trim() : "Missing field");
       }
+      continue;
+    }
+
+    if (el.type === "email" && !isValidEmail(el.value)) {
+      if (!firstInvalid) firstInvalid = el;
+      markFieldInvalid(el);
+      missingLabels.push(t("err.invalidEmail"));
     }
   }
 
@@ -3187,7 +3309,7 @@ nextBtn.addEventListener("click", ()=>{
   if (currentStep === stepsEls.length-1) {
     sessionId = generateSessionId();
     sessionStorage.setItem('quiz_session_id', sessionId);
-    ctaClicks = { calendly: false, skool: false, sendEmail: false, sendWhatsApp: false, sendResultsChecked: false };
+   ctaClicks = { kickstart: false, skool: false, sendEmail: false, sendWhatsApp: false, sendResultsChecked: false };
     userContactInfo = { email: '', phone: '' };
     form.reset();
     document.getElementById("results").innerHTML = "";
@@ -3253,6 +3375,14 @@ if (langSelect){
 }
 applyI18n();
 updateNavButtonText();
+
+// Sticky float tracking
+const stickyFloat = document.getElementById("stickyFloat");
+if (stickyFloat) {
+  stickyFloat.addEventListener("click", () => {
+    trackCtaClick("kickstart_sticky");
+  });
+}
 
 </script>
 </body>
